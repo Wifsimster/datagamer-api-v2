@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
+var uuid = require('node-uuid');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-    name: {type: String, trim: true},
+    name: {type: String, required: 'Name is required', trim: true},
     email: {
         type: String,
         trim: true,
@@ -10,7 +11,7 @@ var UserSchema = new Schema({
         required: 'Email address is required',
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
-    apiKey: String,
+    apiKey: {type:String, default: uuid.v4()},
     gamesAdded: [Schema.ObjectId],
     registerDate: {type: Date, default: Date.now},
     lastAction: Date

@@ -8,7 +8,9 @@ module.exports = function () {
     app.post('/users', function (req, res) {
 
         var user = new User();      // create a new instance of the User model
+
         user.name = req.body.name;  // set the users name (comes from the request)
+        user.email = req.body.email;
 
         // save the user and check for errors
         user.save(function (err) {
@@ -42,7 +44,9 @@ module.exports = function () {
             User.findById(req.params.user_id, function (err, user) {
                 if (err)
                     res.send(err);
+
                 user.name = req.body.name;  // update the users info
+                user.email = req.body.email;
 
                 // Save the user
                 user.save(function (err) {
