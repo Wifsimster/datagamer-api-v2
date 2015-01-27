@@ -42,7 +42,9 @@ module.exports = function () {
             Genre.findById(req.params.genre_id, function (err, genre) {
                 if (err)
                     res.send(err);
+
                 genre.name = req.body.name;  // update the genres info
+                genre.updateDate = new Date();
 
                 // Save the genre
                 genre.save(function (err) {

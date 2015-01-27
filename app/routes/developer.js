@@ -42,12 +42,16 @@ module.exports = function () {
             Developer.findById(req.params.developer_id, function (err, developer) {
                 if (err)
                     res.send(err);
+
                 developer.name = req.body.name;  // update the developers info
+                developer.image = req.body.image;
+                developer.updateDate = new Date();
 
                 // Save the developer
                 developer.save(function (err) {
                     if (err)
                         res.send(err);
+
                     res.json({message: 'Developer updated!'});
                 });
             });

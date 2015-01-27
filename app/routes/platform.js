@@ -42,7 +42,10 @@ module.exports = function () {
             Platform.findById(req.params.platform_id, function (err, platform) {
                 if (err)
                     res.send(err);
+
                 platform.name = req.body.name;  // update the platforms info
+                platform.image = req.body.image;
+                platform.updateDate = new Date();
 
                 // Save the platform
                 platform.save(function (err) {

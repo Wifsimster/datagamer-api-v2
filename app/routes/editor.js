@@ -43,6 +43,8 @@ module.exports = function () {
                 if (err)
                     res.send(err);
                 editor.name = req.body.name;  // update the editors info
+                editor.image = req.body.image;
+                editor.updateDate = new Date();
 
                 // Save the editor
                 editor.save(function (err) {

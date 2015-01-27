@@ -42,7 +42,18 @@ module.exports = function () {
             Game.findById(req.params.game_id, function (err, game) {
                 if (err)
                     res.send(err);
-                game.name = req.body.name;  // update the games info
+
+                // Update the games info
+                game.name = req.body.name;
+                game.cover = req.body.cover;
+                game.editors = req.body.editors;
+                game.developers = req.body.developers;
+                game.genres = req.body.genres;
+                game.platforms = req.body.platforms;
+                game.releaseDate = req.body.releaseDate;
+                game.updateDate = new Date();
+                game.grades = req.body.grades;
+                game.appreciations = req.body.appreciations;
 
                 // Save the game
                 game.save(function (err) {
