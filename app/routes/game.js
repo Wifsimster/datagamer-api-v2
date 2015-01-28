@@ -1,5 +1,6 @@
 module.exports = function () {
     var express = require('express');
+    var unirest = require('unirest');
     var app = express();
 
     var Game = require('../models/game');

@@ -49,6 +49,7 @@ app.use('/api', require('./app/routes/developer'));
 app.use('/api', require('./app/routes/editor'));
 app.use('/api', require('./app/routes/game'));
 app.use('/api', require('./app/routes/genre'));
+app.use('/api', require('./app/routes/metacritic'));
 app.use('/api', require('./app/routes/platform'));
 app.use('/api', require('./app/routes/user'));
 

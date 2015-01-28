@@ -6,17 +6,32 @@ var GameSchema = new Schema({
         type: String,
         trim: true
     },
-    cover: String,
+    media: {
+        boxArt: {
+            front: String,
+            rear: String
+        },
+        logos: [String],
+        banners: [String],
+        fanArt: [String],
+        screenshots: [String],
+        trailers: [String]
+    },
     editors: [Schema.ObjectId],
     developers: [Schema.ObjectId],
     genres: [Schema.ObjectId],
     platforms: [Schema.ObjectId],
+    overview: String,
     releaseDate: Date,
     creationDate: {
         type: Date,
         default: Date.now
     },
     updatedDate: Date,
+    metacritic: {
+        score: Number,
+        url: String
+    },
     grades: [{
         grade: {
             type: Number,
