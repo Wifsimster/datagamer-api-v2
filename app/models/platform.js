@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose-q')(require('mongoose'));
 var Schema = mongoose.Schema;
 
 var PlatformSchema = new Schema({

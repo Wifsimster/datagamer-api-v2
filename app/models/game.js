@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose-q')(require('mongoose'));
 var Schema = mongoose.Schema;
 
 var GameSchema = new Schema({
@@ -11,16 +11,17 @@ var GameSchema = new Schema({
             front: String,
             rear: String
         },
+        thumbnails: [String],
         logos: [String],
         banners: [String],
         fanArt: [String],
         screenshots: [String],
         trailers: [String]
     },
-    editors: [Schema.ObjectId],
-    developers: [Schema.ObjectId],
-    genres: [Schema.ObjectId],
-    platforms: [Schema.ObjectId],
+    editors: [{type: Schema.Types.ObjectId, ref: 'Editor'}],
+    developers: [{type: Schema.Types.ObjectId, ref: 'Developer'}],
+    genres: [{type: Schema.Types.ObjectId, ref: 'Genre'}],
+    platforms: [{type: Schema.Types.ObjectId, ref: 'Platform'}],
     overview: String,
     releaseDate: Date,
     creationDate: {
@@ -31,39 +32,21 @@ var GameSchema = new Schema({
     metacritic: {
         score: Number,
         url: String
-    },
-    grades: [{
-        grade: {
-            type: Number,
-            min: 0,
-            max: 10
-        },
-        date: Date
-    }],
-    appreciations: [{
-        appreciation: {
-            type: Number,
-            min: -1,
-            max: 1
-        },
-        date: Date
-    }]
+    }
 });
 
 var Game = mongoose.model('Game', GameSchema);
 
 //Check if exist before saving
-GameSchema.pre('save', function (next) {
-    var self = this;
-    Game.find({name: self.name}, function (err, docs) {
-        if (!docs.length) {
-            next();
-        } else {
-            console.log('Game exists: ', self.name);
-            var err = new Error('Game already exists !');
-            next(err);
-        }
-    });
-});
+//GameSchema.pre('save', function (next) {
+//    var self = this;
+//    Game.findQ({name: self.name}, function (err, docs) {
+//        if (!docs.length) {
+//            next();
+//        } else {
+//            next(new Error('Game already exists !'));
+//        }
+//    });
+//});
 
 module.exports = mongoose.model('Game', GameSchema);
