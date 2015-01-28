@@ -51,6 +51,7 @@ app.use('/api', require('./app/routes/game'));
 app.use('/api', require('./app/routes/genre'));
 app.use('/api', require('./app/routes/metacritic'));
 app.use('/api', require('./app/routes/platform'));
+app.use('/api', require('./app/routes/thegamesdb'));
 app.use('/api', require('./app/routes/user'));
 
 // START THE SERVER
