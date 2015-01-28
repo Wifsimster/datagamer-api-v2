@@ -1,12 +1,13 @@
 module.exports = function () {
     var express = require('express');
     var unirest = require('unirest');
-    var Game = require('models/game');
-    var Genre = require('models/genre');
-    var Platform = require('models/platform');
-    var Editor = require('models/editor');
-    var Developer = require('models/developer');
     var app = express();
+
+    var Game = require('../../models/game');
+    var Genre = require('../../models/genre');
+    var Platform = require('../../models/platform');
+    var Editor = require('../../models/editor');
+    var Developer = require('../../models/developer');
 
     var MASHAP_KEY = "ecmcKi5btCmshMQ2zEAagzqj9kX6p1iNBZEjsna7t1mwW51poH";
     var ACCEPT_JSON = "application/json";
@@ -14,7 +15,7 @@ module.exports = function () {
     // Automaticly add new games from Metacritic
     // Type : {coming-soon, new-releases}
     // Platform : {ps4, xboxone, ps3, xbox360, pc, wii-u, 3ds, vita, ios}
-    // ie : http://localhost:8080/api/metacritic/game-list/new-releases
+    // ie : http://localhost:8080/extractor/metacritic/game-list/new-releases
     app.get('/metacritic/game-list/:type', function (req, res) {
 
         console.log("-- Searching for games on Metacritic...");
@@ -24,10 +25,11 @@ module.exports = function () {
         //var platform = req.params.platform;
         var platform = "pc" // Force the platform to pc for this app
 
-        unirest.get("https://byroredux-metacritic.p.mashape.com/game-list/" + platform + "/" + type)
+        unirest.get("https://byroredux-metacritic.p.mashape.com/game-list/pc/" + type)
             .header("X-Mashape-Key", MASHAP_KEY)
             .header("Accept", ACCEPT_JSON)
             .end(function (result) {
+
                 if (result.body.results) {
                     var games = result.body.results;
 
@@ -46,17 +48,25 @@ module.exports = function () {
                         game.overview = mcGame.summary;
                         game.platform = mcGame.platform;
 
-                        game.save(function (err) {
-                            if (err)
-                                res.send(err.message);
-
-                            res.json({message: 'Game created!'});
-                        });
+                        game.saveQ()
+                            .then(function (game) {
+                                console.log("---- " + game.name + " added !");
+                            })
+                            .catch(function (err) {
+                                if (err)
+                                    res.send(err.message);
+                            });
                     }
-                } else {
-                    console.log("-- No result ! Maybe an error ?");
+
+                    res.json({message: "OK"});
                 }
-            });
+                else {
+                    console.log("-- No result ! Maybe an error ?");
+                    console.error(result);
+                }
+            }
+        )
+        ;
     });
 
     // Automaticly update game information from Metacritic data
@@ -204,11 +214,15 @@ module.exports = function () {
                                                                 developer.name = mcGame.developer;
 
                                                                 // Add new editor in db
-                                                                developer.save(function (err) {
-                                                                    if (err)
-                                                                        res.send(err.message);
-                                                                    game.developers.add(developer);
-                                                                });
+                                                                developer.saveQ()
+                                                                    .then(function (res) {
+                                                                        console.log("Developer saved !")
+                                                                        game.developers.push(developer);
+                                                                    })
+                                                                    .catch(function (err) {
+                                                                        if (err)
+                                                                            res.send(err.message);
+                                                                    });
                                                             }
 
                                                             game.saveQ()
@@ -239,6 +253,7 @@ module.exports = function () {
                         })
                 } else {
                     console.log("No result ! Maybe an error ?");
+                    console.error(result);
                 }
             }
         );

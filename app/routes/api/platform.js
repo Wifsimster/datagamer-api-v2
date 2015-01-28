@@ -2,7 +2,7 @@ module.exports = function () {
     var express = require('express');
     var app = express();
 
-    var Platform = require('models/platform');
+    var Platform = require('../../models/platform');
 
     // Create a platform (accessed at POST http://localhost:8080/api/platforms)
     app.post('/platforms', function (req, res) {

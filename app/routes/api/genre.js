@@ -2,7 +2,7 @@ module.exports = function () {
     var express = require('express');
     var app = express();
 
-    var Genre = require('models/genre');
+    var Genre = require('../../models/genre');
 
     // Create a genre (accessed at POST http://localhost:8080/api/genres)
     app.post('/genres', function (req, res) {

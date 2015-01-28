@@ -2,7 +2,7 @@ module.exports = function () {
     var express = require('express');
     var app = express();
 
-    var Developer = require('models/developer');
+    var Developer = require('../../models/developer');
 
     // Create a developer (accessed at POST http://localhost:8080/api/developers)
     app.post('/developers', function (req, res) {

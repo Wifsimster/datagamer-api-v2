@@ -3,7 +3,7 @@ module.exports = function () {
     var unirest = require('unirest');
     var app = express();
 
-    var Game = require('models/game');
+    var Game = require('../../models/game');
 
     app.get('/thegamesdb/game-list/:name', function (req, res) {
 

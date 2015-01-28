@@ -63,14 +63,14 @@ app.use('/extractor', require('./app/routes/extractor/thegamesdb'));
 app.listen(port);
 console.log('Datagamer is running on port ' + port);
 
-// Get new release at startup
-console.log("Start getting new release from Metacritic API...");
-
-// Get all new release at startup
-request({
-    url: 'http://localhost:8080/api/metacritic/game-list/new-releases',
-    headers: {'apiKey': 'b3dae6c0-83a0-4721-9901-bf0ee7011af8'}
-}, function (err, res, body) {
-    if (!err)
-        console.log("Get all new release from Metacritic !");
-});
+//// Get new release at startup
+//console.log("Start getting new release from Metacritic API...");
+//
+//// Get all new release at startup
+//request({
+//    url: 'http://localhost:8080/extractor/metacritic/game-list/new-releases',
+//    headers: {'apiKey': 'b3dae6c0-83a0-4721-9901-bf0ee7011af8'}
+//}, function (err, res, body) {
+//    if (!err)
+//        console.log("Get all new release from Metacritic !");
+//});

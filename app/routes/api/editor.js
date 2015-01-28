@@ -2,7 +2,7 @@ module.exports = function () {
     var express = require('express');
     var app = express();
 
-    var Editor = require('models/editor');
+    var Editor = require('../../models/editor');
 
     // Create a editor (accessed at POST http://localhost:8080/api/editors)
     app.post('/editors', function (req, res) {
