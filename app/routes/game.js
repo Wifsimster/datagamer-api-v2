@@ -13,7 +13,7 @@ module.exports = function () {
         // save the game and check for errors
         game.save(function (err) {
             if (err)
-                res.send(err);
+                res.send(err.message);
             res.json({message: 'Game created!'});
         });
     })

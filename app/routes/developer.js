@@ -13,7 +13,7 @@ module.exports = function () {
         // save the developer and check for errors
         developer.save(function (err) {
             if (err)
-                res.send(err);
+                res.send(err.message);
             res.json({message: 'Developer created!'});
         });
     })

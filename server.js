@@ -7,7 +7,8 @@ var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://192.168.0.21:27017/datagamer'); // connect to our database
+//mongoose.connect('mongodb://192.168.0.21:27017/datagamer'); // connect to our database
+mongoose.connect('mongodb://localhost:27017/datagamer'); // connect to our database
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -21,12 +22,11 @@ var User = require('./app/models/user');
 // Middleware to use for all requests
 app.use(function (req, res, next) {
 
-    console.log('Request bitch !' + req.headers.apikey);
+    console.log('API request : ' + req.headers.apikey);
 
     // Check if the API key exist
     User.findByApiKey(req.headers.apikey, function(err, users) {
         if(!err) {
-            console.log(users);
             if(users.length > 0) {
                 next(); // make sure we go to the next routes and don't stop here
             } else {

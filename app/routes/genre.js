@@ -13,7 +13,7 @@ module.exports = function () {
         // save the genre and check for errors
         genre.save(function (err) {
             if (err)
-                res.send(err);
+                res.send(err.message);
             res.json({message: 'Genre created!'});
         });
     })

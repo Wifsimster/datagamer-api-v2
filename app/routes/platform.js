@@ -13,7 +13,7 @@ module.exports = function () {
         // save the platform and check for errors
         platform.save(function (err) {
             if (err)
-                res.send(err);
+                res.send(err.message);
             res.json({message: 'Platform created!'});
         });
     })
