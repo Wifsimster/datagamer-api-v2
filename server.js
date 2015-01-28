@@ -6,9 +6,10 @@ var express = require('express');        // call express
 var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var request = require('request');
 
-//mongoose.connect('mongodb://192.168.0.21:27017/datagamer'); // connect to our database
-mongoose.connect('mongodb://localhost:27017/datagamer'); // connect to our database
+mongoose.connect('mongodb://192.168.0.21:27017/datagamer'); // connect to our database
+//mongoose.connect('mongodb://localhost:27017/datagamer'); // connect to our database
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -22,12 +23,12 @@ var User = require('./app/models/user');
 // Middleware to use for all requests
 app.use(function (req, res, next) {
 
-    console.log('API request : ' + req.headers.apikey);
+    console.log('-- API request : ' + req.headers.apikey);
 
     // Check if the API key exist
-    User.findByApiKey(req.headers.apikey, function(err, users) {
-        if(!err) {
-            if(users.length > 0) {
+    User.findByApiKey(req.headers.apikey, function (err, users) {
+        if (!err) {
+            if (users.length > 0) {
                 next(); // make sure we go to the next routes and don't stop here
             } else {
                 res.json("This API key does not exist !");
@@ -44,17 +45,32 @@ app.get('/', function (req, res) {
 });
 
 // REGISTER OUR ROUTES -------------------------------
-// all of our routes will be prefixed with /api
-app.use('/api', require('./app/routes/developer'));
-app.use('/api', require('./app/routes/editor'));
-app.use('/api', require('./app/routes/game'));
-app.use('/api', require('./app/routes/genre'));
-app.use('/api', require('./app/routes/metacritic'));
-app.use('/api', require('./app/routes/platform'));
-app.use('/api', require('./app/routes/thegamesdb'));
-app.use('/api', require('./app/routes/user'));
+// API routes
+app.use('/api', require('./app/routes/api/developer'));
+app.use('/api', require('./app/routes/api/editor'));
+app.use('/api', require('./app/routes/api/game'));
+app.use('/api', require('./app/routes/api/genre'));
+app.use('/api', require('./app/routes/api/platform'));
+app.use('/api', require('./app/routes/api/user'));
+
+// Extractor routes
+app.use('/extractor', require('./app/routes/extractor/metacritic'));
+app.use('/extractor', require('./app/routes/extractor/thegamesdb'));
+
 
 // START THE SERVER
 // =============================================================================
 app.listen(port);
 console.log('Datagamer is running on port ' + port);
+
+// Get new release at startup
+console.log("Start getting new release from Metacritic API...");
+
+// Get all new release at startup
+request({
+    url: 'http://localhost:8080/api/metacritic/game-list/new-releases',
+    headers: {'apiKey': 'b3dae6c0-83a0-4721-9901-bf0ee7011af8'}
+}, function (err, res, body) {
+    if (!err)
+        console.log("Get all new release from Metacritic !");
+});

@@ -2,7 +2,7 @@ module.exports = function () {
     var express = require('express');
     var app = express();
 
-    var User = require('../models/user');
+    var User = require('models/user');
 
     // Create a user (accessed at POST http://localhost:8080/api/users)
     app.post('/users', function (req, res) {

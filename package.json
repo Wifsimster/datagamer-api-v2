@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "body-parser": "~1.0.1",
     "express": "~4.0.0",
     "mongoose": "~3.6.13",
-    "body-parser": "~1.0.1",
+    "mongoose-q": "*",
     "node-uuid": "*",
-    "unirest": "*",
-    "mongoose-q": "*"
+    "request": "^2.51.0",
+    "unirest": "*"
   }
 }

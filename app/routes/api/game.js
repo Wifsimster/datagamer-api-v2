@@ -3,7 +3,7 @@ module.exports = function () {
     var unirest = require('unirest');
     var app = express();
 
-    var Game = require('../models/game');
+    var Game = require('models/game');
 
     // Create a game (accessed at POST http://localhost:8080/api/games)
     app.post('/games', function (req, res) {

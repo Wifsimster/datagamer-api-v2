@@ -1,14 +1,15 @@
 module.exports = function () {
     var express = require('express');
     var unirest = require('unirest');
-    var Game = require('../models/game');
-    var Genre = require('../models/genre');
-    var Platform = require('../models/platform');
-    var Editor = require('../models/editor');
-    var Developer = require('../models/developer');
+    var Game = require('models/game');
+    var Genre = require('models/genre');
+    var Platform = require('models/platform');
+    var Editor = require('models/editor');
+    var Developer = require('models/developer');
     var app = express();
 
     var MASHAP_KEY = "ecmcKi5btCmshMQ2zEAagzqj9kX6p1iNBZEjsna7t1mwW51poH";
+    var ACCEPT_JSON = "application/json";
 
     // Automaticly add new games from Metacritic
     // Type : {coming-soon, new-releases}
@@ -16,7 +17,7 @@ module.exports = function () {
     // ie : http://localhost:8080/api/metacritic/game-list/new-releases
     app.get('/metacritic/game-list/:type', function (req, res) {
 
-        console.log("Searching for games on Metacritic...");
+        console.log("-- Searching for games on Metacritic...");
 
         var type = req.params.type;
 
@@ -25,7 +26,7 @@ module.exports = function () {
 
         unirest.get("https://byroredux-metacritic.p.mashape.com/game-list/" + platform + "/" + type)
             .header("X-Mashape-Key", MASHAP_KEY)
-            .header("Accept", "application/json")
+            .header("Accept", ACCEPT_JSON)
             .end(function (result) {
                 if (result.body.results) {
                     var games = result.body.results;
@@ -53,7 +54,7 @@ module.exports = function () {
                         });
                     }
                 } else {
-                    console.log("No result ! Maybe an error ?");
+                    console.log("-- No result ! Maybe an error ?");
                 }
             });
     });
@@ -66,12 +67,12 @@ module.exports = function () {
         var platform_id = 3; // Fix platform id to pc for the app
         var name = req.params.name;
 
-        console.log("Searching for '" + name + "' on Metacritic...");
+        console.log("-- Searching for '" + name + "' on Metacritic...");
 
         unirest.post("https://byroredux-metacritic.p.mashape.com/find/game")
             .header("X-Mashape-Key", MASHAP_KEY)
             .header("Content-Type", "application/x-www-form-urlencoded")
-            .header("Accept", "application/json")
+            .header("Accept", ACCEPT_JSON)
             .send({
                 "platform": platform_id,
                 "retry": 4,
