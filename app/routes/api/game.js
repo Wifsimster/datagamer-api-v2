@@ -9,7 +9,6 @@ module.exports = function () {
     // Enums
     var CODE = require('../../enums/codes');
 
-    // Create a game (accessed at POST http://localhost:8080/api/games)
     app
         // -----------------------------------------------------------------------------------
         // --                                       POST                                    --
@@ -19,6 +18,14 @@ module.exports = function () {
         // URL: http://localhost:8080/api/games
         // Form params :
         //          - name
+        //          - overview
+        //          - editors[]
+        //          - developers[]
+        //          - genres[]
+        //          - platforms[]
+        //          - releaseDate
+        //          - metacritic{}
+        //          - media{}
         .post('/games', function (req, res) {
             var name = req.body.name;  // set the games name (comes from the request)
 
@@ -28,8 +35,7 @@ module.exports = function () {
                     if (result) {
                         console.log("Find a game with this name : " + name);
                         res.json(CODE.ALREADY_EXIST);
-                    }
-                    else {
+                    } else {
                         // Create a new instance of the Game model
                         var game = new Game();
                         game.name = name;
@@ -59,23 +65,25 @@ module.exports = function () {
                         }
 
                         // Save the game and check for errors
-                        game.save(function (err) {
-                            if (err)
+                        game.saveQ()
+                            .then(function (game) {
+                                console.log('Game ' + game.name + ' added !');
+
+                                // Save game object to the response object
+                                CODE.SUCCESS_POST.game = game;
+                                res.json(CODE.SUCCESS);
+                            })
+                            .catch(function (err) {
+                                console.error(err);
                                 res.json(CODE.SERVER_ERROR);
-
-                            console.log('Game ' + game.name + ' added !');
-
-                            // Save game object to the response object
-                            CODE.SUCCESS_POST.game = game;
-                            res.json(CODE.SUCCESS);
-                        });
+                            });
                     }
 
                 })
                 .catch(function (err) {
                     console.error(err);
                     res.json(CODE.SERVER_ERROR);
-                })
+                });
         })
 
         // -----------------------------------------------------------------------------------
@@ -113,7 +121,6 @@ module.exports = function () {
                     res.json(CODE.SUCCESS);
                 });
         })
-
 
         // Description : Get games by a name
         // URL : http://localhost:8080/api/games/by/name/:name

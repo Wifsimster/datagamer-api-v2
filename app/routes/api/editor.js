@@ -2,46 +2,145 @@ module.exports = function () {
     var express = require('express');
     var app = express();
 
+    // Models
     var Editor = require('../../models/editor');
 
-    // Create a editor (accessed at POST http://localhost:8080/api/editors)
-    app.post('/editors', function (req, res) {
+    // Enums
+    var CODE = require('../../enums/codes');
 
-        var editor = new Editor();      // create a new instance of the Editor model
-        editor.name = req.body.name;  // set the editors name (comes from the request)
+    app
+        // -----------------------------------------------------------------------------------
+        // --                                       POST                                    --
+        // -----------------------------------------------------------------------------------   
 
-        // save the editor and check for errors
-        editor.save(function (err) {
-            if (err)
-                res.send(err.message);
-            res.json({message: 'Editor created!'});
-        });
-    })
+        // Description : Add a new editor
+        // URL: http://localhost:8080/api/editors
+        // Form params :
+        //          - name
+        .post('/editors', function (req, res) {
+            var name = req.body.name;
 
-        // Get all the editors (accessed at GET http://localhost:8080/api/editors)
+            // Check if a editor already exist with this name
+            Editor.findOneQ({name: name})
+                .then(function (result) {
+                    if (result) {
+                        console.log("Find a editor with this name : " + name);
+                        res.json(CODE.ALREADY_EXIST);
+                    } else {
+                        // Create a new instance of the Editor model
+                        var editor = new Editor();
+                        editor.name = name;
+
+                        // Save the editor and check for errors
+                        editor.saveQ()
+                            .then(function (editor) {
+                                // Build response message
+                                CODE.SUCCESS_POST.editor = editor;
+                                res.json(CODE.SUCCESS);
+                            })
+                            .catch(function (err) {
+                                console.error(err);
+                                res.json(CODE.SERVER_ERROR);
+                            });
+                    }
+                })
+                .catch(function (err) {
+                    console.error(err);
+                    res.json(CODE.SERVER_ERROR);
+                });
+        })
+
+        // -----------------------------------------------------------------------------------
+        // --                                       GET                                     --
+        // -----------------------------------------------------------------------------------
+
+        // Description : Get all the editors, come with pagination params
+        // URL : http://localhost:8080/api/editors/?skip=:skip&limit=:limit
+        // URL params :
+        //          - skip
+        //          - limit
         .get('/editors', function (req, res) {
-            Editor.find(function (err, editors) {
+
+            var skip = req.param('skip');
+            var limit = req.param('limit');
+
+            console.log("-- Searching editors with skip '" + skip + "' and limit '" + limit + "'...");
+
+            Editor.find()
+                .skip(skip)
+                .limit(limit)
+                .exec(function (err, editors) {
+                    if (err)
+                        res.send(CODE.SERVER_ERROR);
+
+                    var count = editors.length;
+                    console.log('-- ' + count + ' editor(s) founded !');
+
+                    // Build the response
+                    CODE.SUCCESS.count = count;
+                    CODE.SUCCESS.skip = skip;
+                    CODE.SUCCESS.limit = limit;
+                    CODE.SUCCESS.games = games;
+
+                    res.json(CODE.SUCCESS);
+                });
+        })
+
+        // Description : Get editors by a name
+        // URL : http://localhost:8080/api/editors/by/name/:name
+        .get('/editors/by/name/:editor_name', function (req, res) {
+            Editor.find({name: req.params.editor_name}, function (err, editors) {
                 if (err)
-                    res.send(err);
-                res.json(editors);
+                    res.send(CODE.SERVER_ERROR);
+
+                Editor.count({name: req.params.editor_name}, function (err, count) {
+                    if (err)
+                        res.send(CODE.SERVER_ERROR);
+
+                    console.log(count + ' editor(s) founded !');
+
+                    // Build the response
+                    CODE.SUCCESS.count = count;
+                    CODE.SUCCESS.editors = editors;
+
+                    res.json(CODE.SUCCESS);
+                });
             });
         })
 
-        // Get the editor with that id (accessed at GET http://localhost:8080/api/editors/:editor_id)
-        .get('/editors/:editor_id', function (req, res) {
+        // Description : Get a editor by an id
+        // URL : http://localhost:8080/api/games/by/:id
+        .get('/editors/by/id/:editor_id', function (req, res) {
             Editor.findById(req.params.editor_id, function (err, editor) {
                 if (err)
-                    res.send(err);
-                res.json(editor);
+                    res.send(CODE.SERVER_ERROR);
+
+                console.log('Searching for editor id ' + req.params.editor_id + ' : ' + editor.name);
+
+                // Build the response
+                CODE.SUCCESS.editor = editor;
+
+                res.json(CODE.SUCCESS);
             });
         })
 
-        // Update the editor with this id (accessed at PUT http://localhost:8080/api/editors/:editor_id)
+
+        // -----------------------------------------------------------------------------------
+        // --                                       PUT                                     --
+        // -----------------------------------------------------------------------------------
+
+        // Description : Update a editor with an id
+        // URL : http://localhost:8080/api/editors/:editor_id
+        // Param :
+        //          - id
+        // Form params :
+        //          - Editor Object
         .put('/editors/:editor_id', function (req, res) {
             // Use our editor model to find the editor we want
             Editor.findById(req.params.editor_id, function (err, editor) {
                 if (err)
-                    res.send(err);
+                    res.send(CODE.SERVER_ERROR);
+
                 editor.name = req.body.name;  // update the editors info
                 editor.image = req.body.image;
                 editor.updateDate = new Date();
@@ -49,20 +148,32 @@ module.exports = function () {
                 // Save the editor
                 editor.save(function (err) {
                     if (err)
-                        res.send(err);
-                    res.json({message: 'Editor updated!'});
+                        res.send(CODE.SERVER_ERROR);
+
+                    // Build the response
+                    CODE.SUCCESS_PUT.editor = editor;
+
+                    res.json(CODE.SUCCESS);
                 });
             });
         })
 
-        // Delete the editor with this id (accessed at DELETE http://localhost:8080/api/editors/:editor_id)
+        // -----------------------------------------------------------------------------------
+        // --                                     DELETE                                    --
+        // -----------------------------------------------------------------------------------
+
+        // Description : Delete a editor with an id
+        // URL : http://localhost:8080/api/games/:game_id
+        // Param :
+        //          - id
         .delete('/editors/:editor_id', function (req, res) {
             Editor.remove({
                 _id: req.params.editor_id
             }, function (err, editor) {
                 if (err)
-                    res.send(err);
-                res.json({message: 'Successfully deleted'});
+                    res.send(CODE.SERVER_ERROR);
+
+                res.json(CODE.SUCCESS_DELETE);
             });
         });
 

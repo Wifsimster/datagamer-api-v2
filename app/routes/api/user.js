@@ -2,23 +2,36 @@ module.exports = function () {
     var express = require('express');
     var app = express();
 
+    // Models
     var User = require('../../models/user');
 
-    // Create a user (accessed at POST http://localhost:8080/api/users)
-    app.post('/users', function (req, res) {
+    // Enums
+    var CODE = require('../../enums/codes');
 
-        var user = new User();      // create a new instance of the User model
+    app
+        // -----------------------------------------------------------------------------------
+        // --                                       POST                                    --
+        // -----------------------------------------------------------------------------------
 
-        user.name = req.body.name;  // set the users name (comes from the request)
-        user.email = req.body.email;
+        // Description : Add a new user
+        // URL: http://localhost:8080/api/users
+        // Form params :
+        //          - name
+        //          - email
+        .post('/users', function (req, res) {
 
-        // save the user and check for errors
-        user.save(function (err) {
-            if (err)
-                res.send(err.message);
-            res.json({message: 'User created!'});
-        });
-    })
+            var user = new User();      // create a new instance of the User model
+
+            user.name = req.body.name;  // set the users name (comes from the request)
+            user.email = req.body.email;
+
+            // save the user and check for errors
+            user.save(function (err) {
+                if (err)
+                    res.send(err.message);
+                res.json({message: 'User created!'});
+            });
+        })
 
         // Get all the users (accessed at GET http://localhost:8080/api/users)
         .get('/users', function (req, res) {
