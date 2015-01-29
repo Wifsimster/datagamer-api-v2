@@ -3,7 +3,11 @@ module.exports = function () {
     var unirest = require('unirest');
     var app = express();
 
+    // Models
     var Game = require('../../models/game');
+
+    // Enums
+    var CODE = require('../../enums/codes');
 
     // Create a game (accessed at POST http://localhost:8080/api/games)
     app
@@ -23,29 +27,54 @@ module.exports = function () {
                 .then(function (result) {
                     if (result) {
                         console.log("Find a game with this name : " + name);
-                        res.json({message: 'This game already exist !', error: -1});
+                        res.json(CODE.ALREADY_EXIST);
                     }
                     else {
-                        console.log("No game with this name : " + name);
-
                         // Create a new instance of the Game model
                         var game = new Game();
                         game.name = name;
+                        game.overview = req.body.overview;
+                        game.editors = req.body.editors;
+                        game.developers = req.body.developers;
+                        game.genres = req.body.genres;
+                        game.platforms = req.body.platforms;
+                        game.releaseDate = req.body.releaseDate;
 
-                        // save the game and check for errors
+                        if (req.body.metacritic) {
+                            game.metacritic.score = req.body.metacritic.score;
+                            game.metacritic.url = req.body.metacritic.url;
+                        }
+
+                        if (req.body.media) {
+                            if (req.body.media.boxArt) {
+                                game.media.boxArt.front = req.body.media.boxArt.front;
+                                game.media.boxArt.rear = req.body.media.boxArt.rear;
+                            }
+                            game.media.thumbnails = req.body.media.thumbnails;
+                            game.media.logos = req.body.media.logos;
+                            game.media.banners = req.body.media.banners;
+                            game.media.fanArt = req.body.media.fanArt;
+                            game.media.screenshots = req.body.media.screenshots;
+                            game.media.trailers = req.body.media.trailers;
+                        }
+
+                        // Save the game and check for errors
                         game.save(function (err) {
                             if (err)
-                                res.send(err.message);
+                                res.json(CODE.SERVER_ERROR);
 
                             console.log('Game ' + game.name + ' added !');
-                            res.json({message: 'Game added !', game: game});
+
+                            // Save game object to the response object
+                            CODE.SUCCESS_POST.game = game;
+                            res.json(CODE.SUCCESS);
                         });
                     }
 
                 })
                 .catch(function (err) {
                     console.error(err);
-                    res.send(err.message);
+                    res.json(CODE.SERVER_ERROR);
                 })
         })
 
@@ -70,17 +99,18 @@ module.exports = function () {
                 .limit(limit)
                 .exec(function (err, games) {
                     if (err)
-                        res.send(err);
+                        res.send(CODE.SERVER_ERROR);
 
                     var count = games.length;
                     console.log('-- ' + count + ' game(s) founded !');
 
-                    res.json({
-                        message: count + ' game(s) founded !',
-                        skip: skip,
-                        limit: limit,
-                        games: games
-                    });
+                    // Build the response
+                    CODE.SUCCESS.count = count;
+                    CODE.SUCCESS.skip = skip;
+                    CODE.SUCCESS.limit = limit;
+                    CODE.SUCCESS.games = games;
+
+                    res.json(CODE.SUCCESS);
                 });
         })
 
@@ -90,13 +120,19 @@ module.exports = function () {
         .get('/games/by/name/:game_name', function (req, res) {
             Game.find({name: req.params.game_name}, function (err, games) {
                 if (err)
-                    res.send(err);
+                    res.send(CODE.SERVER_ERROR);
 
                 Game.count({name: req.params.game_name}, function (err, count) {
                     if (err)
-                        res.send(err);
+                        res.send(CODE.SERVER_ERROR);
+
                     console.log(count + ' game(s) founded !');
-                    res.json({message: count + ' game(s) founded !', count: count, games: games});
+
+                    // Build the response
+                    CODE.SUCCESS.count = count;
+                    CODE.SUCCESS.games = games;
+
+                    res.json(CODE.SUCCESS);
                 });
             });
         })
@@ -106,9 +142,14 @@ module.exports = function () {
         .get('/games/by/id/:game_id', function (req, res) {
             Game.findById(req.params.game_id, function (err, game) {
                 if (err)
-                    res.send(err);
+                    res.send(CODE.SERVER_ERROR);
+
                 console.log('Searching for game id ' + req.params.game_id + ' : ' + game.name);
-                res.json({message: 'Game founded !', game: game});
+
+                // Build the response
+                CODE.SUCCESS.game = game;
+
+                res.json(CODE.SUCCESS);
             });
         })
 
@@ -126,7 +167,7 @@ module.exports = function () {
             // Use our game model to find the game we want
             Game.findById(req.params.game_id, function (err, game) {
                 if (err)
-                    res.send(err);
+                    res.send(CODE.SERVER_ERROR);
 
                 // Update the games info
                 game.name = req.body.name;
@@ -159,8 +200,12 @@ module.exports = function () {
                 // Save the game
                 game.save(function (err) {
                     if (err)
-                        res.send(err);
-                    res.json({message: 'Game updated !', game: game});
+                        res.send(CODE.SERVER_ERROR);
+
+                    // Build the response
+                    CODE.SUCCESS_PUT.game = game;
+
+                    res.json(CODE.SUCCESS);
                 });
             });
         })
@@ -178,8 +223,9 @@ module.exports = function () {
                 _id: req.params.game_id
             }, function (err) {
                 if (err)
-                    res.send(err);
-                res.json({message: 'Game successfully deleted !'});
+                    res.send(CODE.SERVER_ERROR);
+
+                res.json(CODE.SUCCESS_DELETE);
             });
         });
 

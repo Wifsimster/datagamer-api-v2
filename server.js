@@ -22,7 +22,7 @@ var port = process.env.PORT || 8080;        // set our port
 var User = require('./app/models/user');
 
 // Enums
-var ERROR = require('./app/enums/error');
+var CODE = require('./app/enums/codes');
 
 // Middleware to use for all requests
 app.use(function (req, res, next) {
@@ -35,11 +35,10 @@ app.use(function (req, res, next) {
             if (users.length > 0) {
                 next(); // make sure we go to the next routes and don't stop here
             } else {
-                console.log(ERROR);
-                res.json(ERROR.FORBIDDEN);
+                res.json(CODE.FORBIDDEN);
             }
         } else {
-            res.json(ERROR.SERVER_ERROR);
+            res.json(CODE.SERVER_ERROR);
         }
     });
 });
@@ -61,7 +60,6 @@ app.use('/api', require('./app/routes/api/user'));
 // Extractor routes
 app.use('/extractor', require('./app/routes/extractor/metacritic'));
 app.use('/extractor', require('./app/routes/extractor/thegamesdb'));
-
 
 // START THE SERVER
 // =============================================================================
