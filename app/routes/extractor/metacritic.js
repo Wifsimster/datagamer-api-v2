@@ -16,7 +16,7 @@ module.exports = function () {
     var MASHAP_KEY = "ecmcKi5btCmshMQ2zEAagzqj9kX6p1iNBZEjsna7t1mwW51poH";
     var ACCEPT_JSON = "application/json";
 
-    // Automaticly add new games from Metacritic
+    // Automatically add new games from Metacritic
     // Type : {coming-soon, new-releases}
     // Platform : {ps4, xboxone, ps3, xbox360, pc, wii-u, 3ds, vita, ios}
     // ie : http://localhost:8080/extractor/metacritic/game-list/new-releases
@@ -50,6 +50,7 @@ module.exports = function () {
         ;
     });
 
+    // Recursive loop with callback to process correctly each game
     function asyncLoop(i, games, callback) {
         if (i < games.length) {
             var mcGame = games[i];
@@ -97,7 +98,7 @@ module.exports = function () {
         }
     }
 
-    // Automaticly update game information from Metacritic data
+    // Automatically update game information from Metacritic data
     // Platform : {3 : pc}
     // ie : http://localhost:8080/api/metacritic/find/Tupa
     app.get('/metacritic/find/:name', function (req, res) {
