@@ -13,7 +13,7 @@ module.exports = function () {
 
         // Description : Add a new game
         // URL: http://localhost:8080/api/games
-        // Param :
+        // Form params :
         //          - name
         .post('/games', function (req, res) {
 
@@ -34,21 +34,37 @@ module.exports = function () {
         // --                                       GET                                     --
         // -----------------------------------------------------------------------------------
 
-        // Description : Get all the games
-        // URL : http://localhost:8080/api/games
+        // Description : Get all the games, come with pagination params
+        // URL : http://localhost:8080/api/games/?skip=:skip&limit=:limit
+        // URL params :
+        //          - skip
+        //          - limit
         .get('/games', function (req, res) {
-            Game.find(function (err, games) {
-                if (err)
-                    res.send(err);
 
-                Game.count({}, function (err, count) {
+            var skip = req.param('skip');
+            var limit = req.param('limit');
+
+            console.log("-- Searching games with skip '" + skip + "' and limit '" + limit + "'...");
+
+            Game.find()
+                .skip(skip)
+                .limit(limit)
+                .exec(function (err, games) {
                     if (err)
                         res.send(err);
-                    console.log(count + ' game(s) founded !');
-                    res.json({message: count + ' game(s) founded !', count: count, games: games});
-                })
-            });
+
+                    var count = games.length;
+                    console.log('-- ' + count + ' game(s) founded !');
+
+                    res.json({
+                        message: count + ' game(s) founded !',
+                        skip: skip,
+                        limit: limit,
+                        games: games
+                    });
+                });
         })
+
 
         // Description : Get games by a name
         // URL : http://localhost:8080/api/games/by/name/:name
@@ -85,7 +101,7 @@ module.exports = function () {
         // URL : http://localhost:8080/api/games/:game_id
         // Param :
         //          - id
-        // Body :
+        // Form params :
         //          - Game Object
         .put('/games/:game_id', function (req, res) {
             // Use our game model to find the game we want
