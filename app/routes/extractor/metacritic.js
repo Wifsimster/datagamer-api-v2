@@ -3,11 +3,15 @@ module.exports = function () {
     var unirest = require('unirest');
     var app = express();
 
+    // Models
     var Game = require('../../models/game');
     var Genre = require('../../models/genre');
     var Platform = require('../../models/platform');
     var Editor = require('../../models/editor');
     var Developer = require('../../models/developer');
+
+    // Enums
+    var CODE = require('../../enums/codes');
 
     var MASHAP_KEY = "ecmcKi5btCmshMQ2zEAagzqj9kX6p1iNBZEjsna7t1mwW51poH";
     var ACCEPT_JSON = "application/json";
@@ -33,41 +37,65 @@ module.exports = function () {
                 if (result.body.results) {
                     var games = result.body.results;
 
-                    for (var i = 1; i < games.length; i++) {
-                        var mcGame = games[i];
-                        var game = new Game();
-
-                        game.name = mcGame.name;
-
-                        if (mcGame.score != "tbd") {
-                            game.metacritic.score = mcGame.score;
-                        }
-
-                        game.metacritic.url = mcGame.url;
-                        game.releaseDate = mcGame.rlsdate;
-                        game.overview = mcGame.summary;
-                        game.platform = mcGame.platform;
-
-                        game.saveQ()
-                            .then(function (game) {
-                                console.log("---- " + game.name + " added !");
-                            })
-                            .catch(function (err) {
-                                if (err)
-                                    res.send(err.message);
-                            });
-                    }
-
-                    res.json({message: "OK"});
+                    asyncLoop(0, games, function () {
+                        res.json(CODE.SUCCESS_POST);
+                    });
                 }
                 else {
                     console.log("-- No result ! Maybe an error ?");
-                    console.error(result);
+                    res.json(CODE.SERVER_ERROR);
                 }
             }
         )
         ;
     });
+
+    function asyncLoop(i, games, callback) {
+        if (i < games.length) {
+            var mcGame = games[i];
+            console.log("Check game name : " + mcGame.name);
+
+            // Check if a game already exist with this name
+            Game.findOneQ({name: mcGame.name})
+                .then(function (game) {
+                    if (game) {
+                        console.log("---- Game '" + game.name + "' already exist in db !");
+                        asyncLoop(i + 1, games, callback);
+                    } else {
+                        console.log("---- Game '" + mcGame.name + "' is new, so add it !");
+
+                        // Build the game object from mcGame
+                        var game = new Game();
+                        game.name = mcGame.name;
+                        game.metacritic.url = mcGame.url;
+                        game.releaseDate = mcGame.rlsdate;
+                        game.overview = mcGame.summary;
+                        game.platform = mcGame.platform;
+
+                        if (mcGame.score != "tbd") {
+                            game.metacritic.score = mcGame.score;
+                        }
+
+                        // Save the current game to db
+                        game.saveQ()
+                            .then(function (game) {
+                                console.log("---- " + game.name + " added !");
+                                asyncLoop(i + 1, games, callback);
+                            })
+                            .catch(function (err) {
+                                console.error(err)
+                                asyncLoop(i + 1, games, callback);
+                            });
+                    }
+                })
+                .catch(function (err) {
+                    console.error(err)
+                    res.send(CODE.SERVER_ERROR);
+                });
+        } else {
+            callback();
+        }
+    }
 
     // Automaticly update game information from Metacritic data
     // Platform : {3 : pc}

@@ -7,6 +7,7 @@ var app = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var request = require('request');
+var CronJob = require('cron').CronJob;
 
 //mongoose.connect('mongodb://192.168.0.21:27017/datagamer'); // connect to our database
 mongoose.connect('mongodb://localhost:27017/datagamer'); // connect to our database
@@ -66,14 +67,22 @@ app.use('/extractor', require('./app/routes/extractor/thegamesdb'));
 app.listen(port);
 console.log('Datagamer is running on port ' + port);
 
-//// Get new release at startup
-//console.log("Start getting new release from Metacritic API...");
+//// Every minute execute this task
+//new CronJob('01 * * * * *', function () {
+//    console.log('You will see this message every minute');
 //
-//// Get all new release at startup
-//request({
-//    url: 'http://localhost:8080/extractor/metacritic/game-list/new-releases',
-//    headers: {'apiKey': 'b3dae6c0-83a0-4721-9901-bf0ee7011af8'}
-//}, function (err, res, body) {
-//    if (!err)
+//    // Get new release at startup
+//    console.log("Start getting new release from Metacritic API...");
+//
+//    // Get all new release at startup
+//    request({
+//        url: 'http://localhost:8080/extractor/metacritic/game-list/new-releases',
+//        headers: {'apiKey': 'b3dae6c0-83a0-4721-9901-bf0ee7011af8'}
+//    }, function (err, res, body) {
+//        if (err)
+//            console.error(err);
+//
 //        console.log("Get all new release from Metacritic !");
-//});
+//        console.log(res);
+//    });
+//}, null, true, "America/Los_Angeles");
