@@ -8,8 +8,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var request = require('request');
 
-mongoose.connect('mongodb://192.168.0.21:27017/datagamer'); // connect to our database
-//mongoose.connect('mongodb://localhost:27017/datagamer'); // connect to our database
+//mongoose.connect('mongodb://192.168.0.21:27017/datagamer'); // connect to our database
+mongoose.connect('mongodb://localhost:27017/datagamer'); // connect to our database
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -18,7 +18,11 @@ app.use(bodyParser.json());
 
 var port = process.env.PORT || 8080;        // set our port
 
+// Models
 var User = require('./app/models/user');
+
+// Enums
+var ERROR = require('./app/enums/error');
 
 // Middleware to use for all requests
 app.use(function (req, res, next) {
@@ -31,10 +35,11 @@ app.use(function (req, res, next) {
             if (users.length > 0) {
                 next(); // make sure we go to the next routes and don't stop here
             } else {
-                res.json("This API key does not exist !");
+                console.log(ERROR);
+                res.json(ERROR.FORBIDDEN);
             }
         } else {
-            res.json("Error !");
+            res.json(ERROR.SERVER_ERROR);
         }
     });
 });

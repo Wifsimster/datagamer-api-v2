@@ -16,18 +16,37 @@ module.exports = function () {
         // Form params :
         //          - name
         .post('/games', function (req, res) {
+            var name = req.body.name;  // set the games name (comes from the request)
 
-            var game = new Game();      // create a new instance of the Game model
-            game.name = req.body.name;  // set the games name (comes from the request)
+            // Check if a game already exist with this name
+            Game.findOneQ({name: name})
+                .then(function (result) {
+                    if (result) {
+                        console.log("Find a game with this name : " + name);
+                        res.json({message: 'This game already exist !', error: -1});
+                    }
+                    else {
+                        console.log("No game with this name : " + name);
 
-            // save the game and check for errors
-            game.save(function (err) {
-                if (err)
+                        // Create a new instance of the Game model
+                        var game = new Game();
+                        game.name = name;
+
+                        // save the game and check for errors
+                        game.save(function (err) {
+                            if (err)
+                                res.send(err.message);
+
+                            console.log('Game ' + game.name + ' added !');
+                            res.json({message: 'Game added !', game: game});
+                        });
+                    }
+
+                })
+                .catch(function (err) {
+                    console.error(err);
                     res.send(err.message);
-
-                console.log('Game ' + game.name + ' added !');
-                res.json({message: 'Game added !', game: game});
-            });
+                })
         })
 
         // -----------------------------------------------------------------------------------

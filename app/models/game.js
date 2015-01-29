@@ -35,18 +35,4 @@ var GameSchema = new Schema({
     }
 });
 
-var Game = mongoose.model('Game', GameSchema);
-
-//Check if exist before saving
-//GameSchema.pre('save', function (next) {
-//    var self = this;
-//    Game.findQ({name: self.name}, function (err, docs) {
-//        if (!docs.length) {
-//            next();
-//        } else {
-//            next(new Error('Game already exists !'));
-//        }
-//    });
-//});
-
 module.exports = mongoose.model('Game', GameSchema);
