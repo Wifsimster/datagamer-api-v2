@@ -17,7 +17,7 @@ mongoose.connect('mongodb://localhost:27017/datagamer'); // connect to our datab
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 8080;        // set our port
+var port = process.env.PORT || 8084;        // set our port
 
 // Models
 var User = require('./app/models/user');
