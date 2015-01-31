@@ -10,12 +10,12 @@ var cors = require('cors');
 var request = require('request');
 var CronJob = require('cron').CronJob;
 
-//mongoose.connect('mongodb://192.168.0.21:27017/datagamer'); // connect to our database
+mongoose.connect('mongodb://192.168.0.21:27017/datagamer'); // connect to our database
 //mongoose.connect('mongodb://localhost:27017/datagamer'); // connect to our database
-mongoose.connect('mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/'); // connect to our database on OpenShift
+//mongoose.connect('mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/'); // connect to our database on OpenShift
 
 // CORS request
-app.user(cors());
+app.use(cors());
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
