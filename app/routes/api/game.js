@@ -125,7 +125,7 @@ module.exports = function () {
         // Description : Get games by a name
         // URL : http://localhost:8080/api/games/by/name/:name
         .get('/games/by/name/:game_name', function (req, res) {
-            Game.find({name: req.params.game_name}, function (err, games) {
+            Game.find({name: new RegExp('^'+req.params.game_name+'$', "i")}, function (err, games) {
                 if (err)
                     res.send(CODE.SERVER_ERROR);
 
