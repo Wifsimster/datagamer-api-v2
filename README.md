@@ -125,7 +125,8 @@ Only **Genre** object don't have an image attribute.
 <br>
 **Params :** 
 - id
-<br>
+
+
 **Body params :** 
 - name
 - overiew
