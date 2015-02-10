@@ -39,7 +39,7 @@ I show only the methods associated with the developer but other objects support 
 ### Get a developer by id
 **Method :** GET
 <br>
-**URL :** /api/developers/by/id/{id]
+**URL :** /api/developers/by/id/{id}
 <br>
 **Params :** 
 - id
