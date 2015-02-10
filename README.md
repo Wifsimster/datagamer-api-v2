@@ -25,7 +25,9 @@ I show only the methods associated with the developer but other objects support 
 <br>
 **URL :** /api/developers/?skip={skip}&limit={limit}
 <br>
-**Params :** skip & limit
+**Params :** 
+- skip
+- limit
 <br>
 
 **Description :** Get a developer by name
@@ -43,7 +45,8 @@ I show only the methods associated with the developer but other objects support 
 <br>
 **URL :** /api/developers/by/id/{id]
 <br>
-**Params :** id
+**Params :** 
+- id
 <br>
 
 **Description :** Add a new developer
@@ -52,7 +55,8 @@ I show only the methods associated with the developer but other objects support 
 <br>
 **URL :** /api/developers
 <br>
-**Body params :** name
+**Body params :** 
+- name
 <br>
 
 **Description :** Update a developer
@@ -61,7 +65,8 @@ I show only the methods associated with the developer but other objects support 
 <br>
 **URL :** /api/developers/id/{id}
 <br>
-**Params :** id
+**Params :** 
+- id
 <br>
 **Body params :** developer object
 <br>
@@ -72,7 +77,8 @@ I show only the methods associated with the developer but other objects support 
 <br>
 **URL :** /api/developers/id/{id}
 <br>
-**Params :** id
+**Params :** 
+- id
 <br>
 
 ##Game
@@ -83,7 +89,9 @@ I show only the methods associated with the developer but other objects support 
 <br>
 **URL :** /api/games/?skip={skip}&limit={limit}
 <br>
-**Params :** skip & limit
+**Params :** 
+- skip
+- limit
 <br>
 
 **Description :** Get a game by name
@@ -92,7 +100,8 @@ I show only the methods associated with the developer but other objects support 
 <br>
 **URL :** /api/games/by/name/{name}
 <br>
-**Params :** name
+**Params :** 
+- name
 <br>
 
 **Description :** Get a game by id
@@ -101,7 +110,8 @@ I show only the methods associated with the developer but other objects support 
 <br>
 **URL :** /api/games/by/id/{id]
 <br>
-**Params :** id
+**Params :** 
+- id
 <br>
 
 **Description :** Add a new game
@@ -128,7 +138,8 @@ I show only the methods associated with the developer but other objects support 
 <br>
 **URL :** /api/games/id/{id}
 <br>
-**Params :** id
+**Params :** 
+- id
 <br>
 **Body params :** 
 - name
@@ -148,7 +159,8 @@ I show only the methods associated with the developer but other objects support 
 <br>
 **URL :** /api/games/id/{id}
 <br>
-**Params :** id
+**Params :** 
+- id
 <br>
 
 ## Status codes
@@ -163,7 +175,7 @@ I show only the methods associated with the developer but other objects support 
     code: 400, message: Bad request syntax !
     code: 403, message: Invalid API key !
     code: 404, message: Resource doesn't exist in database !
-    PRECONDITION_FAILED: {code: 410, message: Precondition failed, check header content !
+    code: 410, message: Precondition failed, check header content !
     code: 411, message: Mandatory data missing !
     code: 412, message: Resource already exist in database !
 
