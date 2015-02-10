@@ -59,7 +59,8 @@ I show only the methods associated with the developer but other objects support 
 <br>
 **Params :** 
 - id
-<br>
+
+
 **Body params :** 
 - name
 - image
