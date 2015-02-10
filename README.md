@@ -11,7 +11,6 @@ Developers who want to set up video games web site need automatically to build a
 
 ###So why not build together your own database for everyone ?
 
-<br>
 Is the main goal of DataGamer ! You can participate to build a public video games database.
 
 This new version of the API is written in Node.js and run with a MongoDb database;
