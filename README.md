@@ -269,4 +269,10 @@ Only **Genre** object don't have an image attribute.
     **platforms :** [Object_id],
     **overview :** String,
     **releaseDate :** Date,
+    **creationDate :** Date,
+    **updateDate :** Date,
+    **metacritic :** {
+        **score :** Number,
+        **url :** String
+    }
 }
