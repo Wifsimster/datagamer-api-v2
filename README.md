@@ -247,8 +247,8 @@ Only **Genre** object don't have an image attribute.
 ### Game
 
 { 
-    **name :** String,<br>
-    **media :**<br> 
+    **name :** String,
+    **media :**
     {
         **boxArt :** 
         {
