@@ -23,7 +23,7 @@ I show only the methods associated with the developer but other objects support 
 <br>
 **Method :** GET
 <br>
-**URL :** /api/developers/?skip=:skip&limit=:limit
+**URL :** /api/developers/?skip={skip}&limit={limit}
 <br>
 **Params :** skip & limit
 <br>
@@ -32,7 +32,7 @@ I show only the methods associated with the developer but other objects support 
 <br>
 **Method :** GET
 <br>
-**URL :** /api/developers/by/name/:name
+**URL :** /api/developers/by/name/{name}
 <br>
 **Params :** name
 <br>
@@ -41,7 +41,7 @@ I show only the methods associated with the developer but other objects support 
 <br>
 **Method :** GET
 <br>
-**URL :** /api/developers/by/id/:id
+**URL :** /api/developers/by/id/{id]
 <br>
 **Params :** id
 <br>
@@ -59,7 +59,7 @@ I show only the methods associated with the developer but other objects support 
 <br>
 **Method :** PUT
 <br>
-**URL :** /api/developers/id
+**URL :** /api/developers/id/{id}
 <br>
 **Params :** id
 <br>
@@ -70,11 +70,101 @@ I show only the methods associated with the developer but other objects support 
 <br>
 **Method :** DELETE
 <br>
-**URL :** /api/developers/id
+**URL :** /api/developers/id/{id}
 <br>
 **Params :** id
 <br>
 
 ##Game
 
+**Description :** Get a list of games
 <br>
+**Method :** GET
+<br>
+**URL :** /api/games/?skip={skip}&limit={limit}
+<br>
+**Params :** skip & limit
+<br>
+
+**Description :** Get a game by name
+<br>
+**Method :** GET
+<br>
+**URL :** /api/games/by/name/{name}
+<br>
+**Params :** name
+<br>
+
+**Description :** Get a game by id
+<br>
+**Method :** GET
+<br>
+**URL :** /api/games/by/id/{id]
+<br>
+**Params :** id
+<br>
+
+**Description :** Add a new game
+<br>
+**Method :** POST
+<br>
+**URL :** /api/games
+<br>
+**Body params :** 
+- name
+- overiew
+- editors[]
+- developers[]
+- genres[]
+- platforms[]
+- releaseDate
+- metacritic{}
+- media{}
+<br>
+
+**Description :** Update a game
+<br>
+**Method :** PUT
+<br>
+**URL :** /api/games/id/{id}
+<br>
+**Params :** id
+<br>
+**Body params :** 
+- name
+- overiew
+- editors[]
+- developers[]
+- genres[]
+- platforms[]
+- releaseDate
+- metacritic{}
+- media{}
+<br>
+
+**Description :** Delete a game
+<br>
+**Method :** DELETE
+<br>
+**URL :** /api/games/id/{id}
+<br>
+**Params :** id
+<br>
+
+## Status codes
+
+    code: 200, message: Success !
+    code: 201, message: Success, new resource added !
+    code: 202, message: Success, existing resource updated !
+    code: 204, message: Success, no content to return !
+
+    code: 304, message: No error but nothing happened here !
+
+    code: 400, message: Bad request syntax !
+    code: 403, message: Invalid API key !
+    code: 404, message: Resource doesn't exist in database !
+    PRECONDITION_FAILED: {code: 410, message: Precondition failed, check header content !
+    code: 411, message: Mandatory data missing !
+    code: 412, message: Resource already exist in database !
+
+    code: 500, message: Server error !
