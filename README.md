@@ -228,4 +228,45 @@ Only **Genre** object don't have an image attribute.
     **apiKey :** String
 }
 
-### Developer
+### Developer, Editor & Platform
+
+{ 
+    **name :** String,
+    **image :** String,
+    **creationDate :** Date,
+    **updateDate :** Date
+}
+
+### Genre
+
+{ 
+    **name :** String,
+    **creationDate :** Date,
+    **updateDate :** Date
+}
+
+### Game
+
+{ 
+    **name :** String,
+    **media :** 
+    {
+        **boxArt :** 
+        {
+            **front :** String,
+            **rear :** String
+        },
+        **thumbnails :** [String],
+        **logos :** [String},
+        **banners :** [String],
+        **fanArts :** [String],
+        **screenshots :** [String],
+        **trailers :** [String]
+    },
+    **editors :** [Object_id],
+    **developers :** [Object_id],
+    **genres :** [Object_id],
+    **platforms :** [Object_id],
+    **overview :** String,
+    **releaseDate :** Date,
+}
