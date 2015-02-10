@@ -15,6 +15,62 @@ Is the main goal of DataGamer ! You can participate to build a public video game
 
 This new version of the API is written in Node.js and run with a MongoDb database;
 
+### User
+
+First of all you need to create a user. User have an **API key** needed for every requests.
+
+### Get a list of users
+**Method :** GET
+<br>
+**URL :** /api/users/?skip={skip}&limit={limit}
+<br>
+**Params :** 
+- skip
+- limit
+
+### Get a user by name
+**Method :** GET
+<br>
+**URL :** /api/users/by/name/{name}
+<br>
+**Params :** name
+<br>
+
+### Get a user by id
+**Method :** GET
+<br>
+**URL :** /api/users/by/id/{id}
+<br>
+**Params :** 
+- id
+
+### Add a new user
+**Method :** POST
+<br>
+**URL :** /api/users
+<br>
+**Body params :** 
+- name
+- email
+
+### Update a user
+**Method :** PUT
+<br>
+**URL :** /api/users/id/{id}
+<br>
+**Params :** 
+- name
+- email
+- 
+### Delete a user
+**Method :** DELETE
+<br>
+**URL :** /api/users/id/{id}
+<br>
+**Params :** 
+- id
+
+
 ## Developer, Editor, Game, Genre & Plateform
 
 I show only the methods associated with the developer but other objects support the same syntax.
