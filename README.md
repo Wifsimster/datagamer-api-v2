@@ -14,7 +14,7 @@ Is the main goal of DataGamer ! You can participate to build a public video game
 
 **This new version of the API is full REST, written in Node.js and run with a MongoDb database;**
 
-### User
+## User
 
 First of all you need to create a user. User have an **API key** needed for every requests.
 
@@ -60,7 +60,7 @@ First of all you need to create a user. User have an **API key** needed for ever
 **Params :** 
 - name
 - email
-- 
+
 ### Delete a user
 **Method :** DELETE
 <br>
@@ -68,7 +68,6 @@ First of all you need to create a user. User have an **API key** needed for ever
 <br>
 **Params :** 
 - id
-
 
 ## Developer, Editor, Game, Genre & Plateform
 
