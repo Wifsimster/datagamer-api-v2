@@ -1,19 +1,18 @@
 DataGamer v2
 =========
-DataGamer, to gamers from gamers<br>
-Participative video games database, for your web site.
+DataGamer, to gamers from gamers. Participative video games database, for your web site.
 
-Web site : <a href="http://datagamer.fr">datagamer.fr</a>
+Web site : <a href="http://datagamer.fr">datagamer.fr</a> - This is the URL for the V1 API in PHP !
 
-Many video games web site maintain their own database.<br>
-The problem is that no web site gives a free access to their database !<br>
+Many video games web site maintain their own database. 
+The problem is that no web site gives a free access to their database !
 Developers who want to set up video games web site need automatically to build a database.
 
-###So why not build together your own database for everyone ?
+####So why not build together your own database for everyone ?
 
 Is the main goal of DataGamer ! You can participate to build a public video games database.
 
-This new version of the API is written in Node.js and run with a MongoDb database;
+**This new version of the API is full REST, written in Node.js and run with a MongoDb database;**
 
 ### User
 
