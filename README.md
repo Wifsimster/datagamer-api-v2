@@ -13,6 +13,32 @@ Is the main goal of Datagamer ! You can participate to build a public video game
 
 **This new version of the API is full REST, written in Node.js and run with a MongoDb database;**
 
+## Table of Contents
+* [User](https://github.com/Wifsimster/datagamer-api-v2#user)
+** [Get a list of users](https://github.com/Wifsimster/datagamer-api-v2#get-a-list-of-users)
+** [Get a user by name](https://github.com/Wifsimster/datagamer-api-v2#get-a-user-by-name)
+** [Get a user by id](https://github.com/Wifsimster/datagamer-api-v2#get-a-user-by-id)
+** [Add a new user](https://github.com/Wifsimster/datagamer-api-v2#add-a-new-user)
+** [Update a user](https://github.com/Wifsimster/datagamer-api-v2#update-a-user)
+** [Delete a user](https://github.com/Wifsimster/datagamer-api-v2#delete-a-user)
+* [Developer, Editor, Game, Genre & Plateform](https://github.com/Wifsimster/datagamer-api-v2#developer-editor-game-genre--plateform)
+** [Get a list of developers](https://github.com/Wifsimster/datagamer-api-v2#get-a-list-of-developers)
+** [Get a developer by name](https://github.com/Wifsimster/datagamer-api-v2#get-a-developer-by-name)
+** [Get a developer by id](https://github.com/Wifsimster/datagamer-api-v2#get-a-developer-by-id)
+** [Add a new developer](https://github.com/Wifsimster/datagamer-api-v2#add-a-new-developer)
+** [Update a developer](https://github.com/Wifsimster/datagamer-api-v2#update-a-developer)
+** [Delete a developer](https://github.com/Wifsimster/datagamer-api-v2#delete-a-developer)
+* [Game](https://github.com/Wifsimster/datagamer-api-v2#game)
+    * [Get a list of games](https://github.com/Wifsimster/datagamer-api-v2#get-a-list-of-games)
+    * [Get a game by name](https://github.com/Wifsimster/datagamer-api-v2#get-a-game-by-name)
+    * [Get a game by id](https://github.com/Wifsimster/datagamer-api-v2#get-a-game-by-id)
+    * [Add a new game](https://github.com/Wifsimster/datagamer-api-v2#add-a-new-game) 
+    * [Update a game](https://github.com/Wifsimster/datagamer-api-v2#update-a-game) 
+    * [Delete a game](https://github.com/Wifsimster/datagamer-api-v2#delete-a-game) 
+* [Status codes](https://github.com/Wifsimster/datagamer-api-v2#status-codes) 
+* [Objects](https://github.com/Wifsimster/datagamer-api-v2#objects) 
+* [Licence](https://github.com/Wifsimster/datagamer-api-v2#licence) 
+
 ## User
 
 First of all you need to create a user. User have an **API key** needed for every requests.
