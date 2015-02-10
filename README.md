@@ -22,35 +22,61 @@ Developer, Editor, Game, Genre & Plateform
 I show only the methods associated with the developer but other objects support the same syntax.
 
 Description : Get a list of developers
+<br>
 Method : GET
+<br>
 URL : /api/developers/?skip=:skip&limit=:limit
+<br>
 Params : skip & limit
+<br>
 
 Description : Get a developer by name
+<br>
 Method : GET
+<br>
 URL : /api/developers/by/name/:name
+<br>
 Params : name
+<br>
 
 Description : Get a developer by id
+<br>
 Method : GET
+<br>
 URL : /api/developers/by/id/:id
+<br>
 Params : id
+<br>
 
 Description : Add a new developer
+<br>
 Method : POST
+<br>
 URL : /api/developers
+<br>
 Body params : name
+<br>
 
 Description : Update a developer
+<br>
 Method : PUT
+<br>
 URL : /api/developers/id
+<br>
 Params : id
+<br>
 Body params : developer object
+<br>
 
 Description : Delete a developer
+<br>
 Method : DELETE
+<br>
 URL : /api/developers/id
+<br>
 Params : id
+<br>
 
 Game
 =========
+<br>
