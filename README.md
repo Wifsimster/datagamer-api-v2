@@ -16,18 +16,17 @@ Is the main goal of DataGamer ! You can participate to build a public video game
 
 This new version of the API is written in Node.js and run with a MongoDb database;
 
-Developer, Editor, Game, Genre & Plateform
-=========
+## Developer, Editor, Game, Genre & Plateform
 
 I show only the methods associated with the developer but other objects support the same syntax.
 
-Description : Get a list of developers
+*Description :* Get a list of developers
 <br>
-Method : GET
+*Method :* GET
 <br>
-URL : /api/developers/?skip=:skip&limit=:limit
+*URL :* /api/developers/?skip=:skip&limit=:limit
 <br>
-Params : skip & limit
+*Params :* skip & limit
 <br>
 
 Description : Get a developer by name
