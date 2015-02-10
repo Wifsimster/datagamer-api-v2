@@ -24,58 +24,58 @@ I show only the methods associated with the developer but other objects support 
 <br>
 **Method :** GET
 <br>
-*URL :* /api/developers/?skip=:skip&limit=:limit
+**URL :** /api/developers/?skip=:skip&limit=:limit
 <br>
-*Params :* skip & limit
-<br>
-
-Description : Get a developer by name
-<br>
-Method : GET
-<br>
-URL : /api/developers/by/name/:name
-<br>
-Params : name
+**Params :** skip & limit
 <br>
 
-Description : Get a developer by id
+**Description :** Get a developer by name
 <br>
-Method : GET
+**Method :** GET
 <br>
-URL : /api/developers/by/id/:id
+**URL :** /api/developers/by/name/:name
 <br>
-Params : id
-<br>
-
-Description : Add a new developer
-<br>
-Method : POST
-<br>
-URL : /api/developers
-<br>
-Body params : name
+**Params :** name
 <br>
 
-Description : Update a developer
+**Description :** Get a developer by id
 <br>
-Method : PUT
+**Method :** GET
 <br>
-URL : /api/developers/id
+**URL :** /api/developers/by/id/:id
 <br>
-Params : id
-<br>
-Body params : developer object
+**Params :** id
 <br>
 
-Description : Delete a developer
+**Description :** Add a new developer
 <br>
-Method : DELETE
+**Method :** POST
 <br>
-URL : /api/developers/id
+**URL :** /api/developers
 <br>
-Params : id
+**Body params :** name
 <br>
 
-Game
-=========
+**Description :** Update a developer
+<br>
+**Method :** PUT
+<br>
+**URL :** /api/developers/id
+<br>
+**Params :** id
+<br>
+**Body params :** developer object
+<br>
+
+**Description :** Delete a developer
+<br>
+**Method :** DELETE
+<br>
+**URL :** /api/developers/id
+<br>
+**Params :** id
+<br>
+
+##Game
+
 <br>
