@@ -19,8 +19,7 @@ This new version of the API is written in Node.js and run with a MongoDb databas
 
 I show only the methods associated with the developer but other objects support the same syntax.
 
-**Description :** Get a list of developers
-<br>
+### Get a list of developers
 **Method :** GET
 <br>
 **URL :** /api/developers/?skip={skip}&limit={limit}
@@ -28,10 +27,8 @@ I show only the methods associated with the developer but other objects support 
 **Params :** 
 - skip
 - limit
-<br>
 
-**Description :** Get a developer by name
-<br>
+### Get a developer by name
 **Method :** GET
 <br>
 **URL :** /api/developers/by/name/{name}
@@ -39,28 +36,23 @@ I show only the methods associated with the developer but other objects support 
 **Params :** name
 <br>
 
-**Description :** Get a developer by id
-<br>
+### Get a developer by id
 **Method :** GET
 <br>
 **URL :** /api/developers/by/id/{id]
 <br>
 **Params :** 
 - id
-<br>
 
-**Description :** Add a new developer
-<br>
+### Add a new developer
 **Method :** POST
 <br>
 **URL :** /api/developers
 <br>
 **Body params :** 
 - name
-<br>
 
-**Description :** Update a developer
-<br>
+### Update a developer
 **Method :** PUT
 <br>
 **URL :** /api/developers/id/{id}
@@ -68,23 +60,23 @@ I show only the methods associated with the developer but other objects support 
 **Params :** 
 - id
 <br>
-**Body params :** developer object
-<br>
+**Body params :** 
+- name
+- image
 
-**Description :** Delete a developer
-<br>
+Only **Genre** object don't have an image attribute.
+
+### Delete a developer
 **Method :** DELETE
 <br>
 **URL :** /api/developers/id/{id}
 <br>
 **Params :** 
 - id
-<br>
 
 ##Game
 
-**Description :** Get a list of games
-<br>
+### Get a list of games
 **Method :** GET
 <br>
 **URL :** /api/games/?skip={skip}&limit={limit}
@@ -92,30 +84,24 @@ I show only the methods associated with the developer but other objects support 
 **Params :** 
 - skip
 - limit
-<br>
 
-**Description :** Get a game by name
-<br>
+### Get a game by name
 **Method :** GET
 <br>
 **URL :** /api/games/by/name/{name}
 <br>
 **Params :** 
 - name
-<br>
 
-**Description :** Get a game by id
-<br>
+### Get a game by id
 **Method :** GET
 <br>
 **URL :** /api/games/by/id/{id]
 <br>
 **Params :** 
 - id
-<br>
 
-**Description :** Add a new game
-<br>
+### Add a new game
 **Method :** POST
 <br>
 **URL :** /api/games
@@ -130,10 +116,8 @@ I show only the methods associated with the developer but other objects support 
 - releaseDate
 - metacritic{}
 - media{}
-<br>
 
-**Description :** Update a game
-<br>
+### Update a game
 **Method :** PUT
 <br>
 **URL :** /api/games/id/{id}
@@ -151,17 +135,14 @@ I show only the methods associated with the developer but other objects support 
 - releaseDate
 - metacritic{}
 - media{}
-<br>
 
-**Description :** Delete a game
-<br>
+### Delete a game
 **Method :** DELETE
 <br>
 **URL :** /api/games/id/{id}
 <br>
 **Params :** 
 - id
-<br>
 
 ## Status codes
 
