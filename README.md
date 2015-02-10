@@ -245,10 +245,10 @@ Only **Genre** object don't have an image attribute.
 }
 
 ### Game
-```
+
 { 
-    **name :** String,
-    **media :** 
+    **name :** String,<br>
+    **media :**<br> 
     {
         **boxArt :** 
         {
@@ -275,4 +275,3 @@ Only **Genre** object don't have an image attribute.
         **url :** String
     }
 }
-```
