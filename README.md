@@ -217,3 +217,15 @@ Only **Genre** object don't have an image attribute.
     code: 412, message: Resource already exist in database !
 
     code: 500, message: Server error !
+
+## Objects
+
+### User
+
+{ 
+    **name :** String,
+    **email :** String,
+    **apiKey :** String
+}
+
+### Developer
