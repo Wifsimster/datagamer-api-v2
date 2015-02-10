@@ -9,8 +9,8 @@ Many video games web site maintain their own database.<br>
 The problem is that no web site gives a free access to their database !<br>
 Developers who want to set up video games web site need automatically to build a database.
 
-So why not build together your own database for everyone ?
-=========
+###So why not build together your own database for everyone ?
+
 <br>
 Is the main goal of DataGamer ! You can participate to build a public video games database.
 
@@ -20,9 +20,9 @@ This new version of the API is written in Node.js and run with a MongoDb databas
 
 I show only the methods associated with the developer but other objects support the same syntax.
 
-*Description :* Get a list of developers
+**Description :** Get a list of developers
 <br>
-*Method :* GET
+**Method :** GET
 <br>
 *URL :* /api/developers/?skip=:skip&limit=:limit
 <br>
