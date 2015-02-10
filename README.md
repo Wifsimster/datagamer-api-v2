@@ -13,6 +13,8 @@ Is the main goal of Datagamer ! You can participate to build a public video game
 
 **This new version of the API is full REST, written in Node.js and run with a MongoDb database;**
 
+**THIS V2 IS NOT CURRENTLY AVAILABLE ONLINLE !** Please refer to v1 for the moment.
+
 ## Table of Contents
 * [User](https://github.com/Wifsimster/datagamer-api-v2#user)
    * [Get a list of users](https://github.com/Wifsimster/datagamer-api-v2#get-a-list-of-users)
