@@ -1,5 +1,4 @@
-DataGamer v2
-=========
+# DataGamer v2
 DataGamer, to gamers from gamers. Participative video games database, for your web site.
 
 Web site : <a href="http://datagamer.fr">datagamer.fr</a> - This is the URL for the V1 API in PHP !
@@ -246,7 +245,7 @@ Only **Genre** object don't have an image attribute.
 }
 
 ### Game
-
+```
 { 
     **name :** String,
     **media :** 
@@ -276,3 +275,4 @@ Only **Genre** object don't have an image attribute.
         **url :** String
     }
 }
+```
