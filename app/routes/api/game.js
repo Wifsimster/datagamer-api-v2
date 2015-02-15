@@ -122,6 +122,24 @@ module.exports = function () {
                 });
         })
 
+        .get('/games/count', function (req, res) {
+
+            console.log("-- Return video games count...");
+
+            Game.count()
+                .exec(function (err, count) {
+                    if (err)
+                        res.send(CODE.SERVER_ERROR);
+
+                    console.log('-- ' + count + ' game(s) found !');
+
+                    // Build the response
+                    CODE.SUCCESS.count = count;
+
+                    res.json(CODE.SUCCESS);
+                });
+        })
+
         // Description : Get games by a name
         // URL : http://localhost:8080/api/games/by/name/:name
         .get('/games/by/name/:game_name', function (req, res) {
