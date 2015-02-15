@@ -156,27 +156,35 @@ module.exports = function () {
 
                     console.log('Game - ' + count + ' game(s) found by name : ' + req.params.game_name);
 
-                    // If no game found, search on Metacritic.
-                    // Metacritic method will automatically update the database if the game is found.
-                    request('http://localhost:8084/extractor/metacritic/find/' + req.params.game_name, {
-                        headers: {
-                            "apiKey": 'b3dae6c0-83a0-4721-9901-bf0ee7011af8'
-                        }
-                    }, function (error, response, body) {
-                        if (!error && body) {
+                    if (count < 1) {
+                        // If no game found, search on Metacritic.
+                        // Metacritic method will automatically update the database if the game is found.
+                        request('http://localhost:8084/extractor/metacritic/find/' + req.params.game_name, {
+                            headers: {
+                                "apiKey": 'b3dae6c0-83a0-4721-9901-bf0ee7011af8'
+                            }
+                        }, function (error, response, body) {
+                            if (!error && body) {
 
-                            console.log('Game - Metacritic found a game and add it to db !');
+                                console.log('Game - Metacritic found a game and add it to db !');
 
-                            // Build the response
-                            CODE.SUCCESS.count = count;
-                            CODE.SUCCESS.games = games;
+                                // Build the response
+                                CODE.SUCCESS.count = count;
+                                CODE.SUCCESS.games = games;
 
-                            res.json(CODE.SUCCESS);
-                        } else {
-                            console.error("Game - Can't found the game on Metacritic !")
-                            res.json(CODE.NOT_FOUND);
-                        }
-                    });
+                                res.json(CODE.SUCCESS);
+                            } else {
+                                console.error("Game - Can't found the game on Metacritic !")
+                                res.json(CODE.NOT_FOUND);
+                            }
+                        });
+                    } else {
+                        // Build the response
+                        CODE.SUCCESS.count = count;
+                        CODE.SUCCESS.games = games;
+
+                        res.json(CODE.SUCCESS);
+                    }
                 });
             });
         })
