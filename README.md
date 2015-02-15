@@ -1,4 +1,7 @@
 # Datagamer v2
+
+<img src="https://travis-ci.org/Wifsimster/datagamer-api-v2.svg?branch=master">
+
 Datagamer, to gamers from gamers. Participative video games database, for your web site.
 
 Web site : <a href="http://datagamer.fr">datagamer.fr</a> - This is the URL for the V1 API in PHP !
