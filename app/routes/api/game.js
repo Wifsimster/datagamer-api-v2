@@ -125,7 +125,9 @@ module.exports = function () {
         // Description : Get games by a name
         // URL : http://localhost:8080/api/games/by/name/:name
         .get('/games/by/name/:game_name', function (req, res) {
+
             var query = {name: new RegExp(req.params.game_name, "i")};
+
             Game.find(query, function (err, games) {
                 if (err)
                     res.send(CODE.SERVER_ERROR);
@@ -154,6 +156,7 @@ module.exports = function () {
                             res.json(CODE.SUCCESS);
                         } else {
                             console.error("Game - Can't found the game on Metacritic !")
+                            res.json(CODE.NOT_FOUND);
                         }
                     });
                 });
