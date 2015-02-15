@@ -10,7 +10,7 @@
     "mongoose": "~3.6.13",
     "mongoose-q": "*",
     "node-uuid": "*",
-    "request": "^2.51.0",
+    "request": "^2.53.0",
     "unirest": "*"
   }
 }

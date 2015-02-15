@@ -1,6 +1,6 @@
 module.exports = function () {
     var express = require('express');
-    var unirest = require('unirest');
+    var request = require('request');
     var app = express();
 
     // Models
@@ -110,7 +110,7 @@ module.exports = function () {
                         res.send(CODE.SERVER_ERROR);
 
                     var count = games.length;
-                    console.log('-- ' + count + ' game(s) founded !');
+                    console.log('-- ' + count + ' game(s) found !');
 
                     // Build the response
                     CODE.SUCCESS.count = count;
@@ -134,13 +134,28 @@ module.exports = function () {
                     if (err)
                         res.send(CODE.SERVER_ERROR);
 
-                    console.log(count + ' game(s) founded !');
+                    console.log('Game - ' + count + ' game(s) found by name : ' + req.params.game_name);
 
-                    // Build the response
-                    CODE.SUCCESS.count = count;
-                    CODE.SUCCESS.games = games;
+                    // If no game found, search on Metacritic.
+                    // Metacritic method will automatically update the database if the game is found.
+                    request('http://localhost:8084/extractor/metacritic/find/' + req.params.game_name, {
+                        headers: {
+                            "apiKey": 'b3dae6c0-83a0-4721-9901-bf0ee7011af8'
+                        }
+                    }, function (error, response, body) {
+                        if (!error && body) {
 
-                    res.json(CODE.SUCCESS);
+                            console.log('Game - Metacritic found a game and add it to db !');
+
+                            // Build the response
+                            CODE.SUCCESS.count = count;
+                            CODE.SUCCESS.games = games;
+
+                            res.json(CODE.SUCCESS);
+                        } else {
+                            console.error("Game - Can't found the game on Metacritic !")
+                        }
+                    });
                 });
             });
         })
