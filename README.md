@@ -4,7 +4,7 @@
 
 Datagamer, to gamers from gamers. Participative video games database, for your web site.
 
-Web site : <a href="http://datagamer.fr">datagamer.fr</a> - This is the URL for the V1 API in PHP !
+*Web site : <a href="http://datagamer.fr">datagamer.fr</a> - This is the URL for the V1 API in PHP !*
 
 Many video games web site maintain their own database. 
 The problem is that no web site gives a free access to their database !
@@ -14,7 +14,7 @@ Developers who want to set up video games web site need automatically to build a
 
 **Unlike the v1, this v2 automatically populate itself when users search for video games !**
 
-**THIS V2 IS NOT CURRENTLY AVAILABLE ONLINE !** Please refer to v1 for the moment.
+**THIS V2 IS NOW AVAILABLE ONLINE at http://movie-discover.com:8084**
 
 ## Table of Contents
 * [User](https://github.com/Wifsimster/datagamer-api-v2#user)
