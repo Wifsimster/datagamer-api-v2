@@ -7,11 +7,9 @@ Many video games web site maintain their own database.
 The problem is that no web site gives a free access to their database !
 Developers who want to set up video games web site need automatically to build a database.
 
-####So why not build together your own database for everyone ?
+**This new version of the API is full REST, written in Node.js and run with a MongoDb database.**
 
-Is the main goal of Datagamer ! You can participate to build a public video games database.
-
-**This new version of the API is full REST, written in Node.js and run with a MongoDb database;**
+**Unlike the v1, this v2 automatically populate itself when users search for video games !**
 
 **THIS V2 IS NOT CURRENTLY AVAILABLE ONLINE !** Please refer to v1 for the moment.
 
