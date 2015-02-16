@@ -168,13 +168,15 @@ Only **Genre** object don't have an image attribute.
 - skip
 - limit
 
-### Get a game by name
+### Get games by name
 **Method :** GET
 <br>
 **URL :** /api/games/by/name/{name}
 <br>
 **Params :** 
 - name
+
+*Return a list of games who contains the param name. This method will automattcally add new games during the search.*
 
 ### Get a game by id
 **Method :** GET
@@ -183,6 +185,8 @@ Only **Genre** object don't have an image attribute.
 <br>
 **Params :** 
 - id
+
+*Return a game with extended information. This method will automattcally update the game information.*
 
 ### Add a new game
 **Method :** POST
