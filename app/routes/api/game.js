@@ -122,6 +122,8 @@ module.exports = function () {
                 });
         })
 
+        // Description : Get count of total games in db
+        // URL : http://localhost:8080/api/games/count
         .get('/games/count', function (req, res) {
 
             console.log("-- Return video games count...");
@@ -159,7 +161,7 @@ module.exports = function () {
                     if (count < 1) {
                         // If no game found, search on Metacritic.
                         // Metacritic method will automatically update the database if the game is found.
-                        request('http://localhost:8084/extractor/metacritic/find/' + req.params.game_name, {
+                        request('http://localhost:8084/extractor/metacritic/search/' + req.params.game_name, {
                             headers: {
                                 "apiKey": 'b3dae6c0-83a0-4721-9901-bf0ee7011af8'
                             }
@@ -196,12 +198,44 @@ module.exports = function () {
                 if (err)
                     res.send(CODE.SERVER_ERROR);
 
-                console.log('Searching for game id ' + req.params.game_id + ' : ' + game.name);
+                if (game) {
+                    //console.log(game);
+                    console.log('Searching for game id ' + req.params.game_id + ' : ' + game.name);
 
-                // Build the response
-                CODE.SUCCESS.game = game;
+                    // Metacritic method will automatically update the database if the game is found.
+                    request('http://localhost:8084/extractor/metacritic/find/' + game.name, {
+                        headers: {
+                            "apiKey": 'b3dae6c0-83a0-4721-9901-bf0ee7011af8'
+                        }
+                    }, function (error, response, body) {
+                        if (!error && body) {
 
-                res.json(CODE.SUCCESS);
+                            result = JSON.parse(body);
+
+                            if (result.code == 202) {
+                                console.log('Game - Metacritic update the game !');
+
+                                Game.findById(req.params.game_id, function (err, game) {
+                                    if (err)
+                                        res.send(CODE.SERVER_ERROR);
+
+                                    if (game) {
+                                        // Build the response
+                                        CODE.SUCCESS.game = game;
+                                        res.json(CODE.SUCCESS);
+                                    }
+                                });
+                            } else {
+                                res.json(result);
+                            }
+                        } else {
+                            console.error("Game - Can't found the game on Metacritic !")
+                            res.json(CODE.NOT_FOUND);
+                        }
+                    });
+                } else {
+                    res.json(CODE.NOT_FOUND);
+                }
             });
         })
 

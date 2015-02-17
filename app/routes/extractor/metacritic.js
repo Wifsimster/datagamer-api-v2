@@ -98,15 +98,15 @@ module.exports = function () {
         }
     }
 
-    // Automatically update game information from Metacritic data
+    // Automatically update games list from Metacritic data
     // Platform : {3 : pc}
-    // ie : http://localhost:8084/extractor/metacritic/find/Tupa
-    app.get('/metacritic/find/:name', function (req, res) {
+    // ie : http://localhost:8084/extractor/metacritic/search/Tupa
+    app.get('/metacritic/search/:name', function (req, res) {
 
         var platform_id = 3; // Fix platform id to pc for the app
         var name = req.params.name;
 
-        console.log("-- Searching for '" + name + "' on Metacritic...");
+        console.log("Metacritic - Searching for '" + name + "' on Metacritic...");
 
         unirest.post("https://byroredux-metacritic.p.mashape.com/search/game")
             .header("X-Mashape-Key", MASHAP_KEY)
@@ -139,6 +139,74 @@ module.exports = function () {
 
                 } else {
                     console.log("Metacritic - No result ! Maybe an error ?");
+                    //console.error(result);
+                }
+            }
+        );
+    });
+
+    // Automatically update game information from Metacritic data
+    // Platform : {3 : pc}
+    // ie : http://localhost:8084/extractor/metacritic/find/Tupa
+    app.get('/metacritic/find/:name', function (req, res) {
+
+        var platform_id = 3; // Fix platform id to pc for the app
+        var name = req.params.name;
+
+        console.log("Metacritic - Searching for '" + name + "' on Metacritic...");
+
+        unirest.post("https://byroredux-metacritic.p.mashape.com/find/game")
+            .header("X-Mashape-Key", MASHAP_KEY)
+            .header("Content-Type", "application/x-www-form-urlencoded")
+            .header("Accept", ACCEPT_JSON)
+            .send({
+                "platform": platform_id,
+                "retry": 4,
+                "title": name
+            })
+            .end(function (result) {
+
+                if (result.body.result) {
+
+                    console.log("Metacritic -   Updating game '" + result.body.result.name + "' info...");
+
+                    var metacritic_game = result.body.result;
+
+                    console.log("Searching for '" + name + "' in db...");
+
+                    Game.findQ({name: name})
+                        .then(function (game) {
+
+                            console.log(game);
+
+                            // Update the games info
+                            game.updateDate = new Date();
+                            game.overview = metacritic_game.summary;
+                            game.releaseDate = metacritic_game.rlsdate;
+
+                            game.metacritic = {};
+                            game.metacritic.score = metacritic_game.score;
+                            game.metacritic.url = metacritic_game.url;
+
+                            game.media = {};
+                            game.media.thumbnails = []
+                            game.media.thumbnails.push(metacritic_game.thumbnail);
+
+                            Game.updateQ({name: name}, game)
+                                .then(function () {
+                                    console.log("Metacritic -  '" + name + "' updated !");
+                                    res.send(CODE.SUCCESS_PUT);
+                                })
+                                .catch(function (err) {
+                                    console.error(CODE.NOT_MODIFIED);
+                                });
+                        })
+                        .catch(function (err) {
+                            console.error(CODE.NOT_FOUND);
+                        });
+
+                } else {
+                    console.log("Metacritic -   No result ! Maybe an error ?");
                     //console.error(result);
                 }
             }
