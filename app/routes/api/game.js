@@ -105,6 +105,11 @@ module.exports = function () {
             Game.find()
                 .skip(skip)
                 .limit(limit)
+                .populate('genres', 'name -_id')
+                .populate('platforms', 'name -_id')
+                .populate('developers', 'name -_id')
+                .populate('editors', 'name -_id')
+                .exec
                 .exec(function (err, games) {
                     if (err)
                         res.send(CODE.SERVER_ERROR);
@@ -148,47 +153,52 @@ module.exports = function () {
 
             var query = {name: new RegExp(req.params.game_name, "i")};
 
-            Game.find(query, function (err, games) {
-                if (err)
-                    res.send(CODE.SERVER_ERROR);
-
-                Game.count(query, function (err, count) {
+            Game.find(query)
+                .populate('genres', 'name -_id')
+                .populate('platforms', 'name -_id')
+                .populate('developers', 'name -_id')
+                .populate('editors', 'name -_id')
+                .exec(function (err, games) {
                     if (err)
                         res.send(CODE.SERVER_ERROR);
 
-                    console.log('Game - ' + count + ' game(s) found by name : ' + req.params.game_name);
+                    Game.count(query, function (err, count) {
+                        if (err)
+                            res.send(CODE.SERVER_ERROR);
 
-                    if (count < 1) {
-                        // If no game found, search on Metacritic.
-                        // Metacritic method will automatically update the database if the game is found.
-                        request('http://localhost:8084/extractor/metacritic/search/' + req.params.game_name, {
-                            headers: {
-                                "apiKey": 'b3dae6c0-83a0-4721-9901-bf0ee7011af8'
-                            }
-                        }, function (error, response, body) {
-                            if (!error && body) {
+                        console.log('Game - ' + count + ' game(s) found by name : ' + req.params.game_name);
 
-                                console.log('Game - Metacritic found a game and add it to db !');
+                        if (count < 1) {
+                            // If no game found, search on Metacritic.
+                            // Metacritic method will automatically update the database if the game is found.
+                            request('http://localhost:8084/extractor/metacritic/search/' + req.params.game_name, {
+                                headers: {
+                                    "apiKey": 'b3dae6c0-83a0-4721-9901-bf0ee7011af8'
+                                }
+                            }, function (error, response, body) {
+                                if (!error && body) {
 
-                                // Build the response
-                                CODE.SUCCESS.count = count;
-                                CODE.SUCCESS.games = games;
+                                    console.log('Game - Metacritic found a game and add it to db !');
 
-                                res.json(CODE.SUCCESS);
-                            } else {
-                                console.error("Game - Can't found the game on Metacritic !")
-                                res.json(CODE.NOT_FOUND);
-                            }
-                        });
-                    } else {
-                        // Build the response
-                        CODE.SUCCESS.count = count;
-                        CODE.SUCCESS.games = games;
+                                    // Build the response
+                                    CODE.SUCCESS.count = count;
+                                    CODE.SUCCESS.games = games;
 
-                        res.json(CODE.SUCCESS);
-                    }
+                                    res.json(CODE.SUCCESS);
+                                } else {
+                                    console.error("Game - Can't found the game on Metacritic !")
+                                    res.json(CODE.NOT_FOUND);
+                                }
+                            });
+                        } else {
+                            // Build the response
+                            CODE.SUCCESS.count = count;
+                            CODE.SUCCESS.games = games;
+
+                            res.json(CODE.SUCCESS);
+                        }
+                    });
                 });
-            });
         })
 
         // Description : Get a game by an id
@@ -215,16 +225,21 @@ module.exports = function () {
                             if (result.code == 202) {
                                 console.log('Game - Metacritic update the game !');
 
-                                Game.findById(req.params.game_id, function (err, game) {
-                                    if (err)
-                                        res.send(CODE.SERVER_ERROR);
+                                Game.findById(req.params.game_id)
+                                    .populate('genres', 'name -_id')
+                                    .populate('platforms', 'name -_id')
+                                    .populate('developers', 'name -_id')
+                                    .populate('editors', 'name -_id')
+                                    .exec(function (err, game) {
+                                        if (err)
+                                            res.send(CODE.SERVER_ERROR);
 
-                                    if (game) {
-                                        // Build the response
-                                        CODE.SUCCESS.game = game;
-                                        res.json(CODE.SUCCESS);
-                                    }
-                                });
+                                        if (game) {
+                                            // Build the response
+                                            CODE.SUCCESS.game = game;
+                                            res.json(CODE.SUCCESS);
+                                        }
+                                    });
                             } else {
                                 res.json(result);
                             }

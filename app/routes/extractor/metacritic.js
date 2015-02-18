@@ -168,16 +168,198 @@ module.exports = function () {
 
                 if (result.body.result) {
 
-                    console.log("Metacritic -   Updating game '" + result.body.result.name + "' info...");
+                    console.log("Metacritic - Updating game '" + result.body.result.name + "' info...");
 
                     var metacritic_game = result.body.result;
 
-                    console.log("Searching for '" + name + "' in db...");
+                    console.log("Metacritic - Searching for '" + name + "' in db...");
 
                     Game.findQ({name: name})
                         .then(function (game) {
 
-                            console.log(game);
+                            // Search if genre already exist in db
+                            Genre.findOneQ({name: metacritic_game.genre})
+                                .then(function (genre) {
+                                    if (genre) {
+                                        console.log('Genre found in db !');
+
+                                        var genres = [];
+                                        genres.push(genre._id);
+
+                                        // Add genre id to game info
+                                        Game.updateQ({name: name}, {genres: genres})
+                                            .then(function () {
+                                                console.log("Metacritic -  '" + name + "' updated with genre !");
+                                            })
+                                            .catch(function (err) {
+                                                console.error(err);
+                                            });
+                                    } else {
+                                        console.log('Genre not found in db !');
+                                        var genre = new Genre();
+                                        genre.name = metacritic_game.genre;
+                                        genre.saveQ()
+                                            .then(function (genre) {
+                                                console.log("Genre added to db !");
+
+                                                var genres = [];
+                                                genres.push(genre._id);
+
+                                                // Add genre id to game info
+                                                Game.updateQ({name: name}, {genres: genres})
+                                                    .then(function () {
+                                                        console.log("Metacritic -  '" + name + "' updated with new genre !");
+                                                    })
+                                                    .catch(function (err) {
+                                                        console.error(err);
+                                                    });
+                                            })
+                                            .catch(function (err) {
+                                                console.error(err);
+                                            });
+                                    }
+                                })
+                                .catch(function (err) {
+                                    console.error(err);
+                                });
+
+                            // Search if platform already exist in db
+                            Platform.findOneQ({name: metacritic_game.platform})
+                                .then(function (platform) {
+                                    if (platform) {
+                                        console.log('Platform found in db !');
+
+                                        var platforms = [];
+                                        platforms.push(platform._id);
+
+                                        // Add platform id to game info
+                                        Game.updateQ({name: name}, {platforms: platforms})
+                                            .then(function () {
+                                                console.log("Metacritic -  '" + name + "' updated with platform !");
+                                            })
+                                            .catch(function (err) {
+                                                console.error(err);
+                                            });
+                                    } else {
+                                        console.log('Platform not found in db !');
+                                        var platform = new Platform();
+                                        platform.name = metacritic_game.platform;
+                                        platform.saveQ()
+                                            .then(function (platform) {
+                                                console.log("Platform added to db !");
+
+                                                var platforms = [];
+                                                platforms.push(platform._id);
+
+                                                // Add platform id to game info
+                                                Game.updateQ({name: name}, {platforms: platforms})
+                                                    .then(function () {
+                                                        console.log("Metacritic -  '" + name + "' updated with new platform !");
+                                                    })
+                                                    .catch(function (err) {
+                                                        console.error(err);
+                                                    });
+                                            })
+                                            .catch(function (err) {
+                                                console.error(err);
+                                            });
+                                    }
+                                })
+                                .catch(function (err) {
+                                    console.error(err);
+                                });
+
+                            // Search if editor already exist in db
+                            Editor.findOneQ({name: metacritic_game.publisher})
+                                .then(function (editor) {
+                                    if (editor) {
+                                        console.log('Editor found in db !');
+
+                                        var editors = [];
+                                        editors.push(editor._id);
+
+                                        // Add editor id to game info
+                                        Game.updateQ({name: name}, {editors: editors})
+                                            .then(function () {
+                                                console.log("Metacritic -  '" + name + "' updated with editor !");
+                                            })
+                                            .catch(function (err) {
+                                                console.error(err);
+                                            });
+                                    } else {
+                                        console.log('Editor not found in db !');
+                                        var editor = new Editor();
+                                        editor.name = metacritic_game.publisher;
+                                        editor.saveQ()
+                                            .then(function (editor) {
+                                                console.log("Editor added to db !");
+
+                                                var editors = [];
+                                                editors.push(editor._id);
+
+                                                // Add editor id to game info
+                                                Game.updateQ({name: name}, {editors: editors})
+                                                    .then(function () {
+                                                        console.log("Metacritic -  '" + name + "' updated with new editor !");
+                                                    })
+                                                    .catch(function (err) {
+                                                        console.error(err);
+                                                    });
+                                            })
+                                            .catch(function (err) {
+                                                console.error(err);
+                                            });
+                                    }
+                                })
+                                .catch(function (err) {
+                                    console.error(err);
+                                });
+
+                            // Search if developer already exist in db
+                            Developer.findOneQ({name: metacritic_game.developer})
+                                .then(function (developer) {
+                                    if (developer) {
+                                        console.log('Developer found in db !');
+
+                                        var developers = [];
+                                        developers.push(developer._id);
+
+                                        // Add developer id to game info
+                                        Game.updateQ({name: name}, {developers: developers})
+                                            .then(function () {
+                                                console.log("Metacritic -  '" + name + "' updated with developer !");
+                                            })
+                                            .catch(function (err) {
+                                                console.error(err);
+                                            });
+                                    } else {
+                                        console.log('Developer not found in db !');
+                                        var developer = new Developer();
+                                        developer.name = metacritic_game.developer;
+                                        developer.saveQ()
+                                            .then(function (developer) {
+                                                console.log("Developer added to db !");
+
+                                                var developers = [];
+                                                developers.push(developer._id);
+
+                                                // Add developer id to game info
+                                                Game.updateQ({name: name}, {developers: developers})
+                                                    .then(function () {
+                                                        console.log("Metacritic -  '" + name + "' updated with new developer !");
+                                                    })
+                                                    .catch(function (err) {
+                                                        console.error(err);
+                                                    });
+                                            })
+                                            .catch(function (err) {
+                                                console.error(err);
+                                            });
+                                    }
+                                })
+                                .catch(function (err) {
+                                    console.error(err);
+                                });
 
                             // Update the games info
                             game.updateDate = new Date();
@@ -185,7 +367,7 @@ module.exports = function () {
                             game.releaseDate = metacritic_game.rlsdate;
 
                             game.metacritic = {};
-                            game.metacritic.score = metacritic_game.score;
+                            game.metacritic.score = metacritic_game.userscore;
                             game.metacritic.url = metacritic_game.url;
 
                             game.media = {};
@@ -206,7 +388,7 @@ module.exports = function () {
                         });
 
                 } else {
-                    console.log("Metacritic -   No result ! Maybe an error ?");
+                    console.log("Metacritic -  No result ! Maybe an error ?");
                     //console.error(result);
                 }
             }
