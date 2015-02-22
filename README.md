@@ -33,6 +33,7 @@ Developers who want to set up video games web site need automatically to build a
    * [Delete a developer](https://github.com/Wifsimster/datagamer-api-v2#delete-a-developer)
 * [Game](https://github.com/Wifsimster/datagamer-api-v2#game)
     * [Get a list of games](https://github.com/Wifsimster/datagamer-api-v2#get-a-list-of-games)
+    * [Get a list of games similar](https://github.com/Wifsimster/datagamer-api-v2/blob/master/README.md#get-a-list-of-games-which-can-be-similar)
     * [Get a game by name](https://github.com/Wifsimster/datagamer-api-v2#get-a-game-by-name)
     * [Get a game by id](https://github.com/Wifsimster/datagamer-api-v2#get-a-game-by-id)
     * [Add a new game](https://github.com/Wifsimster/datagamer-api-v2#add-a-new-game) 
