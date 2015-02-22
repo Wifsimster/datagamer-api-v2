@@ -22,7 +22,7 @@ module.exports = function () {
     // ie : http://localhost:8080/extractor/metacritic/game-list/new-releases
     app.get('/metacritic/game-list/:type', function (req, res) {
 
-        console.log("-- Searching for games on Metacritic...");
+        console.log("Metacritic - Searching for games on Metacritic...");
 
         var type = req.params.type;
 
@@ -42,7 +42,7 @@ module.exports = function () {
                     });
                 }
                 else {
-                    console.log("-- No result ! Maybe an error ?");
+                    console.log("Metacritic - No result ! Maybe an error ?");
                     res.json(CODE.SERVER_ERROR);
                 }
             }
@@ -54,16 +54,16 @@ module.exports = function () {
     function asyncLoop(i, games, callback) {
         if (i < games.length) {
             var mcGame = games[i];
-            console.log("Check game name : " + mcGame.name);
+            console.log("Metacritic - Check game name : " + mcGame.name);
 
             // Check if a game already exist with this name
             Game.findOneQ({name: mcGame.name})
                 .then(function (game) {
                     if (game) {
-                        console.log("---- Game '" + game.name + "' already exist in db !");
+                        console.log("Metacritic ---- Game '" + game.name + "' already exist in db !");
                         asyncLoop(i + 1, games, callback);
                     } else {
-                        console.log("---- Game '" + mcGame.name + "' is new, so add it !");
+                        console.log("Metacritic ---- Game '" + mcGame.name + "' is new, so add it !");
 
                         // Build the game object from mcGame
                         var game = new Game();
@@ -139,7 +139,7 @@ module.exports = function () {
 
                 } else {
                     console.log("Metacritic - No result ! Maybe an error ?");
-                    //console.error(result);
+                    res.send();
                 }
             }
         );
@@ -409,43 +409,6 @@ module.exports = function () {
                         console.log("Metacritic - No '" + mcGame.name + "' found in db !");
                         console.log("Metacritic - Start adding " + mcGame.name + "...");
 
-                        //// Empty array
-                        //game.editors.length = 0;
-                        //
-                        //// Empty array
-                        //game.developers.length = 0;
-                        //
-
-                        // Try to found an existing genre in db
-                        //Genre.findOneQ({name: mcGame.genre})
-                        //    .then(function (genre) {
-                        //
-                        //        console.log("Metacritic - Genre...");
-                        //
-                        //        game.genres = [];
-                        //
-                        //        if (genre) {
-                        //            console.log("Metacritic - Genre '" + genre.name + "' already exist in db !");
-                        //            game.genres.push(genre);
-                        //        } else {
-                        //            var genre = new Genre();
-                        //            genre.name = mcGame.genre;
-                        //
-                        //            console.log("Metacritic - Genre doesn't exist, so added it...");
-                        //
-                        //            // Add new genre in db
-                        //            genre.saveQ()
-                        //                .then(function (res) {
-                        //                    console.log(res);
-                        //                    console.log("Metacritic - Genre '" + genre.name + "' added in db !");
-                        //                    game.genres.push(genre);
-                        //                })
-                        //                .catch(function (err) {
-                        //                    if (err)
-                        //                        res.send(err.message);
-                        //                });
-                        //        }
-
                         //Try to found an existing platform in db
                         Platform.findOneQ({name: mcGame.platform})
                             .then(function (platform) {
@@ -496,33 +459,6 @@ module.exports = function () {
                                                 });
                                         }
 
-                                        // Try to found an existing developer in db
-                                        //Developer.findOneQ({name: mcGame.developer})
-                                        //    .then(function (developer) {
-                                        //
-                                        //        console.log("Metacritic - Updating developer...");
-                                        //
-                                        //        if (developer) {
-                                        //            console.log("Metacritic - Developer '" + developer.name + "' already exist in db !");
-                                        //            game.developers.push(developer);
-                                        //        } else {
-                                        //            var developer = new Developer();
-                                        //            developer.name = mcGame.developer;
-                                        //
-                                        //            console.log("Metacritic - Developer doesn't exist, so added it...");
-                                        //
-                                        //            // Add new developer in db
-                                        //            developer.saveQ()
-                                        //                .then(function (res) {
-                                        //                    console.log("Metacritic - Developer '" + developer.name + "' added in db !");
-                                        //                    game.developers.push(developer);
-                                        //                })
-                                        //                .catch(function (err) {
-                                        //                    if (err)
-                                        //                        res.send(err.message);
-                                        //                });
-                                        //        }
-
                                         // Build game object before saving it
                                         var game = new Game();
 
@@ -557,41 +493,34 @@ module.exports = function () {
                                         game.saveQ()
                                             .then(function (game) {
                                                 console.log("Metacritic - " + game.name + " added to db !");
-                                                asyncLoop(i + 1, games, callback);
-                                                //res.json(game);
+                                                addGamesRecursive(i + 1, games, callback);
                                             })
                                             .catch(function (err) {
                                                 console.error(err);
-                                                res.send(err.message);
+                                                return err.message;
                                             });
-                                        //})
-                                        //.catch(function (err) {
-                                        //    console.error("Metacritic - Error : " + err);
-                                        //});
                                     })
                                     .catch(function (err) {
                                         console.error("Metacritic - Error : " + err);
-                                        res.send(err.message);
+                                        return err.message;
                                     });
                             })
                             .catch(function (err) {
                                 console.error("Metacritic - Error : " + err);
-                                res.send(err.message);
+                                return err.message;
                             });
-                        //})
-                        //.catch(function (err) {
-                        //    console.error("Metacritic - Error : " + err);
-                        //});
                     } else {
                         console.warn("Metacritic - '" + game.name + "' already exist in db !")
-                        asyncLoop(i + 1, games, callback);
-                        //res.send(game);
+                        addGamesRecursive(i + 1, games, callback);
                     }
                 })
                 .catch(function (err) {
                     console.error("Metacritic - Error : " + err);
-                    res.send(err.message);
+                    return err.message;
                 });
+        } else {
+            console.log("Recursive search ended !")
+            callback();
         }
     }
 
