@@ -168,6 +168,15 @@ Only **Genre** object don't have an image attribute.
 - skip
 - limit
 
+### Get a list of games which can be similar
+**Method :** GET
+<br>
+**URL :** /api/games/similar/by/{percentage}/for/{name}
+<br>
+**Params :** 
+- percentage : Percentage of similarity (20 return good results in general)
+- name
+
 ### Get games by name
 **Method :** GET
 <br>
@@ -176,7 +185,7 @@ Only **Genre** object don't have an image attribute.
 **Params :** 
 - name
 
-*Return a list of games who contains the param name. This method will automattcally add new games during the search.*
+*Return a list of games which are similar by name. Each game object have a new argument percentage*
 
 ### Get a game by id
 **Method :** GET
