@@ -167,10 +167,13 @@ module.exports = function () {
                     for (var i = 0; i < games.length; i++) {
 
                         var game = games[i];
-                        var prct = similar(game.name, name);
+                        game.percentage = 0;
+
+                        var prct = similar_text(game.name, name);
 
                         if (prct > percentage) {
                             console.log('Game - ' + game.name + ' = ' + name + ' (' + prct + ')');
+                            game.percentage = prct;
                             return_games.push(game);
                         }
                     }
@@ -366,17 +369,50 @@ module.exports = function () {
     return app;
 }();
 
-function similar(a, b) {
-    var lengthA = a.length;
-    var lengthB = b.length;
-    var equivalency = 0;
-    var minLength = (a.length > b.length) ? b.length : a.length;
-    var maxLength = (a.length < b.length) ? b.length : a.length;
-    for (var i = 0; i < minLength; i++) {
-        if (a[i] == b[i]) {
-            equivalency++;
+// Awesome method found here: http://stackoverflow.com/a/10473840/1283595
+function similar_text(first, second) {
+    // Calculates the similarity between two strings
+    // discuss at: http://phpjs.org/functions/similar_text
+
+    if (first === null || second === null || typeof first === 'undefined' || typeof second === 'undefined') {
+        return 0;
+    }
+
+    first += '';
+    second += '';
+
+    var pos1 = 0,
+        pos2 = 0,
+        max = 0,
+        firstLength = first.length,
+        secondLength = second.length,
+        p, q, l, sum;
+
+    max = 0;
+
+    for (p = 0; p < firstLength; p++) {
+        for (q = 0; q < secondLength; q++) {
+            for (l = 0;
+                 (p + l < firstLength) && (q + l < secondLength) && (first.charAt(p + l) === second.charAt(q + l)); l++);
+            if (l > max) {
+                max = l;
+                pos1 = p;
+                pos2 = q;
+            }
         }
     }
-    var weight = equivalency / maxLength;
-    return (weight * 100);
+
+    sum = max;
+
+    if (sum) {
+        if (pos1 && pos2) {
+            sum += similar_text(first.substr(0, pos2), second.substr(0, pos2));
+        }
+
+        if ((pos1 + max < firstLength) && (pos2 + max < secondLength)) {
+            sum += similar_text(first.substr(pos1 + max, firstLength - pos1 - max), second.substr(pos2 + max, secondLength - pos2 - max));
+        }
+    }
+
+    return sum;
 }
