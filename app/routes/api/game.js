@@ -147,6 +147,39 @@ module.exports = function () {
                 });
         })
 
+        .get('/games/similar/by/:percentage/for/:name', function (req, res) {
+
+            var percentage = req.param('percentage');
+            var name = req.param('name');
+
+            // Get all games
+            Game.find()
+                .populate('genres', 'name -_id')
+                .populate('platforms', 'name -_id')
+                .populate('developers', 'name -_id')
+                .populate('editors', 'name -_id')
+                .exec(function (err, games) {
+                    if (err)
+                        res.send(CODE.SERVER_ERROR);
+
+                    var return_games = [];
+
+                    for (var i = 0; i < games.length; i++) {
+
+                        var game = games[i];
+                        var prct = similar(game.name, name);
+
+                        if (prct > percentage) {
+                            console.log('Game - ' + game.name + ' = ' + name + ' (' + prct + ')');
+                            return_games.push(game);
+                        }
+                    }
+
+                    CODE.SUCCESS.games = return_games;
+                    res.send(CODE.SUCCESS);
+                });
+        })
+
         // Description : Get games by a name
         // URL : http://localhost:8080/api/games/by/name/:name
         .get('/games/by/name/:game_name', function (req, res) {
@@ -332,3 +365,18 @@ module.exports = function () {
 
     return app;
 }();
+
+function similar(a, b) {
+    var lengthA = a.length;
+    var lengthB = b.length;
+    var equivalency = 0;
+    var minLength = (a.length > b.length) ? b.length : a.length;
+    var maxLength = (a.length < b.length) ? b.length : a.length;
+    for (var i = 0; i < minLength; i++) {
+        if (a[i] == b[i]) {
+            equivalency++;
+        }
+    }
+    var weight = equivalency / maxLength;
+    return (weight * 100);
+}
