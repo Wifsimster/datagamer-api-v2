@@ -24,7 +24,7 @@ Developers who want to set up video games web site need automatically to build a
    * [Add a new user](https://github.com/Wifsimster/datagamer-api-v2#add-a-new-user)
    * [Update a user](https://github.com/Wifsimster/datagamer-api-v2#update-a-user)
    * [Delete a user](https://github.com/Wifsimster/datagamer-api-v2#delete-a-user)
-* [Developer, Editor, Game, Genre & Plateform](https://github.com/Wifsimster/datagamer-api-v2#developer-editor-game-genre--plateform)
+* [Developer, Editor, Game, Genre & Platform](https://github.com/Wifsimster/datagamer-api-v2#developer-editor-game-genre--platform)
    * [Get a list of developers](https://github.com/Wifsimster/datagamer-api-v2#get-a-list-of-developers)
    * [Get a developer by name](https://github.com/Wifsimster/datagamer-api-v2#get-a-developer-by-name)
    * [Get a developer by id](https://github.com/Wifsimster/datagamer-api-v2#get-a-developer-by-id)
@@ -97,7 +97,7 @@ First of all you need to create a user. User have an **API key** needed for ever
 **Params :** 
 - id
 
-## Developer, Editor, Game, Genre & Plateform
+## Developer, Editor, Game, Genre & Platform
 
 I show only the methods associated with the developer but other objects support the same syntax.
 
