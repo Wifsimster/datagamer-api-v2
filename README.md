@@ -17,6 +17,7 @@ Developers who want to set up video games web site need automatically to build a
 **THIS V2 IS NOW AVAILABLE ONLINE at http://movie-discover.com:8084**
 
 ## Table of Contents
+* [Authentication](https://github.com/Wifsimster/datagamer-api-v2#authentication)
 * [User](https://github.com/Wifsimster/datagamer-api-v2#user)
    * [Get a list of users](https://github.com/Wifsimster/datagamer-api-v2#get-a-list-of-users)
    * [Get a user by name](https://github.com/Wifsimster/datagamer-api-v2#get-a-user-by-name)
@@ -51,9 +52,9 @@ Once you have your API key, you just need to pass it through the Headers each ti
 
 *Example : Return a game info*
 
-Headers : 
-* apiKey : b3dae6c0-83a0-4721-9901-bf0ee7011af
-URL : http://movie-discover.com:8084/api/games/by/id/12
+Headers : *apiKey : b3dae6c0-83a0-4721-9901-bf0ee7011af*
+
+URL : *http://movie-discover.com:8084/api/games/by/id/12*
 
 
 ## User
