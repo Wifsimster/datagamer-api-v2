@@ -43,9 +43,20 @@ Developers who want to set up video games web site need automatically to build a
 * [Objects](https://github.com/Wifsimster/datagamer-api-v2#objects) 
 * [Licence](https://github.com/Wifsimster/datagamer-api-v2#licence) 
 
-## User
+## Authentication
 
-First of all you need to create a user. User have an **API key** needed for every requests.
+First of all, you need to create a user. User have an **API key** needed for every requests !
+
+Once you have your API key, you just need to pass it through the Headers each time to be authenticated.
+
+*Example : Return a game info*
+
+Headers : 
+* apiKey : b3dae6c0-83a0-4721-9901-bf0ee7011af
+URL : http://movie-discover.com:8084/api/games/by/id/12
+
+
+## User
 
 ### Get a list of users
 **Method :** GET
