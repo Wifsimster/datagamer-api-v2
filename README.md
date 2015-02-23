@@ -50,7 +50,7 @@ First of all, you need to create a user. User have an **API key** needed for eve
 
 Once you have your API key, you just need to pass it through the Headers each time to be authenticated.
 
-*Example : Return a game info*
+**Example : Return a game info**
 
 Headers : *apiKey : b3dae6c0-83a0-4721-9901-bf0ee7011af*
 
