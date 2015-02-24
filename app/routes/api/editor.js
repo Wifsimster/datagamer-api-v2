@@ -1,4 +1,5 @@
 module.exports = function () {
+    var winston = require('winston');
     var express = require('express');
     var app = express();
 
@@ -24,7 +25,7 @@ module.exports = function () {
             Editor.findOneQ({name: name})
                 .then(function (result) {
                     if (result) {
-                        console.log("Find a editor with this name : " + name);
+                        winston.info("Find a editor with this name : " + name);
                         res.json(CODE.ALREADY_EXIST);
                     } else {
                         // Create a new instance of the Editor model
@@ -64,7 +65,7 @@ module.exports = function () {
             var skip = req.param('skip');
             var limit = req.param('limit');
 
-            console.log("-- Searching editors with skip '" + skip + "' and limit '" + limit + "'...");
+            winston.info("-- Searching editors with skip '" + skip + "' and limit '" + limit + "'...");
 
             Editor.find()
                 .skip(skip)
@@ -74,7 +75,7 @@ module.exports = function () {
                         res.send(CODE.SERVER_ERROR);
 
                     var count = editors.length;
-                    console.log('-- ' + count + ' editor(s) founded !');
+                    winston.info('-- ' + count + ' editor(s) founded !');
 
                     // Build the response
                     CODE.SUCCESS.count = count;
@@ -97,7 +98,7 @@ module.exports = function () {
                     if (err)
                         res.send(CODE.SERVER_ERROR);
 
-                    console.log(count + ' editor(s) founded !');
+                    winston.info(count + ' editor(s) founded !');
 
                     // Build the response
                     CODE.SUCCESS.count = count;
@@ -115,7 +116,7 @@ module.exports = function () {
                 if (err)
                     res.send(CODE.SERVER_ERROR);
 
-                console.log('Searching for editor id ' + req.params.editor_id + ' : ' + editor.name);
+                winston.info('Searching for editor id ' + req.params.editor_id + ' : ' + editor.name);
 
                 // Build the response
                 CODE.SUCCESS.editor = editor;

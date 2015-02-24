@@ -5,12 +5,12 @@
   "dependencies": {
     "body-parser": "~1.0.1",
     "cors": "^2.5.3",
-    "cron": "^1.0.6",
     "express": "~4.0.0",
     "mongoose": "~3.6.13",
     "mongoose-q": "*",
     "node-uuid": "*",
     "request": "^2.53.0",
-    "unirest": "*"
+    "unirest": "*",
+    "winston": "^0.9.0"
   }
 }

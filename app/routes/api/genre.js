@@ -1,4 +1,5 @@
 module.exports = function () {
+    var winston = require('winston');
     var express = require('express');
     var app = express();
 
@@ -24,7 +25,7 @@ module.exports = function () {
             Genre.findOneQ({name: name})
                 .then(function (result) {
                     if (result) {
-                        console.log("Find a genre with this name : " + name);
+                        winston.info("Find a genre with this name : " + name);
                         res.json(CODE.ALREADY_EXIST);
                     } else {
                         // Create a new instance of the Genre model
@@ -64,7 +65,7 @@ module.exports = function () {
             var skip = req.param('skip');
             var limit = req.param('limit');
 
-            console.log("-- Searching genres with skip '" + skip + "' and limit '" + limit + "'...");
+            winston.info("-- Searching genres with skip '" + skip + "' and limit '" + limit + "'...");
 
             Genre.find()
                 .skip(skip)
@@ -74,7 +75,7 @@ module.exports = function () {
                         res.send(CODE.SERVER_ERROR);
 
                     var count = genres.length;
-                    console.log('-- ' + count + ' genre(s) founded !');
+                    winston.info('-- ' + count + ' genre(s) founded !');
 
                     // Build the response
                     CODE.SUCCESS.count = count;
@@ -97,7 +98,7 @@ module.exports = function () {
                     if (err)
                         res.send(CODE.SERVER_ERROR);
 
-                    console.log(count + ' genre(s) founded !');
+                    winston.info(count + ' genre(s) founded !');
 
                     // Build the response
                     CODE.SUCCESS.count = count;
@@ -115,7 +116,7 @@ module.exports = function () {
                 if (err)
                     res.send(CODE.SERVER_ERROR);
 
-                console.log('Searching for genre id ' + req.params.genre_id + ' : ' + genre.name);
+                winston.info('Searching for genre id ' + req.params.genre_id + ' : ' + genre.name);
 
                 // Build the response
                 CODE.SUCCESS.genre = genre;

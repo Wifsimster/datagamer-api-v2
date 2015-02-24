@@ -1,4 +1,5 @@
 module.exports = function () {
+    var winston = require('winston');
     var express = require('express');
     var app = express();
 
@@ -24,7 +25,7 @@ module.exports = function () {
             Developer.findOneQ({name: name})
                 .then(function (result) {
                     if (result) {
-                        console.log("Find a developer with this name : " + name);
+                        winston.info("Find a developer with this name : " + name);
                         res.json(CODE.ALREADY_EXIST);
                     } else {
                         // Create a new instance of the Developer model
@@ -64,7 +65,7 @@ module.exports = function () {
             var skip = req.param('skip');
             var limit = req.param('limit');
 
-            console.log("-- Searching developers with skip '" + skip + "' and limit '" + limit + "'...");
+            winston.info("-- Searching developers with skip '" + skip + "' and limit '" + limit + "'...");
 
             Developer.find()
                 .skip(skip)
@@ -74,7 +75,7 @@ module.exports = function () {
                         res.send(CODE.SERVER_ERROR);
 
                     var count = developers.length;
-                    console.log('-- ' + count + ' developer(s) founded !');
+                    winston.info('-- ' + count + ' developer(s) founded !');
 
                     // Build the response
                     CODE.SUCCESS.count = count;
@@ -97,7 +98,7 @@ module.exports = function () {
                     if (err)
                         res.send(CODE.SERVER_ERROR);
 
-                    console.log(count + ' developer(s) founded !');
+                    winston.info(count + ' developer(s) founded !');
 
                     // Build the response
                     CODE.SUCCESS.count = count;
@@ -115,7 +116,7 @@ module.exports = function () {
                 if (err)
                     res.send(CODE.SERVER_ERROR);
 
-                console.log('Searching for developer id ' + req.params.developer_id + ' : ' + developer.name);
+                winston.info('Searching for developer id ' + req.params.developer_id + ' : ' + developer.name);
 
                 // Build the response
                 CODE.SUCCESS.developer = developer;

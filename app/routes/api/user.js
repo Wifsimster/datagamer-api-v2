@@ -1,4 +1,5 @@
 module.exports = function () {
+    var winston = require('winston');
     var express = require('express');
     var app = express();
 
@@ -47,7 +48,7 @@ module.exports = function () {
             var skip = req.param('skip');
             var limit = req.param('limit');
 
-            console.log("-- Searching users with skip '" + skip + "' and limit '" + limit + "'...");
+            winston.info("-- Searching users with skip '" + skip + "' and limit '" + limit + "'...");
 
             User.find()
                 .skip(skip)
@@ -57,7 +58,7 @@ module.exports = function () {
                         res.send(CODE.SERVER_ERROR);
 
                     var count = users.length;
-                    console.log('-- ' + count + ' user(s) founded !');
+                    winston.info('-- ' + count + ' user(s) founded !');
 
                     // Build the response
                     CODE.SUCCESS.count = count;
@@ -80,7 +81,7 @@ module.exports = function () {
                     if (err)
                         res.send(CODE.SERVER_ERROR);
 
-                    console.log(count + ' user(s) founded !');
+                    winston.info(count + ' user(s) founded !');
 
                     // Build the response
                     CODE.SUCCESS.count = count;
@@ -98,7 +99,7 @@ module.exports = function () {
                 if (err)
                     res.send(CODE.SERVER_ERROR);
 
-                console.log('Searching for user id ' + req.params.user_id + ' : ' + user.name);
+                winston.info('Searching for user id ' + req.params.user_id + ' : ' + user.name);
 
                 // Build the response
                 CODE.SUCCESS.user = user;

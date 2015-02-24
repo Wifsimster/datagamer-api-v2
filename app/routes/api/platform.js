@@ -1,4 +1,5 @@
 module.exports = function () {
+    var winston = require('winston');
     var express = require('express');
     var app = express();
 
@@ -24,7 +25,7 @@ module.exports = function () {
             Platform.findOneQ({name: name})
                 .then(function (result) {
                     if (result) {
-                        console.log("Find a platform with this name : " + name);
+                        winston.info("Find a platform with this name : " + name);
                         res.json(CODE.ALREADY_EXIST);
                     } else {
                         // Create a new instance of the Platform model
@@ -64,7 +65,7 @@ module.exports = function () {
             var skip = req.param('skip');
             var limit = req.param('limit');
 
-            console.log("-- Searching platforms with skip '" + skip + "' and limit '" + limit + "'...");
+            winston.info("-- Searching platforms with skip '" + skip + "' and limit '" + limit + "'...");
 
             Platform.find()
                 .skip(skip)
@@ -74,7 +75,7 @@ module.exports = function () {
                         res.send(CODE.SERVER_ERROR);
 
                     var count = platforms.length;
-                    console.log('-- ' + count + ' platform(s) founded !');
+                    winston.info('-- ' + count + ' platform(s) founded !');
 
                     // Build the response
                     CODE.SUCCESS.count = count;
@@ -97,7 +98,7 @@ module.exports = function () {
                     if (err)
                         res.send(CODE.SERVER_ERROR);
 
-                    console.log(count + ' platform(s) founded !');
+                    winston.info(count + ' platform(s) founded !');
 
                     // Build the response
                     CODE.SUCCESS.count = count;
@@ -115,7 +116,7 @@ module.exports = function () {
                 if (err)
                     res.send(CODE.SERVER_ERROR);
 
-                console.log('Searching for platform id ' + req.params.platform_id + ' : ' + platform.name);
+                winston.info('Searching for platform id ' + req.params.platform_id + ' : ' + platform.name);
 
                 // Build the response
                 CODE.SUCCESS.platform = platform;

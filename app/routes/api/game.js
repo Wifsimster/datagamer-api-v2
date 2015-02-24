@@ -1,6 +1,7 @@
 module.exports = function () {
     var express = require('express');
     var request = require('request');
+    var winston = require('winston');
     var app = express();
 
     // Models
@@ -33,7 +34,7 @@ module.exports = function () {
             Game.findOneQ({name: name})
                 .then(function (result) {
                     if (result) {
-                        console.log("Find a game with this name : " + name);
+                        winston.info("Find a game with this name : " + name);
                         res.json(CODE.ALREADY_EXIST);
                     } else {
                         // Create a new instance of the Game model
@@ -67,7 +68,7 @@ module.exports = function () {
                         // Save the game and check for errors
                         game.saveQ()
                             .then(function (game) {
-                                console.log('Game ' + game.name + ' added !');
+                                winston.info('Game ' + game.name + ' added !');
 
                                 // Save game object to the response object
                                 CODE.SUCCESS_POST.game = game;
@@ -100,7 +101,7 @@ module.exports = function () {
             var skip = req.param('skip');
             var limit = req.param('limit');
 
-            console.log("-- Searching games with skip '" + skip + "' and limit '" + limit + "'...");
+            winston.info("-- Searching games with skip '" + skip + "' and limit '" + limit + "'...");
 
             Game.find()
                 .skip(skip)
@@ -115,7 +116,7 @@ module.exports = function () {
                         res.send(CODE.SERVER_ERROR);
 
                     var count = games.length;
-                    console.log('-- ' + count + ' game(s) found !');
+                    winston.info('-- ' + count + ' game(s) found !');
 
                     // Build the response
                     CODE.SUCCESS.count = count;
@@ -131,14 +132,14 @@ module.exports = function () {
         // URL : http://localhost:8080/api/games/count
         .get('/games/count', function (req, res) {
 
-            console.log("-- Return video games count...");
+            winston.info("-- Return video games count...");
 
             Game.count()
                 .exec(function (err, count) {
                     if (err)
                         res.send(CODE.SERVER_ERROR);
 
-                    console.log('-- ' + count + ' game(s) found !');
+                    winston.info('-- ' + count + ' game(s) found !');
 
                     // Build the response
                     CODE.SUCCESS.count = count;
@@ -172,7 +173,7 @@ module.exports = function () {
                         var prct = similar_text(game.name, name);
 
                         if (prct > percentage) {
-                            console.log('Game - ' + game.name + ' = ' + name + ' (' + prct + ')');
+                            winston.info('Game - ' + game.name + ' = ' + name + ' (' + prct + ')');
                             game.percentage = prct;
                             return_games.push(game);
                         }
@@ -202,7 +203,7 @@ module.exports = function () {
                         if (err)
                             res.send(CODE.SERVER_ERROR);
 
-                        console.log('Game - ' + count + ' game(s) found by name : ' + req.params.game_name);
+                        winston.info('Game - ' + count + ' game(s) found by name : ' + req.params.game_name);
 
                         if (count < 1) {
                             // If no game found, search on Metacritic.
@@ -214,7 +215,7 @@ module.exports = function () {
                             }, function (error, response, body) {
                                 if (!error && body) {
 
-                                    console.log('Game - Metacritic found a game and add it to db !');
+                                    winston.info('Game - Metacritic found a game and add it to db !');
 
                                     // Build the response
                                     CODE.SUCCESS.count = count;
@@ -245,8 +246,8 @@ module.exports = function () {
                     res.send(CODE.SERVER_ERROR);
 
                 if (game) {
-                    //console.log(game);
-                    console.log('Searching for game id ' + req.params.game_id + ' : ' + game.name);
+                    //winston.info(game);
+                    winston.info('Searching for game id ' + req.params.game_id + ' : ' + game.name);
 
                     // Metacritic method will automatically update the database if the game is found.
                     request('http://localhost:8084/extractor/metacritic/find/' + game.name, {
@@ -259,7 +260,7 @@ module.exports = function () {
                             result = JSON.parse(body);
 
                             if (result.code == 202) {
-                                console.log('Game - Metacritic update the game !');
+                                winston.info('Game - Metacritic update the game !');
 
                                 Game.findById(req.params.game_id)
                                     .populate('genres', 'name -_id')

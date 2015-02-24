@@ -1,28 +1,23 @@
-// BASE SETUP
-// =============================================================================
-
-// call the packages we need
-var express = require('express');        // call express
-var app = express();                 // define our app using express
+var express = require('express');
+var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var cors = require('cors');
 var request = require('request');
-var CronJob = require('cron').CronJob;
+var winston = require('winston');
 
 mongoose.connect('mongodb://192.168.0.21:27017/datagamer'); // connect to our database
 //mongoose.connect('mongodb://localhost:27017/datagamer'); // connect to our database
-//mongoose.connect('mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/'); // connect to our database on OpenShift
 
 // CORS request
 app.use(cors());
 
-// configure app to use bodyParser()
-// this will let us get the data from a POST
+// Configure app to use bodyParser(), this will let us get the data from a POST
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 8084;        // set our port
+// Set our port
+var port = process.env.PORT || 8084;
 
 // Models
 var User = require('./app/models/user');
@@ -33,7 +28,7 @@ var CODE = require('./app/enums/codes');
 // Middleware to use for all requests
 app.use(function (req, res, next) {
 
-    console.log('-- API request : ' + req.headers.apikey);
+    winston.info('-- API request : ' + req.headers.apikey);
 
     // Check if the API key exist
     User.findByApiKey(req.headers.apikey, function (err, users) {
@@ -41,9 +36,11 @@ app.use(function (req, res, next) {
             if (users.length > 0) {
                 next(); // make sure we go to the next routes and don't stop here
             } else {
+                winston.info(CODE.FORBIDDEN);
                 res.json(CODE.FORBIDDEN);
             }
         } else {
+            winston.error(CODE.FORBIDDEN);
             res.json(CODE.SERVER_ERROR);
         }
     });
@@ -51,6 +48,7 @@ app.use(function (req, res, next) {
 
 // Test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 app.get('/', function (req, res) {
+    winston.info('Test route called !');
     res.json({message: 'Hooray ! Welcome to Datagamer API !'});
 });
 
@@ -70,24 +68,4 @@ app.use('/extractor', require('./app/routes/extractor/thegamesdb'));
 // START THE SERVER
 // =============================================================================
 app.listen(port);
-console.log('Datagamer is running on port ' + port);
-
-//// Every minute execute this task
-//new CronJob('01 * * * * *', function () {
-//    console.log('You will see this message every minute');
-//
-//    // Get new release at startup
-//    console.log("Start getting new release from Metacritic API...");
-//
-//    // Get all new release at startup
-//    request({
-//        url: 'http://localhost:8080/extractor/metacritic/game-list/new-releases',
-//        headers: {'apiKey': 'b3dae6c0-83a0-4721-9901-bf0ee7011af8'}
-//    }, function (err, res, body) {
-//        if (err)
-//            console.error(err);
-//
-//        console.log("Get all new release from Metacritic !");
-//        console.log(res);
-//    });
-//}, null, true, "America/Los_Angeles");
+winston.info('Datagamer-api v2 is running on port ' + port);
