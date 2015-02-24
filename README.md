@@ -10,11 +10,11 @@ Many video games web site maintain their own database.
 The problem is that no web site gives a free access to their database !
 Developers who want to set up video games web site need automatically to build a database.
 
-**This new version of the API is full REST, written in Node.js and run with a MongoDb database.**
+This new version of the API is full REST, written in Node.js and run with a MongoDb database.
 
-**Unlike the v1, this v2 automatically populate itself when users search for video games !**
+**Unlike the v1, this v2 automatically populate itself when users search video games !**
 
-**THIS V2 IS NOW AVAILABLE ONLINE at http://movie-discover.com:8084**
+**THIS V2 IS AVAILABLE ONLINE at http://movie-discover.com:8084/api**
 
 ## Table of Contents
 * [Authentication](https://github.com/Wifsimster/datagamer-api-v2#authentication)
@@ -46,7 +46,9 @@ Developers who want to set up video games web site need automatically to build a
 
 ## Authentication
 
-First of all, you need to create a user. User have an **API key** needed for every requests !
+**NEW USER MUST BE REQUESTED TO @wifsimster !!!**
+
+First of all, you need to have a user. User have an **API key** needed for every requests !
 
 Once you have your API key, you just need to pass it through the Headers each time to be authenticated.
 
