@@ -25,6 +25,9 @@ var User = require('./app/models/user');
 // Enums
 var CODE = require('./app/enums/codes');
 
+// Config logger file
+winston.add(winston.transports.File, { filename: 'datagamer-api-v2.log' });
+
 // Middleware to use for all requests
 app.use(function (req, res, next) {
 
@@ -63,7 +66,6 @@ app.use('/api', require('./app/routes/api/user'));
 
 // Extractor routes
 app.use('/extractor', require('./app/routes/extractor/metacritic'));
-app.use('/extractor', require('./app/routes/extractor/thegamesdb'));
 
 // START THE SERVER
 // =============================================================================
