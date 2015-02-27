@@ -16,6 +16,8 @@ This new version of the API is full REST, written in Node.js and run with a Mong
 
 **THIS V2 IS AVAILABLE ONLINE at http://movie-discover.com:8084/api**
 
+*The current release works ONLY with PC platform game /!\*
+
 ## Table of Contents
 * [Authentication](https://github.com/Wifsimster/datagamer-api-v2#authentication)
 * [User](https://github.com/Wifsimster/datagamer-api-v2#user)
