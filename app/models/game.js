@@ -34,6 +34,6 @@ var GameSchema = new Schema({
         url: String
     },
     percentage: Number
-});
+}, {strict: true});
 
 module.exports = mongoose.model('Game', GameSchema);

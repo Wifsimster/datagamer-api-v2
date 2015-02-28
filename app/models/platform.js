@@ -11,6 +11,6 @@ var PlatformSchema = new Schema({
     image: String,
     creationDate: Date,
     updatedDate: Date
-});
+}, {strict: true});
 
 module.exports = mongoose.model('Platform', PlatformSchema);

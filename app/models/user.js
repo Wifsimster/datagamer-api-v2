@@ -19,7 +19,7 @@ var UserSchema = new Schema({
         type: String,
         default: uuid.v4()
     }
-});
+}, {strict: true});
 
 UserSchema.statics.findByApiKey = function (apiKey, cb) {
     this.find({apiKey: apiKey}, cb);

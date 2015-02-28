@@ -10,6 +10,6 @@ var GenreSchema = new Schema({
     },
     creationDate: Date,
     updatedDate: Date
-});
+}, {strict: true});
 
 module.exports = mongoose.model('Genre', GenreSchema);
