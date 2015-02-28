@@ -32,8 +32,8 @@ winston.add(winston.transports.File, {filename: 'datagamer-api-v2.log'});
 app.use(function (req, res, next) {
 
     // Don't check API key for this route
-    if (req.url == "/api/users" && req.method == "POST") {
-        winston.info("Don't check API key for adding new user !");
+    if ((req.url == "/api/users" && req.method == "POST") || req.url == "/utils/cleaner/games/duplicates") {
+        winston.info("Don't check API key !");
         next();
     } else {
         winston.info('-- API request : ' + req.headers.apikey);
@@ -42,6 +42,7 @@ app.use(function (req, res, next) {
         User.findByApiKey(req.headers.apikey, function (err, users) {
             if (!err) {
                 if (users.length > 0) {
+                    winston.info('-- User authentificated as ' + users[0].name + ' <' +users[0].email + '>');
                     next(); // make sure we go to the next routes and don't stop here
                 } else {
                     winston.info(CODE.FORBIDDEN);
@@ -55,7 +56,6 @@ app.use(function (req, res, next) {
     }
 });
 
-// REGISTER OUR ROUTES -------------------------------
 // API routes
 app.use('/api', require('./app/routes/api/developer'));
 app.use('/api', require('./app/routes/api/editor'));
@@ -65,9 +65,14 @@ app.use('/api', require('./app/routes/api/platform'));
 app.use('/api', require('./app/routes/api/user'));
 
 // Extractor routes
-app.use('/extractor', require('./app/routes/extractor/metacritic'));
+app.use('/utils', require('./app/routes/utils/cleaner'));
+app.use('/utils', require('./app/routes/utils/metacritic'));
 
 // START THE SERVER
-// =============================================================================
 app.listen(port);
 winston.info('Datagamer-api v2 is running on port ' + port);
+
+// Inject CRONs
+var cleaner = require('./app/crons/cleaner.js');
+
+cleaner.start();
