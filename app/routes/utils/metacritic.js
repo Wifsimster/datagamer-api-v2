@@ -20,7 +20,7 @@ module.exports = function () {
     // Automatically add new games from Metacritic
     // Type : {coming-soon, new-releases}
     // Platform : {ps4, xboxone, ps3, xbox360, pc, wii-u, 3ds, vita, ios}
-    // ie : http://localhost:8080/extractor/metacritic/game-list/new-releases
+    // ie : http://localhost:8080/utils/metacritic/game-list/new-releases
     app.get('/metacritic/game-list/:type', function (req, res) {
 
         winston.info("Metacritic - Searching for games on Metacritic...");
@@ -101,7 +101,7 @@ module.exports = function () {
 
     // Automatically update games list from Metacritic data
     // Platform : {3 : pc}
-    // ie : http://localhost:8084/extractor/metacritic/search/Tupa
+    // ie : http://localhost:8084/utils/metacritic/search/Tupa
     app.get('/metacritic/search/:name', function (req, res) {
 
         var platform_id = 3; // Fix platform id to pc for the app
@@ -148,7 +148,7 @@ module.exports = function () {
 
     // Automatically update game information from Metacritic data
     // Platform : {3 : pc}
-    // ie : http://localhost:8084/extractor/metacritic/find/Tupa
+    // ie : http://localhost:8084/utils/metacritic/find/Tupa
     app.get('/metacritic/find/:name', function (req, res) {
 
         var platform_id = 3; // Fix platform id to pc for the app

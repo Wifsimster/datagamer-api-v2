@@ -210,7 +210,7 @@ module.exports = function () {
                         if (count < 1) {
                             // If no game found, search on Metacritic.
                             // Metacritic method will automatically update the database if the game is found.
-                            request('http://localhost:8084/extractor/metacritic/search/' + req.params.game_name, {
+                            request('http://localhost:8084/utils/metacritic/search/' + req.params.game_name, {
                                 headers: {
                                     "apiKey": req.headers.apikey
                                 }
@@ -259,7 +259,7 @@ module.exports = function () {
                     winston.info('Searching for game id ' + req.params.game_id + ' : ' + game.name);
 
                     // Metacritic method will automatically update the database if the game is found.
-                    request('http://localhost:8084/extractor/metacritic/find/' + game.name, {
+                    request('http://localhost:8084/utils/metacritic/find/' + game.name, {
                         headers: {
                             "apiKey": req.headers.apikey
                         }
