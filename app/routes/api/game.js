@@ -148,6 +148,8 @@ module.exports = function () {
                 });
         })
 
+        // Descripton : Get games that are similar
+        // URL : http://localhost:8080/api/games/similare/by/20/for/The Forest
         .get('/games/similar/by/:percentage/for/:name', function (req, res) {
 
             var percentage = req.param('percentage');
