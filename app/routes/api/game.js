@@ -230,6 +230,13 @@ module.exports = function () {
                                 }
                             });
                         } else {
+
+                            // Add percentage to all return games
+                            for (var i = 0; i < games.length; i++) {
+                                var game = games[i];
+                                game.percentage = similar_text(game.name, req.params.game_name);
+                            }
+
                             // Build the response
                             CODE.SUCCESS.count = count;
                             CODE.SUCCESS.games = games;
