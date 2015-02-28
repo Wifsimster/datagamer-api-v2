@@ -21,16 +21,17 @@ module.exports = function () {
         //          - email
         .post('/users', function (req, res) {
 
-            var user = new User();      // create a new instance of the User model
-
-            user.name = req.body.name;  // set the users name (comes from the request)
+            var user = new User();
+            user.name = req.body.name;
             user.email = req.body.email;
 
             if (user.name && user.email) {
                 // Save the user and check for errors
-                user.save(function (err) {
+                user.save(function (err, object) {
                     if (err)
-                        res.send(CODE.BAD_REQUEST);
+                        res.json(CODE.BAD_REQUEST);
+
+                    CODE.SUCCESS_POST.user = object;
                     res.json(CODE.SUCCESS_POST);
                 });
             } else {
