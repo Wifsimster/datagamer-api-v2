@@ -212,7 +212,7 @@ module.exports = function () {
                             // Metacritic method will automatically update the database if the game is found.
                             request('http://localhost:8084/extractor/metacritic/search/' + req.params.game_name, {
                                 headers: {
-                                    "apiKey": 'b3dae6c0-83a0-4721-9901-bf0ee7011af8'
+                                    "apiKey": req.headers.apikey
                                 }
                             }, function (error, response, body) {
                                 if (!error && body) {
@@ -261,7 +261,7 @@ module.exports = function () {
                     // Metacritic method will automatically update the database if the game is found.
                     request('http://localhost:8084/extractor/metacritic/find/' + game.name, {
                         headers: {
-                            "apiKey": 'b3dae6c0-83a0-4721-9901-bf0ee7011af8'
+                            "apiKey": req.headers.apikey
                         }
                     }, function (error, response, body) {
                         if (!error && body) {
