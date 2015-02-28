@@ -26,12 +26,16 @@ module.exports = function () {
             user.name = req.body.name;  // set the users name (comes from the request)
             user.email = req.body.email;
 
-            // Save the user and check for errors
-            user.save(function (err) {
-                if (err)
-                    res.send(err.message);
-                res.json({message: 'User created!'});
-            });
+            if (user.name && user.email) {
+                // Save the user and check for errors
+                user.save(function (err) {
+                    if (err)
+                        res.send(CODE.BAD_REQUEST);
+                    res.json(CODE.SUCCESS_POST);
+                });
+            } else {
+                res.json(CODE.MISSING_DATA);
+            }
         })
 
         // -----------------------------------------------------------------------------------

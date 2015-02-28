@@ -26,33 +26,33 @@ var User = require('./app/models/user');
 var CODE = require('./app/enums/codes');
 
 // Config logger file
-winston.add(winston.transports.File, { filename: 'datagamer-api-v2.log' });
+winston.add(winston.transports.File, {filename: 'datagamer-api-v2.log'});
 
 // Middleware to use for all requests
 app.use(function (req, res, next) {
 
-    winston.info('-- API request : ' + req.headers.apikey);
+    // Don't check API key for this route
+    if (req.url == "/api/users" && req.method == "POST") {
+        winston.info("Don't check API key for adding new user !");
+        next();
+    } else {
+        winston.info('-- API request : ' + req.headers.apikey);
 
-    // Check if the API key exist
-    User.findByApiKey(req.headers.apikey, function (err, users) {
-        if (!err) {
-            if (users.length > 0) {
-                next(); // make sure we go to the next routes and don't stop here
+        // Check if the API key exist
+        User.findByApiKey(req.headers.apikey, function (err, users) {
+            if (!err) {
+                if (users.length > 0) {
+                    next(); // make sure we go to the next routes and don't stop here
+                } else {
+                    winston.info(CODE.FORBIDDEN);
+                    res.json(CODE.FORBIDDEN);
+                }
             } else {
-                winston.info(CODE.FORBIDDEN);
-                res.json(CODE.FORBIDDEN);
+                winston.error(CODE.FORBIDDEN);
+                res.json(CODE.SERVER_ERROR);
             }
-        } else {
-            winston.error(CODE.FORBIDDEN);
-            res.json(CODE.SERVER_ERROR);
-        }
-    });
-});
-
-// Test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-app.get('/', function (req, res) {
-    winston.info('Test route called !');
-    res.json({message: 'Hooray ! Welcome to Datagamer API !'});
+        });
+    }
 });
 
 // REGISTER OUR ROUTES -------------------------------
