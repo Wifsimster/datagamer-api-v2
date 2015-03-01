@@ -365,7 +365,11 @@ module.exports = function () {
                             // Update the games info
                             game.updateDate = new Date();
                             game.overview = metacritic_game.summary;
-                            game.releaseDate = metacritic_game.rlsdate;
+
+                            game.releaseDates = [];
+                            var release = {};
+                            release.date = metacritic_game.rlsdate;
+                            game.releaseDates.push(release);
 
                             game.metacritic = {};
                             game.metacritic.score = metacritic_game.userscore;
@@ -464,7 +468,12 @@ module.exports = function () {
                                         var game = new Game();
 
                                         game.defaultTitle = mcGame.name;
-                                        game.releaseDate = mcGame.rlsdate;
+
+                                        game.releaseDates = [];
+                                        var release = {};
+                                        release.date = mcGame.rlsdate;
+                                        game.releaseDates.push(release);
+
                                         game.overview = mcGame.summary;
 
                                         if (!game.metacritic)
