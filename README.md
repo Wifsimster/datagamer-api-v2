@@ -137,6 +137,7 @@ Return : {code, message, developer}
 
 ### Add a new developer
 **Method :** POST
+
 Only **Genre** object don't have an image attribute.
 ````
 URL : /api/developers
@@ -146,6 +147,7 @@ Return : {code, message, developer}
 
 ### Update a developer
 **Method :** PUT
+
 Only **Genre** object don't have an image attribute.
 ````
 URL : /api/developers/{id}
