@@ -2,10 +2,16 @@ var mongoose = require('mongoose-q')(require('mongoose'));
 var Schema = mongoose.Schema;
 
 var GameSchema = new Schema({
-    name: {
-        type: String,
-        trim: true
-    },
+    defaultTitle: {type: String, trim: true, required: true},
+    overview: String,
+    titles: [{name: {type: String, trim: true}, countryCode: {type: String, uppercase: true, match: /[A-Z]{3}/}}],
+    releaseDate: [{date: Date, countryCode: {type: String, uppercase: true, match: /[A-Z]{3}/}}],
+    versions: [{number: String, date: Date, description: String}],
+    metacritic: {score: Number, url: String},
+    editors: [{type: Schema.Types.ObjectId, ref: 'Editor'}],
+    developers: [{type: Schema.Types.ObjectId, ref: 'Developer'}],
+    genres: [{type: Schema.Types.ObjectId, ref: 'Genre'}],
+    platforms: [{type: Schema.Types.ObjectId, ref: 'Platform'}],
     media: {
         boxArt: {
             front: String,
@@ -18,22 +24,11 @@ var GameSchema = new Schema({
         screenshots: [String],
         trailers: [String]
     },
-    editors: [{type: Schema.Types.ObjectId, ref: 'Editor'}],
-    developers: [{type: Schema.Types.ObjectId, ref: 'Developer'}],
-    genres: [{type: Schema.Types.ObjectId, ref: 'Genre'}],
-    platforms: [{type: Schema.Types.ObjectId, ref: 'Platform'}],
-    overview: String,
-    releaseDate: Date,
-    creationDate: {
-        type: Date,
-        default: Date.now
-    },
+
+    // Applicative attributes
+    percentage: Number,
     updatedDate: Date,
-    metacritic: {
-        score: Number,
-        url: String
-    },
-    percentage: Number
+    creationDate: {type: Date, default: Date.now}
 }, {strict: true});
 
 module.exports = mongoose.model('Game', GameSchema);
