@@ -48,18 +48,22 @@ This new version of the API is full REST, written in Node.js and run with a Mong
 
 ## Authentication
 
-**NEW USER MUST BE REQUESTED TO @wifsimster !!!**
+First of all, you need to create a new user. User have an **API key** needed for every requests !
 
-First of all, you need to have a user. User have an **API key** needed for every requests !
+Request a new user with a POST request : 
+````
+URL : http:movie-discover.com:8084/api/users
+POST data : {name: "username", email: "foo@gmail.com"}
+Return : {code, message, user: {name, email, apiKey}}
+````
 
-Once you have your API key, you just need to pass it through the Headers each time to be authenticated.
+Once you have your API key, you just need to pass it through the **Headers** each time to be authenticated.
 
-**Example : Return game info**
-
-Headers : *apiKey : b3dae6c0-83a0-4721-9901-bf0ee7011af*
-
-URL : *http://movie-discover.com:8084/api/games/by/id/12*
-
+**Example : Return game info with GET request**
+````
+Headers : {apiKey : b3dae6c0-83a0-4721-9901-bf0ee7011af}
+URL : http://movie-discover.com:8084/api/games/by/id/12
+````
 
 ## User
 
