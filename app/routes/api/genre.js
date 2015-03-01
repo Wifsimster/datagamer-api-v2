@@ -37,7 +37,7 @@ module.exports = function () {
                             .then(function (genre) {
                                 // Build response message
                                 CODE.SUCCESS_POST.genre = genre;
-                                res.json(CODE.SUCCESS);
+                                res.json(CODE.SUCCESS_POST);
                             })
                             .catch(function (err) {
                                 console.error(err);
@@ -153,7 +153,7 @@ module.exports = function () {
                     // Build the response
                     CODE.SUCCESS_PUT.genre = genre;
 
-                    res.json(CODE.SUCCESS);
+                    res.json(CODE.SUCCESS_PUT);
                 });
             });
         })

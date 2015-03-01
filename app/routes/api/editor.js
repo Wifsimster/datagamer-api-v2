@@ -37,7 +37,7 @@ module.exports = function () {
                             .then(function (editor) {
                                 // Build response message
                                 CODE.SUCCESS_POST.editor = editor;
-                                res.json(CODE.SUCCESS);
+                                res.json(CODE.SUCCESS_POST);
                             })
                             .catch(function (err) {
                                 console.error(err);
@@ -154,7 +154,7 @@ module.exports = function () {
                     // Build the response
                     CODE.SUCCESS_PUT.editor = editor;
 
-                    res.json(CODE.SUCCESS);
+                    res.json(CODE.SUCCESS_PUT);
                 });
             });
         })

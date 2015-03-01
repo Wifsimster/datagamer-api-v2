@@ -39,7 +39,7 @@ module.exports = function () {
                             .then(function (developer) {
                                 // Build response message
                                 CODE.SUCCESS_POST.developer = developer;
-                                res.json(CODE.SUCCESS);
+                                res.json(CODE.SUCCESS_POST);
                             })
                             .catch(function (err) {
                                 console.error(err);
