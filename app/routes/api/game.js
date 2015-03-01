@@ -40,12 +40,14 @@ module.exports = function () {
                         // Create a new instance of the Game model
                         var game = new Game();
                         game.defaultTitle = defaultTitle;
+                        game.titles = req.body.titles;
+                        game.releaseDates = req.body.releaseDates;
+                        game.versions = req.body.versions;
                         game.overview = req.body.overview;
                         game.editors = req.body.editors;
                         game.developers = req.body.developers;
                         game.genres = req.body.genres;
                         game.platforms = req.body.platforms;
-                        game.releaseDate = req.body.releaseDate;
 
                         if (req.body.metacritic) {
                             game.metacritic.score = req.body.metacritic.score;
@@ -60,7 +62,7 @@ module.exports = function () {
                             game.media.thumbnails = req.body.media.thumbnails;
                             game.media.logos = req.body.media.logos;
                             game.media.banners = req.body.media.banners;
-                            game.media.fanArt = req.body.media.fanArt;
+                            game.media.fanArts = req.body.media.fanArts;
                             game.media.screenshots = req.body.media.screenshots;
                             game.media.trailers = req.body.media.trailers;
                         }
@@ -72,7 +74,7 @@ module.exports = function () {
 
                                 // Save game object to the response object
                                 CODE.SUCCESS_POST.game = game;
-                                res.json(CODE.SUCCESS);
+                                res.json(CODE.SUCCESS_POST);
                             })
                             .catch(function (err) {
                                 console.error(err);
@@ -110,7 +112,6 @@ module.exports = function () {
                 .populate('platforms', 'name -_id')
                 .populate('developers', 'name -_id')
                 .populate('editors', 'name -_id')
-                .exec
                 .exec(function (err, games) {
                     if (err)
                         res.send(CODE.SERVER_ERROR);
@@ -317,13 +318,15 @@ module.exports = function () {
                     res.send(CODE.SERVER_ERROR);
 
                 // Update the games info
-                game.defaultTitle = req.body.defaultTitle;
+                game.defaultTitle = defaultTitle;
+                game.titles = req.body.titles;
+                game.releaseDates = req.body.releaseDates;
+                game.versions = req.body.versions;
                 game.overview = req.body.overview;
                 game.editors = req.body.editors;
                 game.developers = req.body.developers;
                 game.genres = req.body.genres;
                 game.platforms = req.body.platforms;
-                game.releaseDate = req.body.releaseDate;
                 game.updateDate = new Date();
 
                 if (req.body.metacritic) {
@@ -339,7 +342,7 @@ module.exports = function () {
                     game.media.thumbnails = req.body.media.thumbnails;
                     game.media.logos = req.body.media.logos;
                     game.media.banners = req.body.media.banners;
-                    game.media.fanArt = req.body.media.fanArt;
+                    game.media.fanArts = req.body.media.fanArts;
                     game.media.screenshots = req.body.media.screenshots;
                     game.media.trailers = req.body.media.trailers;
                 }
@@ -352,7 +355,7 @@ module.exports = function () {
                     // Build the response
                     CODE.SUCCESS_PUT.game = game;
 
-                    res.json(CODE.SUCCESS);
+                    res.json(CODE.SUCCESS_PUT);
                 });
             });
         })

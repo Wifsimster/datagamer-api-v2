@@ -5,7 +5,7 @@ var GameSchema = new Schema({
     defaultTitle: {type: String, trim: true, required: true},
     overview: String,
     titles: [{name: {type: String, trim: true}, countryCode: {type: String, uppercase: true, match: /[A-Z]{3}/}}],
-    releaseDate: [{date: Date, countryCode: {type: String, uppercase: true, match: /[A-Z]{3}/}}],
+    releaseDates: [{date: Date, countryCode: {type: String, uppercase: true, match: /[A-Z]{3}/}}],
     versions: [{number: String, date: Date, description: String}],
     metacritic: {score: Number, url: String},
     editors: [{type: Schema.Types.ObjectId, ref: 'Editor'}],
@@ -20,7 +20,7 @@ var GameSchema = new Schema({
         thumbnails: [String],
         logos: [String],
         banners: [String],
-        fanArt: [String],
+        fanArts: [String],
         screenshots: [String],
         trailers: [String]
     },
