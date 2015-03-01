@@ -140,7 +140,7 @@ module.exports = function () {
                     // Build the response
                     CODE.SUCCESS_PUT.user = user;
 
-                    res.json(CODE.SUCCESS);
+                    res.json(CODE.SUCCESS_PUT);
                 });
             });
         })
