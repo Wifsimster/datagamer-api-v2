@@ -81,7 +81,7 @@ module.exports = function () {
                     CODE.SUCCESS.count = count;
                     CODE.SUCCESS.skip = skip;
                     CODE.SUCCESS.limit = limit;
-                    CODE.SUCCESS.games = games;
+                    CODE.SUCCESS.genres = genres;
 
                     res.json(CODE.SUCCESS);
                 });
@@ -110,7 +110,7 @@ module.exports = function () {
         })
 
         // Description : Get a genre by an id
-        // URL : http://localhost:8080/api/games/by/:id
+        // URL : http://localhost:8080/api/genres/by/:id
         .get('/genres/by/id/:genre_id', function (req, res) {
             Genre.findById(req.params.genre_id, function (err, genre) {
                 if (err)
@@ -163,7 +163,7 @@ module.exports = function () {
         // -----------------------------------------------------------------------------------
 
         // Description : Delete a genre with an id
-        // URL : http://localhost:8080/api/games/:game_id
+        // URL : http://localhost:8080/api/genres/:genre_id
         // Param :
         //          - id
         .delete('/genres/:genre_id', function (req, res) {

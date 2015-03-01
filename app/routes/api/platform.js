@@ -81,7 +81,7 @@ module.exports = function () {
                     CODE.SUCCESS.count = count;
                     CODE.SUCCESS.skip = skip;
                     CODE.SUCCESS.limit = limit;
-                    CODE.SUCCESS.games = games;
+                    CODE.SUCCESS.platforms = platforms;
 
                     res.json(CODE.SUCCESS);
                 });
@@ -110,7 +110,7 @@ module.exports = function () {
         })
 
         // Description : Get a platform by an id
-        // URL : http://localhost:8080/api/games/by/:id
+        // URL : http://localhost:8080/api/platforms/by/:id
         .get('/platforms/by/id/:platform_id', function (req, res) {
             Platform.findById(req.params.platform_id, function (err, platform) {
                 if (err)
@@ -164,7 +164,7 @@ module.exports = function () {
         // -----------------------------------------------------------------------------------
 
         // Description : Delete a platform with an id
-        // URL : http://localhost:8080/api/games/:game_id
+        // URL : http://localhost:8080/api/platforms/:plateform_id
         // Param :
         //          - id
         .delete('/platforms/:platform_id', function (req, res) {

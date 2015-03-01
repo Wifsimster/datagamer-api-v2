@@ -81,7 +81,7 @@ module.exports = function () {
                     CODE.SUCCESS.count = count;
                     CODE.SUCCESS.skip = skip;
                     CODE.SUCCESS.limit = limit;
-                    CODE.SUCCESS.games = games;
+                    CODE.SUCCESS.developers = developers;
 
                     res.json(CODE.SUCCESS);
                 });
@@ -110,7 +110,7 @@ module.exports = function () {
         })
 
         // Description : Get a developer by an id
-        // URL : http://localhost:8080/api/games/by/:id
+        // URL : http://localhost:8080/api/developers/by/:id
         .get('/developers/by/id/:developer_id', function (req, res) {
             Developer.findById(req.params.developer_id, function (err, developer) {
                 if (err)
@@ -164,7 +164,7 @@ module.exports = function () {
         // -----------------------------------------------------------------------------------
 
         // Description : Delete a developer with an id
-        // URL : http://localhost:8080/api/games/:game_id
+        // URL : http://localhost:8080/api/developers/:developer_id
         // Param :
         //          - id
         .delete('/developers/:developer_id', function (req, res) {

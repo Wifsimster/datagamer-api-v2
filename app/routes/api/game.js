@@ -18,7 +18,7 @@ module.exports = function () {
         // Description : Add a new game
         // URL: http://localhost:8080/api/games
         // Form params :
-        //          - name
+        //          - defaultTitle
         //          - overview
         //          - editors[]
         //          - developers[]
@@ -28,18 +28,18 @@ module.exports = function () {
         //          - metacritic{}
         //          - media{}
         .post('/games', function (req, res) {
-            var name = req.body.name;  // set the games name (comes from the request)
+            var defaultTitle = req.body.defaultTitle;  // set the games defaultTitle (comes from the request)
 
-            // Check if a game already exist with this name
-            Game.findOneQ({name: name})
+            // Check if a game already exist with this defaultTitle
+            Game.findOneQ({defaultTitle: defaultTitle})
                 .then(function (result) {
                     if (result) {
-                        winston.info("Find a game with this name : " + name);
+                        winston.info("Find a game with this default title : " + defaultTitle);
                         res.json(CODE.ALREADY_EXIST);
                     } else {
                         // Create a new instance of the Game model
                         var game = new Game();
-                        game.name = name;
+                        game.defaultTitle = defaultTitle;
                         game.overview = req.body.overview;
                         game.editors = req.body.editors;
                         game.developers = req.body.developers;
@@ -68,7 +68,7 @@ module.exports = function () {
                         // Save the game and check for errors
                         game.saveQ()
                             .then(function (game) {
-                                winston.info('Game ' + game.name + ' added !');
+                                winston.info('Game ' + game.defaultTitle + ' added !');
 
                                 // Save game object to the response object
                                 CODE.SUCCESS_POST.game = game;
@@ -149,11 +149,11 @@ module.exports = function () {
         })
 
         // Descripton : Get games that are similar
-        // URL : http://localhost:8080/api/games/similare/by/20/for/The Forest
-        .get('/games/similar/by/:percentage/for/:name', function (req, res) {
+        // URL : http://localhost:8080/api/games/similar/by/20/for/The Forest
+        .get('/games/similar/by/:percentage/for/:defaultTitle', function (req, res) {
 
             var percentage = req.param('percentage');
-            var name = req.param('name');
+            var defaultTitle = req.param('defaultTitle');
 
             // Get all games
             Game.find()
@@ -172,10 +172,10 @@ module.exports = function () {
                         var game = games[i];
                         game.percentage = 0;
 
-                        var prct = similar_text(game.name, name);
+                        var prct = similar_text(game.defaultTitle, defaultTitle);
 
                         if (prct > percentage) {
-                            winston.info('Game - ' + game.name + ' = ' + name + ' (' + prct + ')');
+                            winston.info('Game - ' + game.defaultTitle + ' = ' + defaultTitle + ' (' + prct + ')');
                             game.percentage = prct;
                             return_games.push(game);
                         }
@@ -186,11 +186,11 @@ module.exports = function () {
                 });
         })
 
-        // Description : Get games by a name
-        // URL : http://localhost:8080/api/games/by/name/:name
-        .get('/games/by/name/:game_name', function (req, res) {
+        // Description : Get games by a defaultTitle
+        // URL : http://localhost:8080/api/games/by/defaultTitle/:defaultTitle
+        .get('/games/by/defaultTitle/:defaultTitle', function (req, res) {
 
-            var query = {name: new RegExp(req.params.game_name, "i")};
+            var query = {defaultTitle: new RegExp(req.params.defaultTitle, "i")};
 
             Game.find(query)
                 .populate('genres', 'name -_id')
@@ -205,12 +205,12 @@ module.exports = function () {
                         if (err)
                             res.send(CODE.SERVER_ERROR);
 
-                        winston.info('Game - ' + count + ' game(s) found by name : ' + req.params.game_name);
+                        winston.info('Game - ' + count + ' game(s) found by defaultTitle : ' + req.params.defaultTitle);
 
                         if (count < 1) {
                             // If no game found, search on Metacritic.
                             // Metacritic method will automatically update the database if the game is found.
-                            request('http://localhost:8084/utils/metacritic/search/' + req.params.game_name, {
+                            request('http://localhost:8084/utils/metacritic/search/' + req.params.defaultTitle, {
                                 headers: {
                                     "apiKey": req.headers.apikey
                                 }
@@ -234,7 +234,7 @@ module.exports = function () {
                             // Add percentage to all return games
                             for (var i = 0; i < games.length; i++) {
                                 var game = games[i];
-                                game.percentage = similar_text(game.name, req.params.game_name);
+                                game.percentage = similar_text(game.defaultTitle, req.params.defaultTitle);
                             }
 
                             // Build the response
@@ -256,10 +256,10 @@ module.exports = function () {
 
                 if (game) {
                     //winston.info(game);
-                    winston.info('Searching for game id ' + req.params.game_id + ' : ' + game.name);
+                    winston.info('Searching for game id ' + req.params.game_id + ' : ' + game.defaultTitle);
 
                     // Metacritic method will automatically update the database if the game is found.
-                    request('http://localhost:8084/utils/metacritic/find/' + game.name, {
+                    request('http://localhost:8084/utils/metacritic/find/' + game.defaultTitle, {
                         headers: {
                             "apiKey": req.headers.apikey
                         }
@@ -317,7 +317,7 @@ module.exports = function () {
                     res.send(CODE.SERVER_ERROR);
 
                 // Update the games info
-                game.name = req.body.name;
+                game.defaultTitle = req.body.defaultTitle;
                 game.overview = req.body.overview;
                 game.editors = req.body.editors;
                 game.developers = req.body.developers;

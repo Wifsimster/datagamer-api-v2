@@ -81,7 +81,7 @@ module.exports = function () {
                     CODE.SUCCESS.count = count;
                     CODE.SUCCESS.skip = skip;
                     CODE.SUCCESS.limit = limit;
-                    CODE.SUCCESS.games = games;
+                    CODE.SUCCESS.editors = editors;
 
                     res.json(CODE.SUCCESS);
                 });
@@ -110,7 +110,7 @@ module.exports = function () {
         })
 
         // Description : Get a editor by an id
-        // URL : http://localhost:8080/api/games/by/:id
+        // URL : http://localhost:8080/api/editors/by/:id
         .get('/editors/by/id/:editor_id', function (req, res) {
             Editor.findById(req.params.editor_id, function (err, editor) {
                 if (err)
@@ -164,7 +164,7 @@ module.exports = function () {
         // -----------------------------------------------------------------------------------
 
         // Description : Delete a editor with an id
-        // URL : http://localhost:8080/api/games/:game_id
+        // URL : http://localhost:8080/api/editors/:editor_id
         // Param :
         //          - id
         .delete('/editors/:editor_id', function (req, res) {

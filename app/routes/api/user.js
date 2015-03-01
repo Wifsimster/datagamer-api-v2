@@ -122,7 +122,7 @@ module.exports = function () {
         // Param :
         //          - id
         // Form params :
-        //          - Game Object
+        //          - User Object
         .put('/users/:user_id', function (req, res) {
             // Use our user model to find the user we want
             User.findById(req.params.user_id, function (err, user) {

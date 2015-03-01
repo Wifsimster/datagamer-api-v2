@@ -175,7 +175,7 @@ module.exports = function () {
 
                     winston.info("Metacritic - Searching for '" + name + "' in db...");
 
-                    Game.findQ({name: name})
+                    Game.findQ({defaultTitle: name})
                         .then(function (game) {
 
                             // Search if genre already exist in db
@@ -207,7 +207,7 @@ module.exports = function () {
                                                 genres.push(genre._id);
 
                                                 // Add genre id to game info
-                                                Game.updateQ({name: name}, {genres: genres})
+                                                Game.updateQ({defaultTitle: name}, {genres: genres})
                                                     .then(function () {
                                                         winston.info("Metacritic -  '" + name + "' updated with new genre !");
                                                     })
@@ -234,7 +234,7 @@ module.exports = function () {
                                         platforms.push(platform._id);
 
                                         // Add platform id to game info
-                                        Game.updateQ({name: name}, {platforms: platforms})
+                                        Game.updateQ({defaultTitle: name}, {platforms: platforms})
                                             .then(function () {
                                                 winston.info("Metacritic -  '" + name + "' updated with platform !");
                                             })
@@ -253,7 +253,7 @@ module.exports = function () {
                                                 platforms.push(platform._id);
 
                                                 // Add platform id to game info
-                                                Game.updateQ({name: name}, {platforms: platforms})
+                                                Game.updateQ({defaultTitle: name}, {platforms: platforms})
                                                     .then(function () {
                                                         winston.info("Metacritic -  '" + name + "' updated with new platform !");
                                                     })
@@ -280,7 +280,7 @@ module.exports = function () {
                                         editors.push(editor._id);
 
                                         // Add editor id to game info
-                                        Game.updateQ({name: name}, {editors: editors})
+                                        Game.updateQ({defaultTitle: name}, {editors: editors})
                                             .then(function () {
                                                 winston.info("Metacritic -  '" + name + "' updated with editor !");
                                             })
@@ -299,7 +299,7 @@ module.exports = function () {
                                                 editors.push(editor._id);
 
                                                 // Add editor id to game info
-                                                Game.updateQ({name: name}, {editors: editors})
+                                                Game.updateQ({defaultTitle: name}, {editors: editors})
                                                     .then(function () {
                                                         winston.info("Metacritic -  '" + name + "' updated with new editor !");
                                                     })
@@ -326,7 +326,7 @@ module.exports = function () {
                                         developers.push(developer._id);
 
                                         // Add developer id to game info
-                                        Game.updateQ({name: name}, {developers: developers})
+                                        Game.updateQ({defaultTitle: name}, {developers: developers})
                                             .then(function () {
                                                 winston.info("Metacritic -  '" + name + "' updated with developer !");
                                             })
@@ -345,7 +345,7 @@ module.exports = function () {
                                                 developers.push(developer._id);
 
                                                 // Add developer id to game info
-                                                Game.updateQ({name: name}, {developers: developers})
+                                                Game.updateQ({defaultTitle: name}, {developers: developers})
                                                     .then(function () {
                                                         winston.info("Metacritic -  '" + name + "' updated with new developer !");
                                                     })
@@ -375,7 +375,7 @@ module.exports = function () {
                             game.media.thumbnails = []
                             game.media.thumbnails.push(metacritic_game.thumbnail);
 
-                            Game.updateQ({name: name}, game)
+                            Game.updateQ({defaultTitle: name}, game)
                                 .then(function () {
                                     winston.info("Metacritic -  '" + name + "' updated !");
                                     res.send(CODE.SUCCESS_PUT);
@@ -404,7 +404,7 @@ module.exports = function () {
 
             winston.info("Metacritic - Checking if " + mcGame.name + " already exist in db...");
 
-            Game.findOneQ({name: mcGame.name})
+            Game.findOneQ({defaultTitle: mcGame.name})
                 .then(function (game) {
                     if (!game) {
                         winston.info("Metacritic - No '" + mcGame.name + "' found in db !");
@@ -463,7 +463,7 @@ module.exports = function () {
                                         // Build game object before saving it
                                         var game = new Game();
 
-                                        game.name = mcGame.name;
+                                        game.defaultTitle = mcGame.name;
                                         game.releaseDate = mcGame.rlsdate;
                                         game.overview = mcGame.summary;
 
@@ -476,24 +476,17 @@ module.exports = function () {
                                             game.metacritic.score = mcGame.score;
                                         }
 
-                                        //if (!game.media)
-                                        //    game.media = {};
-                                        //
-                                        // Empty array
-                                        //game.media.thumbnails = [];
-                                        //game.media.thumbnails.push(mcGame.thumbnail);
-
                                         game.platforms = [];
                                         game.platforms.push(platform);
 
                                         game.editors = [];
                                         game.editors.push(editor);
 
-                                        winston.info("Metacritic - Adding " + mcGame.name + " to the db...");
+                                        winston.info("Metacritic - Adding " + game.defaultTitle + " to the db...");
 
                                         game.saveQ()
                                             .then(function (game) {
-                                                winston.info("Metacritic - " + game.name + " added to db !");
+                                                winston.info("Metacritic - " + game.defaultTitle + " added to db !");
                                                 addGamesRecursive(i + 1, games, callback);
                                             })
                                             .catch(function (err) {
@@ -511,7 +504,7 @@ module.exports = function () {
                                 return err.message;
                             });
                     } else {
-                        console.warn("Metacritic - '" + game.name + "' already exist in db !")
+                        console.warn("Metacritic - '" + game.defaultTitle + "' already exist in db !")
                         addGamesRecursive(i + 1, games, callback);
                     }
                 })

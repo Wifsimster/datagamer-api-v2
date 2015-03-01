@@ -30,14 +30,14 @@ module.exports = function () {
 
             var game = games[i];
 
-            Game.find({name: game.name}, function (err, result) {
+            Game.find({defaultTitle: game.defaultTitle}, function (err, result) {
                 if (err)
                     res.send(CODE.SERVER_ERROR);
 
-                //console.log('Search : ' + game.name);
+                //console.log('Search : ' + game.defaultTitle);
 
                 if (result.length > 1) {
-                    console.log('Duplicate with : ' + result[1].name);
+                    console.log('Duplicate with : ' + result[1].defaultTitle);
 
                     Game.remove({
                         _id: result[1]._id
