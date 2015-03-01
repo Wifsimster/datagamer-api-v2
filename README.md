@@ -245,41 +245,37 @@ Return : {code, message}
 ````
 {name, email, apiKey}
 ````
-<br>
-- name : String and required
-- email : String and Email format
-- apiKey :  String and auto generated once
+- **name :** String and required
+- **email :** String and Email format
+- **apiKey :**  String and auto generated once
 
 ### Developer, Editor & Platform
 
 ````
 {name, image, creationDate, updateDate}
 ````
-<br>
-- name : String and required
-- image : String and represent a substainable URL
-- creationDate :  Date and auto generated once
-- updateDate :  Date and auto generated at each update
+- **name :** String and required
+- **image :** String and represent a substainable URL
+- **creationDate :**  Date and auto generated once
+- **updateDate :**  Date and auto generated at each update
 
 ### Genre
 
 ````
 {name, creationDate, updateDate}
 ````
-<br>
-- name : String and required
-- creationDate :  Date and auto generated once
-- updateDate :  Date and auto generated at each update
+- **name :** String and required
+- **creationDate :**  Date and auto generated once
+- **updateDate :**  Date and auto generated at each update
 
 ### Game
 
 ````
 {defaultTitle, overiew, titles: [{name, countryCode}], releaseDates: [{date, countryCode}], versions: [{number, date, description}], metacritic: {score, url}, editors: [{Editor._id}], developers: [{Developer._id}], genres: [{Genre._id}], platforms: [{Platform._id}], media: {boxArt: {front, rear}, thumbnails[], logos[], banners[], fanArts[], screenshots[], trailers}}
 ````
-<br>
-- defaultTitle : String and required
-- overview :  String
-- titles :  
+- **defaultTitle :** String and required
+- **overview :**  String
+- **titles :**  
 - - Name :
 - - countryCode
 
