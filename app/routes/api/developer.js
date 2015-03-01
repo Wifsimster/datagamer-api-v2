@@ -20,6 +20,7 @@ module.exports = function () {
         //          - name
         .post('/developers', function (req, res) {
             var name = req.body.name;
+            var image = req.body.image;
 
             // Check if a developer already exist with this name
             Developer.findOneQ({name: name})
@@ -31,6 +32,7 @@ module.exports = function () {
                         // Create a new instance of the Developer model
                         var developer = new Developer();
                         developer.name = name;
+                        developer.image = image;
 
                         // Save the developer and check for errors
                         developer.saveQ()
