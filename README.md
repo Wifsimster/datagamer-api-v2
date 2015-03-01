@@ -242,60 +242,46 @@ Return : {code, message}
 
 ### User
 
-{ 
-    **name :** String,
-    **email :** String,
-    **apiKey :** String
-}
+````
+{name, email, apiKey}
+````
+<br>
+- name : String and required
+- email : String and Email format
+- apiKey :  String and auto generated once
 
 ### Developer, Editor & Platform
 
-{ 
-    **name :** String,
-    **image :** String,
-    **creationDate :** Date,
-    **updateDate :** Date
-}
+````
+{name, image, creationDate, updateDate}
+````
+<br>
+- name : String and required
+- image : String and represent a substainable URL
+- creationDate :  Date and auto generated once
+- updateDate :  Date and auto generated at each update
 
 ### Genre
 
-{ 
-    **name :** String,
-    **creationDate :** Date,
-    **updateDate :** Date
-}
+````
+{name, creationDate, updateDate}
+````
+<br>
+- name : String and required
+- creationDate :  Date and auto generated once
+- updateDate :  Date and auto generated at each update
 
 ### Game
 
-{ 
-    **name :** String,
-    **media :**
-    {
-        **boxArt :** 
-        {
-            **front :** String,
-            **rear :** String
-        },
-        **thumbnails :** [String],
-        **logos :** [String},
-        **banners :** [String],
-        **fanArts :** [String],
-        **screenshots :** [String],
-        **trailers :** [String]
-    },
-    **editors :** [Object_id],
-    **developers :** [Object_id],
-    **genres :** [Object_id],
-    **platforms :** [Object_id],
-    **overview :** String,
-    **releaseDate :** Date,
-    **creationDate :** Date,
-    **updateDate :** Date,
-    **metacritic :** {
-        **score :** Number,
-        **url :** String
-    }
-}
+````
+{defaultTitle, overiew, titles: [{name, countryCode}], releaseDates: [{date, countryCode}], versions: [{number, date, description}], metacritic: {score, url}, editors: [{Editor._id}], developers: [{Developer._id}], genres: [{Genre._id}], platforms: [{Platform._id}], media: {boxArt: {front, rear}, thumbnails[], logos[], banners[], fanArts[], screenshots[], trailers}}
+````
+<br>
+- defaultTitle : String and required
+- overview :  String
+- titles :  
+- - Name :
+- - countryCode
 
 ## Licence
 
