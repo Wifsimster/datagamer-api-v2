@@ -136,9 +136,7 @@ Return : {code, message, developer}
 ````
 
 ### Add a new developer
-**Method :** POST
-
-Only **Genre** object don't have an image attribute.
+**Method :** POST - Only **Genre** object don't have an image attribute.
 ````
 URL : /api/developers
 Form param : {name, image}
@@ -146,9 +144,7 @@ Return : {code, message, developer}
 ````
 
 ### Update a developer
-**Method :** PUT
-
-Only **Genre** object don't have an image attribute.
+**Method :** PUT - Only **Genre** object don't have an image attribute.
 ````
 URL : /api/developers/{id}
 Form param : {name, image}
@@ -166,85 +162,63 @@ Return : {code, message}
 
 ### Get a list of games
 **Method :** GET
-<br>
-**URL :** /api/games/?skip={skip}&limit={limit}
-<br>
-**Params :** 
-- skip
-- limit
+````
+URL : /api/games/?skip={skip}&limit={limit}
+Return : {code, message, count, skip, limit, games:[{game}]}
+````
 
-### Get a list of games which can be similar
+### Get count of all games
 **Method :** GET
-<br>
-**URL :** /api/games/similar/by/{percentage}/for/{name}
-<br>
-**Params :** 
-- percentage : Percentage of similarity (20 return good results in general)
-- name
+````
+URL : /api/games/count
+Return : {code, message, count}
+````
 
-### Get games by name
+### Get a list of games which can be similar by their default title
 **Method :** GET
-<br>
-**URL :** /api/games/by/name/{name}
-<br>
-**Params :** 
-- name
+````
+URL : /api/games/similar/by/{percentage}/for/{defaultTile}
+Return : {code, message, games:[{game}]}
+````
 
-*Return a list of games which are similar by name. Each game object have a new argument percentage*
+### Get games by default title
+**Method :** GET
+````
+URL : /api/games/by/defaultTitle/{defaultTitle}
+Return : {code, message, count, games:[{game}]}
+````
 
 ### Get a game by id
-**Method :** GET
-<br>
-**URL :** /api/games/by/id/{id]
-<br>
-**Params :** 
-- id
-
-*Return a game with extended information. This method will automattcally update the game information.*
+**Method :** GET - Return a game with extended information. This method will automatically update the game information if needed.
+````
+URL : /api/games/by/id/{id}
+Return : {code, message, game}
+````
 
 ### Add a new game
-**Method :** POST
+**Method :** POST - Only **defaultTitle** is mandatory !
+````
+URL : /api/games
+Form params : {defaultTitle, overiew, titles: [{name, countryCode}], releaseDates: [{date, countryCode}], versions: [{number, date, description}], metacritic: {score, url}, editors: [{Editor._id}], developers: [{Developer._id}], genres: [{Genre._id}], platforms: [{Platform._id}], media: {boxArt: {front, rear}, thumbnails[], logos[], banners[], fanArts[], screenshots[], trailers}}
+Return : {code, message, game}
+````
 <br>
-**URL :** /api/games
-<br>
-**Body params :** 
-- name
-- overiew
-- editors[]
-- developers[]
-- genres[]
-- platforms[]
-- releaseDate
-- metacritic{}
-- media{}
+**Country code** must be ISO alpha 3 code in uppercase.
 
 ### Update a game
 **Method :** PUT
-<br>
-**URL :** /api/games/id/{id}
-<br>
-**Params :** 
-- id
-
-
-**Body params :** 
-- name
-- overiew
-- editors[]
-- developers[]
-- genres[]
-- platforms[]
-- releaseDate
-- metacritic{}
-- media{}
+````
+URL : /api/games/{id}
+Form params : {defaultTitle, overiew, titles: [{name, countryCode}], releaseDates: [{date, countryCode}], versions: [{number, date, description}], metacritic: {score, url}, editors: [{Editor._id}], developers: [{Developer._id}], genres: [{Genre._id}], platforms: [{Platform._id}], media: {boxArt: {front, rear}, thumbnails[], logos[], banners[], fanArts[], screenshots[], trailers}}
+Return : {code, message, game}
+````
 
 ### Delete a game
 **Method :** DELETE
-<br>
-**URL :** /api/games/id/{id}
-<br>
-**Params :** 
-- id
+````
+URL : /api/games/{id}
+Return : {code, message}
+````
 
 ## Status codes
 
