@@ -245,39 +245,66 @@ Return : {code, message}
 ````
 {name, email, apiKey}
 ````
-- **name :** String and required
-- **email :** String and Email format
-- **apiKey :**  String and auto generated once
+- **name :** String required
+- **email :** String email format
+- **apiKey :**  String auto generated once
 
 ### Developer, Editor & Platform
 
 ````
 {name, image, creationDate, updateDate}
 ````
-- **name :** String and required
-- **image :** String and represent a substainable URL
-- **creationDate :**  Date and auto generated once
-- **updateDate :**  Date and auto generated at each update
+- **name :** String required
+- **image :** String represent a substainable URL
+- **creationDate :**  Date auto generated once
+- **updateDate :**  Date auto generated at each update
 
 ### Genre
 
 ````
 {name, creationDate, updateDate}
 ````
-- **name :** String and required
-- **creationDate :**  Date and auto generated once
-- **updateDate :**  Date and auto generated at each update
+- **name :** String required
+- **creationDate :**  Date auto generated once
+- **updateDate :**  Date auto generated at each update
 
 ### Game
 
 ````
 {defaultTitle, overiew, titles: [{name, countryCode}], releaseDates: [{date, countryCode}], versions: [{number, date, description}], metacritic: {score, url}, editors: [{Editor._id}], developers: [{Developer._id}], genres: [{Genre._id}], platforms: [{Platform._id}], media: {boxArt: {front, rear}, thumbnails[], logos[], banners[], fanArts[], screenshots[], trailers}}
 ````
-- **defaultTitle :** String and required
+- **defaultTitle :** String required
 - **overview :**  String
-- **titles :**  
-- - Name :
-- - countryCode
+- **titles :**  Array
+  - **name :** String
+  - **countryCode :** String ISO Alpha 3 uppercase
+- **releaseDates :**
+  - **date :** Date
+  - **countryCode :** String ISO Alpha 3 uppercase
+- **versions :**
+  - **number :** String
+  - **date :** Date
+  - **descriptione :** String
+- **metacritic :**
+  - **score :** Number
+  - **url :** String
+- **editors :** Array of ObjectId,  need to be an existing Editor id
+- **developers :** Array of ObjectId,  need to be an existing Developer id
+- **genres :** Array of ObjectId, need to be an existing Genre id
+- **paltforms :** Array of ObjectId, need to be an existing Platform id
+- **media :** Array
+  - **boxArt :** Array
+    - **front :** String
+    - **rear :** String
+  - **thumbnails :** Array of String
+  - **logos :** Array of String
+  - **banners :** Array of String
+  - **fanArts :** Array of String
+  - **screenshots :** Array of String
+  - **trailers :** Array of String
+- **percentage :** Number valorized when a games list is return
+- **creationDate :**  Date auto generated once
+- **updateDate :**  Date auto generated at each update
 
 ## Licence
 
