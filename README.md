@@ -69,54 +69,46 @@ URL : http://movie-discover.com:8084/api/games/by/id/12
 
 ### Get a list of users
 **Method :** GET
-<br>
-**URL :** /api/users/?skip={skip}&limit={limit}
-<br>
-**Params :** 
-- skip
-- limit
+````
+URL : /api/users/?skip={skip}&limit={limit}
+Return : {code, message, count, skip, limit, users:[{user}]}
+````
 
 ### Get a user by name
 **Method :** GET
-<br>
-**URL :** /api/users/by/name/{name}
-<br>
-**Params :** name
-<br>
+````
+URL : /api/users/by/name/{name}
+Return : {code, message, users:[{user}]}
+````
 
 ### Get a user by id
 **Method :** GET
-<br>
-**URL :** /api/users/by/id/{id}
-<br>
-**Params :** 
-- id
+````
+URL : /api/users/by/id/{id}
+Return : {code, message, user}
+````
 
 ### Add a new user
-**Method :** POST
-<br>
-**URL :** /api/users
-<br>
-**Body params :** 
-- name
-- email
+**Method :** POST - Only request with no authentication !
+````
+URL : /api/users
+Form param : {name, email}
+Return : {code, message, user}
+````
 
 ### Update a user
 **Method :** PUT
-<br>
-**URL :** /api/users/id/{id}
-<br>
-**Params :** 
-- name
-- email
+````
+URL : /api/users/{id}
+Return : {code, message, user}
+````
 
 ### Delete a user
 **Method :** DELETE
-<br>
-**URL :** /api/users/id/{id}
-<br>
-**Params :** 
-- id
+````
+URL : /api/users/{id}
+Return : {code, message}
+````
 
 ## Developer, Editor, Game, Genre & Platform
 
