@@ -78,7 +78,7 @@ Return : {code, message, count, skip, limit, users:[{user}]}
 **Method :** GET
 ````
 URL : /api/users/by/name/{name}
-Return : {code, message, users:[{user}]}
+Return : {code, message, count, users:[{user}]}
 ````
 
 ### Get a user by id
@@ -110,65 +110,55 @@ URL : /api/users/{id}
 Return : {code, message}
 ````
 
-## Developer, Editor, Game, Genre & Platform
+## Developer, Editor, Genre & Platform
 
-I show only the methods associated with the developer but other objects support the same syntax.
+I show only the methods associated with the developer but other objects support the exact same syntax.
 
 ### Get a list of developers
 **Method :** GET
-<br>
-**URL :** /api/developers/?skip={skip}&limit={limit}
-<br>
-**Params :** 
-- skip
-- limit
+````
+URL : /api/developers/?skip={skip}&limit={limit}
+Return : {code, message, count, skip, limit, developers:[{developer}]}
+````
 
 ### Get a developer by name
 **Method :** GET
-<br>
-**URL :** /api/developers/by/name/{name}
-<br>
-**Params :** name
-<br>
+````
+URL : /api/developers/by/name/{name}
+Return : {code, message, count, developers:[{developer}]}
+````
 
 ### Get a developer by id
 **Method :** GET
-<br>
-**URL :** /api/developers/by/id/{id}
-<br>
-**Params :** 
-- id
+````
+URL : /api/developers/by/id/{id}
+Return : {code, message, developer}
+````
 
 ### Add a new developer
 **Method :** POST
-<br>
-**URL :** /api/developers
-<br>
-**Body params :** 
-- name
+Only **Genre** object don't have an image attribute.
+````
+URL : /api/developers
+Form param : {name, image}
+Return : {code, message, developer}
+````
 
 ### Update a developer
 **Method :** PUT
-<br>
-**URL :** /api/developers/id/{id}
-<br>
-**Params :** 
-- id
-
-
-**Body params :** 
-- name
-- image
-
 Only **Genre** object don't have an image attribute.
+````
+URL : /api/developers/{id}
+Form param : {name, image}
+Return : {code, message, developer}
+````
 
 ### Delete a developer
 **Method :** DELETE
-<br>
-**URL :** /api/developers/id/{id}
-<br>
-**Params :** 
-- id
+````
+URL : /api/developers/{id}
+Return : {code, message}
+````
 
 ##Game
 
