@@ -69,198 +69,156 @@ URL : http://movie-discover.com:8084/api/games/by/id/12
 
 ### Get a list of users
 **Method :** GET
-<br>
-**URL :** /api/users/?skip={skip}&limit={limit}
-<br>
-**Params :** 
-- skip
-- limit
+````
+URL : /api/users/?skip={skip}&limit={limit}
+Return : {code, message, count, skip, limit, users:[{user}]}
+````
 
 ### Get a user by name
 **Method :** GET
-<br>
-**URL :** /api/users/by/name/{name}
-<br>
-**Params :** name
-<br>
+````
+URL : /api/users/by/name/{name}
+Return : {code, message, count, users:[{user}]}
+````
 
 ### Get a user by id
 **Method :** GET
-<br>
-**URL :** /api/users/by/id/{id}
-<br>
-**Params :** 
-- id
+````
+URL : /api/users/by/id/{id}
+Return : {code, message, user}
+````
 
 ### Add a new user
-**Method :** POST
-<br>
-**URL :** /api/users
-<br>
-**Body params :** 
-- name
-- email
+**Method :** POST - Only request with no authentication !
+````
+URL : /api/users
+Form param : {name, email}
+Return : {code, message, user}
+````
 
 ### Update a user
 **Method :** PUT
-<br>
-**URL :** /api/users/id/{id}
-<br>
-**Params :** 
-- name
-- email
+````
+URL : /api/users/{id}
+Return : {code, message, user}
+````
 
 ### Delete a user
 **Method :** DELETE
-<br>
-**URL :** /api/users/id/{id}
-<br>
-**Params :** 
-- id
+````
+URL : /api/users/{id}
+Return : {code, message}
+````
 
-## Developer, Editor, Game, Genre & Platform
+## Developer, Editor, Genre & Platform
 
-I show only the methods associated with the developer but other objects support the same syntax.
+I show only the methods associated with the developer but other objects support the exact same syntax.
 
 ### Get a list of developers
 **Method :** GET
-<br>
-**URL :** /api/developers/?skip={skip}&limit={limit}
-<br>
-**Params :** 
-- skip
-- limit
+````
+URL : /api/developers/?skip={skip}&limit={limit}
+Return : {code, message, count, skip, limit, developers:[{developer}]}
+````
 
 ### Get a developer by name
 **Method :** GET
-<br>
-**URL :** /api/developers/by/name/{name}
-<br>
-**Params :** name
-<br>
+````
+URL : /api/developers/by/name/{name}
+Return : {code, message, count, developers:[{developer}]}
+````
 
 ### Get a developer by id
 **Method :** GET
-<br>
-**URL :** /api/developers/by/id/{id}
-<br>
-**Params :** 
-- id
+````
+URL : /api/developers/by/id/{id}
+Return : {code, message, developer}
+````
 
 ### Add a new developer
-**Method :** POST
-<br>
-**URL :** /api/developers
-<br>
-**Body params :** 
-- name
+**Method :** POST - Only **Genre** object don't have an image attribute.
+````
+URL : /api/developers
+Form param : {name, image}
+Return : {code, message, developer}
+````
 
 ### Update a developer
-**Method :** PUT
-<br>
-**URL :** /api/developers/id/{id}
-<br>
-**Params :** 
-- id
-
-
-**Body params :** 
-- name
-- image
-
-Only **Genre** object don't have an image attribute.
+**Method :** PUT - Only **Genre** object don't have an image attribute.
+````
+URL : /api/developers/{id}
+Form param : {name, image}
+Return : {code, message, developer}
+````
 
 ### Delete a developer
 **Method :** DELETE
-<br>
-**URL :** /api/developers/id/{id}
-<br>
-**Params :** 
-- id
+````
+URL : /api/developers/{id}
+Return : {code, message}
+````
 
 ##Game
 
 ### Get a list of games
 **Method :** GET
-<br>
-**URL :** /api/games/?skip={skip}&limit={limit}
-<br>
-**Params :** 
-- skip
-- limit
+````
+URL : /api/games/?skip={skip}&limit={limit}
+Return : {code, message, count, skip, limit, games:[{game}]}
+````
 
-### Get a list of games which can be similar
+### Get count of all games
 **Method :** GET
-<br>
-**URL :** /api/games/similar/by/{percentage}/for/{name}
-<br>
-**Params :** 
-- percentage : Percentage of similarity (20 return good results in general)
-- name
+````
+URL : /api/games/count
+Return : {code, message, count}
+````
 
-### Get games by name
+### Get a list of games which can be similar by their default title
 **Method :** GET
-<br>
-**URL :** /api/games/by/name/{name}
-<br>
-**Params :** 
-- name
+````
+URL : /api/games/similar/by/{percentage}/for/{defaultTile}
+Return : {code, message, games:[{game}]}
+````
 
-*Return a list of games which are similar by name. Each game object have a new argument percentage*
+### Get games by default title
+**Method :** GET
+````
+URL : /api/games/by/defaultTitle/{defaultTitle}
+Return : {code, message, count, games:[{game}]}
+````
 
 ### Get a game by id
-**Method :** GET
-<br>
-**URL :** /api/games/by/id/{id]
-<br>
-**Params :** 
-- id
-
-*Return a game with extended information. This method will automattcally update the game information.*
+**Method :** GET - Return a game with extended information. This method will automatically update the game information if needed.
+````
+URL : /api/games/by/id/{id}
+Return : {code, message, game}
+````
 
 ### Add a new game
-**Method :** POST
+**Method :** POST - Only **defaultTitle** is mandatory !
+````
+URL : /api/games
+Form params : {defaultTitle, overiew, titles: [{name, countryCode}], releaseDates: [{date, countryCode}], versions: [{number, date, description}], metacritic: {score, url}, editors: [{Editor._id}], developers: [{Developer._id}], genres: [{Genre._id}], platforms: [{Platform._id}], media: {boxArt: {front, rear}, thumbnails[], logos[], banners[], fanArts[], screenshots[], trailers}}
+Return : {code, message, game}
+````
 <br>
-**URL :** /api/games
-<br>
-**Body params :** 
-- name
-- overiew
-- editors[]
-- developers[]
-- genres[]
-- platforms[]
-- releaseDate
-- metacritic{}
-- media{}
+**Country code** must be ISO alpha 3 code in uppercase.
 
 ### Update a game
 **Method :** PUT
-<br>
-**URL :** /api/games/id/{id}
-<br>
-**Params :** 
-- id
-
-
-**Body params :** 
-- name
-- overiew
-- editors[]
-- developers[]
-- genres[]
-- platforms[]
-- releaseDate
-- metacritic{}
-- media{}
+````
+URL : /api/games/{id}
+Form params : {defaultTitle, overiew, titles: [{name, countryCode}], releaseDates: [{date, countryCode}], versions: [{number, date, description}], metacritic: {score, url}, editors: [{Editor._id}], developers: [{Developer._id}], genres: [{Genre._id}], platforms: [{Platform._id}], media: {boxArt: {front, rear}, thumbnails[], logos[], banners[], fanArts[], screenshots[], trailers}}
+Return : {code, message, game}
+````
 
 ### Delete a game
 **Method :** DELETE
-<br>
-**URL :** /api/games/id/{id}
-<br>
-**Params :** 
-- id
+````
+URL : /api/games/{id}
+Return : {code, message}
+````
 
 ## Status codes
 
@@ -284,60 +242,69 @@ Only **Genre** object don't have an image attribute.
 
 ### User
 
-{ 
-    **name :** String,
-    **email :** String,
-    **apiKey :** String
-}
+````
+{name, email, apiKey}
+````
+- **name :** String required
+- **email :** String email format
+- **apiKey :**  String auto generated once
 
 ### Developer, Editor & Platform
 
-{ 
-    **name :** String,
-    **image :** String,
-    **creationDate :** Date,
-    **updateDate :** Date
-}
+````
+{name, image, creationDate, updateDate}
+````
+- **name :** String required
+- **image :** String represent a substainable URL
+- **creationDate :**  Date auto generated once
+- **updateDate :**  Date auto generated at each update
 
 ### Genre
 
-{ 
-    **name :** String,
-    **creationDate :** Date,
-    **updateDate :** Date
-}
+````
+{name, creationDate, updateDate}
+````
+- **name :** String required
+- **creationDate :**  Date auto generated once
+- **updateDate :**  Date auto generated at each update
 
 ### Game
 
-{ 
-    **name :** String,
-    **media :**
-    {
-        **boxArt :** 
-        {
-            **front :** String,
-            **rear :** String
-        },
-        **thumbnails :** [String],
-        **logos :** [String},
-        **banners :** [String],
-        **fanArts :** [String],
-        **screenshots :** [String],
-        **trailers :** [String]
-    },
-    **editors :** [Object_id],
-    **developers :** [Object_id],
-    **genres :** [Object_id],
-    **platforms :** [Object_id],
-    **overview :** String,
-    **releaseDate :** Date,
-    **creationDate :** Date,
-    **updateDate :** Date,
-    **metacritic :** {
-        **score :** Number,
-        **url :** String
-    }
-}
+````
+{defaultTitle, overiew, titles: [{name, countryCode}], releaseDates: [{date, countryCode}], versions: [{number, date, description}], metacritic: {score, url}, editors: [{Editor._id}], developers: [{Developer._id}], genres: [{Genre._id}], platforms: [{Platform._id}], media: {boxArt: {front, rear}, thumbnails[], logos[], banners[], fanArts[], screenshots[], trailers}}
+````
+- **defaultTitle :** String required
+- **overview :**  String
+- **titles :**  Array
+  - **name :** String
+  - **countryCode :** String ISO Alpha 3 uppercase
+- **releaseDates :**
+  - **date :** Date
+  - **countryCode :** String ISO Alpha 3 uppercase
+- **versions :**
+  - **number :** String
+  - **date :** Date
+  - **descriptione :** String
+- **metacritic :**
+  - **score :** Number
+  - **url :** String
+- **editors :** Array of ObjectId,  need to be an existing Editor id
+- **developers :** Array of ObjectId,  need to be an existing Developer id
+- **genres :** Array of ObjectId, need to be an existing Genre id
+- **paltforms :** Array of ObjectId, need to be an existing Platform id
+- **media :** Array
+  - **boxArt :** Array
+    - **front :** String
+    - **rear :** String
+  - **thumbnails :** Array of String
+  - **logos :** Array of String
+  - **banners :** Array of String
+  - **fanArts :** Array of String
+  - **screenshots :** Array of String
+  - **trailers :** Array of String
+- **percentage :** Number valorized when a games list is return
+- **creationDate :**  Date auto generated once
+- **updateDate :**  Date auto generated at each update
 
 ## Licence
 
