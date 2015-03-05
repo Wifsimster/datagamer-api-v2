@@ -240,7 +240,7 @@ module.exports = function () {
                             // Add percentage to all return games
                             for (var i = 0; i < games.length; i++) {
                                 var game = games[i];
-                                game.percentage = 100 - levenshtein.get(game.defaultTitle, defaultTitle);
+                                game.percentage = 100 - levenshtein.get(game.defaultTitle, req.params.defaultTitle);
                             }
 
                             // Build the response
