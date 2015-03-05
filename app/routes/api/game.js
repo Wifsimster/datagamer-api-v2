@@ -186,6 +186,10 @@ module.exports = function () {
                         }
                     }
 
+                    // Sort the games list by percentage value
+                    games.sort(compare);
+                    games.reverse();
+
                     CODE.SUCCESS.count = return_games.length;
                     CODE.SUCCESS.games = return_games;
                     res.send(CODE.SUCCESS);
@@ -242,6 +246,10 @@ module.exports = function () {
                                 var game = games[i];
                                 game.percentage = 100 - levenshtein.get(game.defaultTitle, req.params.defaultTitle);
                             }
+
+                            // Sort the games list by percentage value
+                            games.sort(compare);
+                            games.reverse();
 
                             // Build the response
                             CODE.SUCCESS.count = count;
@@ -434,3 +442,11 @@ module.exports = function () {
 //
 //    return sum;
 //}
+
+function compare(a, b) {
+    if (a.percentage < b.percentage)
+        return -1;
+    if (a.percentage > b.percentage)
+        return 1;
+    return 0;
+}
