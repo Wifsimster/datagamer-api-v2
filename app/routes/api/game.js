@@ -175,7 +175,7 @@ module.exports = function () {
                         game.percentage = 0;
 
                         //var prct = similar_text(game.defaultTitle, defaultTitle);
-                        var prct = levenshtein.get(game.defaultTitle, defaultTitle);
+                        var prct = levenshtein.get(game.defaultTitle.toLowerCase(), defaultTitle.toLowerCase());
 
                         prct = 100 - prct;
 
@@ -244,7 +244,7 @@ module.exports = function () {
                             // Add percentage to all return games
                             for (var i = 0; i < games.length; i++) {
                                 var game = games[i];
-                                game.percentage = 100 - levenshtein.get(game.defaultTitle, req.params.defaultTitle);
+                                game.percentage = 100 - levenshtein.get(game.defaultTitle.toLowerCase(), req.params.defaultTitle.toLowerCase());
                             }
 
                             // Sort the games list by percentage value
