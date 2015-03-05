@@ -6,6 +6,7 @@
     "body-parser": "~1.0.1",
     "cors": "^2.5.3",
     "express": "~4.0.0",
+    "fast-levenshtein": "^1.0.6",
     "mongoose": "~3.6.13",
     "mongoose-q": "*",
     "node-uuid": "*",

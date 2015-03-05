@@ -2,6 +2,7 @@ module.exports = function () {
     var express = require('express');
     var request = require('request');
     var winston = require('winston');
+    var levenshtein = require('fast-levenshtein');
     var app = express();
 
     // Models
@@ -173,7 +174,10 @@ module.exports = function () {
                         var game = games[i];
                         game.percentage = 0;
 
-                        var prct = similar_text(game.defaultTitle, defaultTitle);
+                        //var prct = similar_text(game.defaultTitle, defaultTitle);
+                        var prct = levenshtein.get(game.defaultTitle, defaultTitle);
+
+                        prct = 100 - prct;
 
                         if (prct > percentage) {
                             winston.info('Game - ' + game.defaultTitle + ' = ' + defaultTitle + ' (' + prct + ')');
@@ -182,6 +186,7 @@ module.exports = function () {
                         }
                     }
 
+                    CODE.SUCCESS.count = return_games.length;
                     CODE.SUCCESS.games = return_games;
                     res.send(CODE.SUCCESS);
                 });
