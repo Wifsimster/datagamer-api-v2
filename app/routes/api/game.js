@@ -151,7 +151,7 @@ module.exports = function () {
         })
 
         // Descripton : Get games that are similar
-        // URL : http://localhost:8080/api/games/similar/by/20/for/The Forest
+        // URL : http://localhost:8080/api/games/similar/by/75/for/The Forest
         .get('/games/similar/by/:percentage/for/:defaultTitle', function (req, res) {
 
             var percentage = req.param('percentage');
@@ -240,7 +240,7 @@ module.exports = function () {
                             // Add percentage to all return games
                             for (var i = 0; i < games.length; i++) {
                                 var game = games[i];
-                                game.percentage = similar_text(game.defaultTitle, req.params.defaultTitle);
+                                game.percentage = 100 - levenshtein.get(game.defaultTitle, defaultTitle);
                             }
 
                             // Build the response
@@ -388,49 +388,49 @@ module.exports = function () {
 }();
 
 // Awesome method found here: http://stackoverflow.com/a/10473840/1283595
-function similar_text(first, second) {
-    // Calculates the similarity between two strings
-    // discuss at: http://phpjs.org/functions/similar_text
-
-    if (first === null || second === null || typeof first === 'undefined' || typeof second === 'undefined') {
-        return 0;
-    }
-
-    first += '';
-    second += '';
-
-    var pos1 = 0,
-        pos2 = 0,
-        max = 0,
-        firstLength = first.length,
-        secondLength = second.length,
-        p, q, l, sum;
-
-    max = 0;
-
-    for (p = 0; p < firstLength; p++) {
-        for (q = 0; q < secondLength; q++) {
-            for (l = 0;
-                 (p + l < firstLength) && (q + l < secondLength) && (first.charAt(p + l) === second.charAt(q + l)); l++);
-            if (l > max) {
-                max = l;
-                pos1 = p;
-                pos2 = q;
-            }
-        }
-    }
-
-    sum = max;
-
-    if (sum) {
-        if (pos1 && pos2) {
-            sum += similar_text(first.substr(0, pos2), second.substr(0, pos2));
-        }
-
-        if ((pos1 + max < firstLength) && (pos2 + max < secondLength)) {
-            sum += similar_text(first.substr(pos1 + max, firstLength - pos1 - max), second.substr(pos2 + max, secondLength - pos2 - max));
-        }
-    }
-
-    return sum;
-}
+//function similar_text(first, second) {
+//    // Calculates the similarity between two strings
+//    // discuss at: http://phpjs.org/functions/similar_text
+//
+//    if (first === null || second === null || typeof first === 'undefined' || typeof second === 'undefined') {
+//        return 0;
+//    }
+//
+//    first += '';
+//    second += '';
+//
+//    var pos1 = 0,
+//        pos2 = 0,
+//        max = 0,
+//        firstLength = first.length,
+//        secondLength = second.length,
+//        p, q, l, sum;
+//
+//    max = 0;
+//
+//    for (p = 0; p < firstLength; p++) {
+//        for (q = 0; q < secondLength; q++) {
+//            for (l = 0;
+//                 (p + l < firstLength) && (q + l < secondLength) && (first.charAt(p + l) === second.charAt(q + l)); l++);
+//            if (l > max) {
+//                max = l;
+//                pos1 = p;
+//                pos2 = q;
+//            }
+//        }
+//    }
+//
+//    sum = max;
+//
+//    if (sum) {
+//        if (pos1 && pos2) {
+//            sum += similar_text(first.substr(0, pos2), second.substr(0, pos2));
+//        }
+//
+//        if ((pos1 + max < firstLength) && (pos2 + max < secondLength)) {
+//            sum += similar_text(first.substr(pos1 + max, firstLength - pos1 - max), second.substr(pos2 + max, secondLength - pos2 - max));
+//        }
+//    }
+//
+//    return sum;
+//}
