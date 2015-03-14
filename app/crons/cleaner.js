@@ -4,7 +4,7 @@ var winston = require('winston');
 
 module.exports.start = function () {
     // Every hour remove duplicate games from database
-    new CronJob('* * 1 * * * *', function () {
+    new CronJob('* /15 * * * * *', function () {
         winston.info('Cleaner trigger !');
 
         request('http://localhost:8084/utils/cleaner/games/duplicates', function (error, response, body) {

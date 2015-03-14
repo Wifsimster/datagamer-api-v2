@@ -372,7 +372,7 @@ module.exports = function () {
                             game.releaseDates.push(release);
 
                             game.metacritic = {};
-                            game.metacritic.score = metacritic_game.userscore;
+                            game.metacritic.score = metacritic_game.score;
                             game.metacritic.url = metacritic_game.url;
 
                             game.media = {};
