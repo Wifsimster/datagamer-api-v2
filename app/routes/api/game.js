@@ -150,6 +150,34 @@ module.exports = function () {
                 });
         })
 
+        // Description : Get the highest score games in db
+        // URL : http://localhost:8080/api/games/top/:limit
+        .get('/games/top/:limit', function (req, res) {
+
+            var limit = req.param('limit');
+            winston.info("-- Return highest video games score...");
+
+            Game.find()
+                .limit(limit)
+                .populate('genres', 'name -_id')
+                .populate('platforms', 'name -_id')
+                .populate('developers', 'name -_id')
+                .populate('editors', 'name -_id')
+                .sort('-metacritic.score')
+                .exec(function (err, games) {
+                    if (err)
+                        res.send(CODE.SERVER_ERROR);
+
+                    winston.info('-- ' + games.length + ' game(s) found !');
+
+                    // Build the response
+                    CODE.SUCCESS.limit = limit;
+                    CODE.SUCCESS.games = games;
+
+                    res.json(CODE.SUCCESS);
+                });
+        })
+
         // Descripton : Get games that are similar
         // URL : http://localhost:8080/api/games/similar/by/75/for/The Forest
         .get('/games/similar/by/:percentage/for/:defaultTitle', function (req, res) {
@@ -291,8 +319,9 @@ module.exports = function () {
                                     .populate('developers', 'name -_id')
                                     .populate('editors', 'name -_id')
                                     .exec(function (err, game) {
-                                        if (err)
-                                            res.send(CODE.SERVER_ERROR);
+                                        if (err) {
+                                            res.json(CODE.SERVER_ERROR);
+                                        }
 
                                         if (game) {
                                             // Build the response
@@ -304,7 +333,7 @@ module.exports = function () {
                                 res.json(result);
                             }
                         } else {
-                            console.error("Game - Can't found the game on Metacritic !")
+                            winston.error("Game - Can't found the game on Metacritic !");
                             res.json(CODE.NOT_FOUND);
                         }
                     });
