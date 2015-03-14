@@ -174,6 +174,13 @@ URL : /api/games/count
 Return : {code, message, count}
 ````
 
+### Get top 10 of games by metacritic score
+**Method :** GET
+````
+URL : /api/games/top/{limit}
+Return : {code, message, games}
+````
+
 ### Get a list of games which can be similar by their default title
 **Method :** GET
 ````
