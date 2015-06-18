@@ -28,10 +28,10 @@ module.exports = function () {
             if (user.name && user.email) {
                 // Save the user and check for errors
                 user.save(function (err, object) {
-                    if (err)
+                    if (err) {
                         res.json(CODE.BAD_REQUEST);
+                    }
 
-                    CODE.SUCCESS_POST = {};
                     CODE.SUCCESS_POST.user = object;
                     res.json(CODE.SUCCESS_POST);
                 });
@@ -67,7 +67,6 @@ module.exports = function () {
                     winston.info('-- ' + count + ' user(s) founded !');
 
                     // Build the response
-                    CODE.SUCCESS = {};
                     CODE.SUCCESS.count = count;
                     CODE.SUCCESS.skip = skip;
                     CODE.SUCCESS.limit = limit;
@@ -91,7 +90,6 @@ module.exports = function () {
                     winston.info(count + ' user(s) founded !');
 
                     // Build the response
-                    CODE.SUCCESS = {};
                     CODE.SUCCESS.count = count;
                     CODE.SUCCESS.users = users;
 
@@ -110,7 +108,6 @@ module.exports = function () {
                 winston.info('Searching for user id ' + req.params.user_id + ' : ' + user.name);
 
                 // Build the response
-                CODE.SUCCESS = {};
                 CODE.SUCCESS.user = user;
 
                 res.json(CODE.SUCCESS);
@@ -142,7 +139,6 @@ module.exports = function () {
                         res.send(CODE.SERVER_ERROR);
 
                     // Build the response
-                    CODE.SUCCESS_PUT = {};
                     CODE.SUCCESS_PUT.user = user;
 
                     res.json(CODE.SUCCESS_PUT);

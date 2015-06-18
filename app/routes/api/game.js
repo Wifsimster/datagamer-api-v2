@@ -74,7 +74,6 @@ module.exports = function () {
                                 winston.info('Game ' + game.defaultTitle + ' added !');
 
                                 // Save game object to the response object
-                                CODE.SUCCESS_POST = {};
                                 CODE.SUCCESS_POST.game = game;
                                 res.json(CODE.SUCCESS_POST);
                             })
@@ -122,7 +121,6 @@ module.exports = function () {
                     winston.info('-- ' + count + ' game(s) found !');
 
                     // Build the response
-                    CODE.SUCCESS = {};
                     CODE.SUCCESS.count = count;
                     CODE.SUCCESS.skip = skip;
                     CODE.SUCCESS.limit = limit;
@@ -146,7 +144,6 @@ module.exports = function () {
                     winston.info('-- ' + count + ' game(s) found !');
 
                     // Build the response
-                    CODE.SUCCESS = {};
                     CODE.SUCCESS.count = count;
 
                     res.json(CODE.SUCCESS);
@@ -174,7 +171,6 @@ module.exports = function () {
                     winston.info('-- ' + games.length + ' game(s) found !');
 
                     // Build the response
-                    CODE.SUCCESS = {};
                     CODE.SUCCESS.limit = limit;
                     CODE.SUCCESS.games = games;
 
@@ -222,7 +218,6 @@ module.exports = function () {
                     games.sort(compare);
                     games.reverse();
 
-                    CODE.SUCCESS = {};
                     CODE.SUCCESS.count = return_games.length;
                     CODE.SUCCESS.games = return_games;
                     res.send(CODE.SUCCESS);
@@ -263,7 +258,6 @@ module.exports = function () {
                                     winston.info('Game - Metacritic found a game and add it to db !');
 
                                     // Build the response
-                                    CODE.SUCCESS = {};
                                     CODE.SUCCESS.count = count;
                                     CODE.SUCCESS.games = games;
 
@@ -286,7 +280,6 @@ module.exports = function () {
                             games.reverse();
 
                             // Build the response
-                            CODE.SUCCESS = {};
                             CODE.SUCCESS.count = count;
                             CODE.SUCCESS.games = games;
 
@@ -332,7 +325,6 @@ module.exports = function () {
 
                                         if (game) {
                                             // Build the response
-                                            CODE.SUCCESS = {};
                                             CODE.SUCCESS.game = game;
                                             res.json(CODE.SUCCESS);
                                         }
@@ -403,7 +395,6 @@ module.exports = function () {
                         res.send(CODE.SERVER_ERROR);
 
                     // Build the response
-                    CODE.SUCCESS_PUT = {};
                     CODE.SUCCESS_PUT.game = game;
 
                     res.json(CODE.SUCCESS_PUT);

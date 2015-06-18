@@ -6,7 +6,7 @@ var cors = require('cors');
 var request = require('request');
 var winston = require('winston');
 
-mongoose.connect('mongodb://192.168.0.21:27017/datagamer'); // connect to our database
+mongoose.connect('mongodb://localhost:27017/datagamer'); // connect to our database
 //mongoose.connect('mongodb://localhost:27017/datagamer'); // connect to our database
 
 // CORS request
@@ -75,4 +75,4 @@ winston.info('Datagamer-api v2 is running on port ' + port);
 // Inject CRONs
 var cleaner = require('./app/crons/cleaner.js');
 
-cleaner.start();
+//cleaner.start();
