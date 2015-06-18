@@ -104,19 +104,17 @@ module.exports = function () {
     // ie : http://localhost:8084/utils/metacritic/search/Tupa
     app.get('/metacritic/search/:name', function (req, res) {
 
-        var platform_id = 3; // Fix platform id to pc for the app
+        var platform_id = 5; // Fix platform id to pc for the app
         var name = req.params.name;
 
         winston.info("Metacritic - Searching for '" + name + "' on Metacritic...");
 
         unirest.post("https://byroredux-metacritic.p.mashape.com/search/game")
             .header("X-Mashape-Key", MASHAP_KEY)
-            .header("Content-Type", "application/x-www-form-urlencoded")
+            //.header("Content-Type", "application/x-www-form-urlencoded")
             .header("Accept", ACCEPT_JSON)
             .send({
-                "max_pages": 1,
                 "platform": platform_id,
-                "retry": 4,
                 "title": name
             })
             .end(function (result) {
